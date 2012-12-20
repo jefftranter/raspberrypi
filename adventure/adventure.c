@@ -358,9 +358,10 @@ void doLook()
 /* Quit command */
 void doQuit()
 {
+    char *s;
     printf("%s", "ARE YOU SURE YOU WANT TO QUIT (Y/N)? ");
-    fgets(buffer, sizeof(buffer)-1, stdin);
-    if (toupper(buffer[0]) == 'Y') {
+    s = fgets(buffer, sizeof(buffer)-1, stdin);
+    if (s != 0 && toupper(buffer[0]) == 'Y') {
         gameOver = 1;
     }
 }
@@ -650,9 +651,12 @@ void doUse()
 void prompt()
 {
     number i;
+    char *s;
 
     printf("? ");        
-    fgets(buffer, sizeof(buffer)-1, stdin);
+    s = fgets(buffer, sizeof(buffer)-1, stdin);
+    if (s == 0)
+        return;
 
     /* Remove trailing newline */
     buffer[strlen(buffer)-1] = '\0';
@@ -772,6 +776,8 @@ void initialize()
 /* Main program (obviously) */
 int main(void)
 {
+    char *s;
+
     while (1) {
         initialize();
         clearScreen();
@@ -816,8 +822,8 @@ int main(void)
 
         printf("GAME OVER AFTER %d TURNS.\n", turnsPlayed);
         printf("%s", "DO YOU WANT TO PLAY AGAIN (Y/N)? ");
-        fgets(buffer, sizeof(buffer)-1, stdin);
-        if (toupper(buffer[0]) == 'N') {
+        s = fgets(buffer, sizeof(buffer)-1, stdin);
+        if (s != 0 && toupper(buffer[0]) == 'N') {
             break;
         }
     }
