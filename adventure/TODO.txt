@@ -1,6 +1,5 @@
 To Do
 -----
 
-- make lines longer
 - write shell script wrapper to run in console window?
 - testing on Raspberry Pi
