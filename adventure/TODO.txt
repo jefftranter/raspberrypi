@@ -3,6 +3,5 @@ To Do
 
 - use lower-case text
 - make lines longer
-- remove CC65 compiler specific code
 - write shell script wrapper to run in console window?
 - testing on Raspberry Pi

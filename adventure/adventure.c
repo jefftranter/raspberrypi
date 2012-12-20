@@ -4,9 +4,6 @@
  *
  * Jeff Tranter <tranter@pobox.com>
  *
- * Written in standard C but designed to run on the Apple Replica 1
- * using the CC65 6502 assembler.
- *
  * Copyright 2012 Jeff Tranter
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,14 +17,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Revision History:
- *
- * Version  Date         Comments
- * -------  ----         --------
- * 0.0      13 Mar 2012  First alpha version
- * 0.1      18 Mar 2012  First beta version
- * 0.9      19 Mar 2012  First public release
  *
  */
 
@@ -45,13 +34,6 @@
 #define NUMLOCATIONS 32
 
 /* TYPES */
-
-/* To optimize for code size and speed, must numbers are 8-bit chars when compiling for the Replica 1. */
-#ifdef __CC65__
-typedef char number;
-#else
-typedef int number;
-#endif
 
 /* Directions */
 typedef enum {
@@ -231,31 +213,31 @@ Direction_t Move[NUMLOCATIONS][6] = {
 };
 
 /* Current location */
-number currentLocation;
+int currentLocation;
 
 /* Number of turns played in game */
 int turnsPlayed;
 
 /* True if player has lit the lamp. */
-number lampLit;
+int lampLit;
 
 /* True if lamp filled with oil. */
-number lampFilled;
+int lampFilled;
 
 /* True if player ate food. */
-number ateFood;
+int ateFood;
 
 /* True if player drank water. */
-number drankWater;
+int drankWater;
 
 /* Incremented each turn you are in the tunnel. */
-number ratAttack;
+int ratAttack;
 
 /* Tracks state of wolf attack */
-number wolfState;
+int wolfState;
 
 /* Set when game is over */
-number gameOver;
+int gameOver;
 
 const char *introText = "     ABANDONED FARMHOUSE ADVENTURE\n           BY JEFF TRANTER\n\nYOUR THREE-YEAR-OLD GRANDSON HAS GONE\nMISSING AND WAS LAST SEEN HEADED IN THE\nDIRECTION OF THE ABANDONED FAMILY FARM.\nIT'S A DANGEROUS PLACE TO PLAY. YOU\nHAVE TO FIND HIM BEFORE HE GETS HURT,\nAND IT WILL BE GETTING DARK SOON...\n";
 
@@ -267,15 +249,15 @@ char buffer[40];
 /* Clear the screen */
 void clearScreen()
 {
-    number i;
+    int i;
     for (i = 0; i < 24; ++i)
         printf("\n");
 }
 
 /* Return 1 if carrying an item */
-number carryingItem(char *item)
+int carryingItem(char *item)
 {
-    number i;
+    int i;
 
     for (i = 0; i < MAXITEMS; i++) {
         if ((Inventory[i] != 0) && (!strcmp(DescriptionOfItem[Inventory[i]], item)))
@@ -285,9 +267,9 @@ number carryingItem(char *item)
 }
 
 /* Return 1 if item it at current location (not carried) */
-number itemIsHere(char *item)
+int itemIsHere(char *item)
 {
-    number i;
+    int i;
 
     /* Find number of the item. */
     for (i = 1; i <= LastItem; i++) {
@@ -306,7 +288,7 @@ number itemIsHere(char *item)
 /* Inventory command */
 void doInventory()
 {
-    number i;
+    int i;
     int found = 0;
 
     printf("%s", "YOU ARE CARRYING:\n");
@@ -329,7 +311,7 @@ void doHelp()
 /* Look command */
 void doLook()
 {
-    number i, loc, seen;
+    int i, loc, seen;
 
     printf("YOU ARE %s.\n", DescriptionOfLocation[currentLocation]);
 
@@ -369,7 +351,7 @@ void doQuit()
 /* Drop command */
 void doDrop()
 {
-    number i;
+    int i;
     char *sp;
     char *item;
 
@@ -401,7 +383,7 @@ void doDrop()
 /* Take command */
 void doTake()
 {
-    number i, j;
+    int i, j;
     char *sp;
     char *item;
 
@@ -650,7 +632,7 @@ void doUse()
 /* Prompt user and get a line of input */
 void prompt()
 {
-    number i;
+    int i;
     char *s;
 
     printf("? ");        
