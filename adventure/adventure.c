@@ -239,7 +239,7 @@ int wolfState;
 /* Set when game is over */
 int gameOver;
 
-const char *introText = "                         Abandoned Farmhouse Adventure\n                                By Jeff Tranter\n\nYour three-year-old grandson has gone missing and was last seen headed in the direction of the abandoned family farm.\nIt's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon...\n";
+const char *introText = "                         Abandoned Farmhouse Adventure\n                                By Jeff Tranter\n\nYour three-year-old grandson has gone missing and was last seen headed in the\ndirection of the abandoned family farm. It's a dangerous place to play.\nYou have to find him before he gets hurt, and it will be getting dark soon...\n";
 
 const char *helpString = "Valid commands:\ngo east/west/north/south/up/down \nlook\nuse <object>\nexamine <object>\ntake <object>\ndrop <object>\ninventory\nhelp\nquit\nYou can abbreviate commands and directions to the first letter.\nType just the first letter of a direction to move.\n";
 
