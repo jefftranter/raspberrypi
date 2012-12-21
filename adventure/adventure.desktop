@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Version=1.0
+Name=Adventure
+Comment=Abandoned Farmhouse Adventure Game
+Exec=lxterminal -e adventure -T Adventure
+Icon=adventure.jpg
+Terminal=false
+Categories=Application;Games;
