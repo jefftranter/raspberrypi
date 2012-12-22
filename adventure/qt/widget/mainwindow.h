@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QLabel>
+#include <QButtonGroup>
 
 namespace Ui {
 class MainWindow;
@@ -20,6 +21,8 @@ private:
     Ui::MainWindow *ui;
     QLabel *locationLabel;
     QLabel *turnsLabel;
+    QButtonGroup *objectButtonGroup;
+    QButtonGroup *inventoryButtonGroup;
 };
 
 #endif // MAINWINDOW_H
