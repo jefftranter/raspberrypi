@@ -658,7 +658,7 @@ void doActions()
         printf("It will be getting dark soon. You need some kind of light or soon you won't be able to see.\n");
     }
 
-    if ((turnsPlayed >= 60) && (!lampLit || (!itemIsHere("LAMP") && !carryingItem("LAMP")))) {
+    if ((turnsPlayed >= 60) && (!lampLit || (!itemIsHere("lamp") && !carryingItem("lamp")))) {
         printf("It is dark out and you have no light. You stumble around for a while and then fall, hit your head, and pass out.\n");
         gameOver = 1;
         return;
@@ -709,7 +709,7 @@ void doActions()
                 printf("Matthew is afraid to come down from the tree.\nIf only you had something to coax him with.\n");
                 break;
             case 2:
-                printf("Congratulations! You succeeded and won the game.\nI hope you had as much fun playing the game as i did creating it.\n- Jeff Tranter <tranter@pobox.com>\n");
+                printf("Congratulations! You succeeded and won the game.\nI hope you had as much fun playing the game as I did creating it.\n- Jeff Tranter <tranter@pobox.com>\n");
                 gameOver = 1;
                 return;
                 break;
