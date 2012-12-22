@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLabel>
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +18,8 @@ public:
     
 private:
     Ui::MainWindow *ui;
+    QLabel *locationLabel;
+    QLabel *turnsLabel;
 };
 
 #endif // MAINWINDOW_H
