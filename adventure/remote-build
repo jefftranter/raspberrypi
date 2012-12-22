@@ -1,0 +1,7 @@
+#/bin/sh
+make distclean
+ssh pi@pi1 rm -rf adventure.bak
+ssh pi@pi1 mv adventure adventure.bak
+scp -r ../adventure pi@pi1:
+ssh pi@pi1 "cd adventure ; make"
+scp pi@pi1:adventure/afadv .
