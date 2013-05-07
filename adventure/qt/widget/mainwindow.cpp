@@ -6,8 +6,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    initialize();
+}
 
-    locationLabel = new QLabel(tr("Turns: 60"));
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::initialize()
+{
+    locationLabel = new QLabel(tr("Turns: 0"));
     turnsLabel = new QLabel(tr("Location: driveway"));
     statusBar()->addPermanentWidget(turnsLabel, 1);
     statusBar()->addPermanentWidget(locationLabel);
@@ -45,9 +54,4 @@ MainWindow::MainWindow(QWidget *parent) :
 "? "
 );
 
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
 }
