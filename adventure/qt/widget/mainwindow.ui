@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Abandoned Farmhouse Adventure</string>
+   <string>The Abandoned Farmhouse Adventure</string>
   </property>
   <property name="statusTip">
    <string/>
@@ -324,17 +324,6 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
    </layout>
-   <zorder></zorder>
-   <zorder></zorder>
-   <zorder>groupBox2</zorder>
-   <zorder>inventoryGroupBox</zorder>
-   <zorder>inventoryGroupBox</zorder>
-   <zorder>groupBox</zorder>
-   <zorder>groupBox2</zorder>
-   <zorder>frame</zorder>
-   <zorder>moveFrame</zorder>
-   <zorder>globalFrame</zorder>
-   <zorder>groupBox3</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -367,6 +356,25 @@ p, li { white-space: pre-wrap; }
   <tabstop>eastButton</tabstop>
   <tabstop>downButton</tabstop>
   <tabstop>southButton</tabstop>
+  <tabstop>takeButton</tabstop>
+  <tabstop>dropButton</tabstop>
+  <tabstop>useButton</tabstop>
+  <tabstop>examineButton</tabstop>
+  <tabstop>inventoryButton1</tabstop>
+  <tabstop>inventoryButton2</tabstop>
+  <tabstop>inventoryButton3</tabstop>
+  <tabstop>inventoryButton4</tabstop>
+  <tabstop>inventoryButton5</tabstop>
+  <tabstop>lookButton</tabstop>
+  <tabstop>inventoryButton</tabstop>
+  <tabstop>helpButton</tabstop>
+  <tabstop>quitButton</tabstop>
+  <tabstop>objectButton1</tabstop>
+  <tabstop>objectButton2</tabstop>
+  <tabstop>objectButton3</tabstop>
+  <tabstop>objectButton4</tabstop>
+  <tabstop>objectButton5</tabstop>
+  <tabstop>objectButton6</tabstop>
   <tabstop>textEdit</tabstop>
  </tabstops>
  <resources/>
