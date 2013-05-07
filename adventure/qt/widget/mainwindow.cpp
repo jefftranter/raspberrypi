@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -20,6 +21,10 @@ void MainWindow::initialize()
     turnsLabel = new QLabel(tr("Location: driveway"));
     statusBar()->addPermanentWidget(turnsLabel, 1);
     statusBar()->addPermanentWidget(locationLabel);
+
+    // Signal/slot connections
+    connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(quit()));
+    connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
 
     objectButtonGroup = new QButtonGroup();
     objectButtonGroup->addButton(ui->objectButton1, 0);
@@ -54,4 +59,28 @@ void MainWindow::initialize()
 "? "
 );
 
+}
+
+void MainWindow::quit()
+{
+    int button = QMessageBox::question(this, tr("Confirm Quit"), tr("Are you sure you want to quit?"));
+    if (button == QMessageBox::Yes) {
+        qApp->quit();
+    }
+}
+
+void MainWindow::gameOver()
+{
+    int turns = 47;
+    int button = QMessageBox::question(this, tr("Game Over"), tr("Game over after %1 turns.\nDo you want to play again?").arg(turns));
+    if (button == QMessageBox::No) {
+        qApp->quit();
+    }
+}
+
+// This intercepts the window close so we can ask the user to confirm.
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    quit();
+    event->ignore(); // If we got here we do not want to quit.
 }
