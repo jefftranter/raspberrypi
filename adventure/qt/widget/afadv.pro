@@ -12,9 +12,10 @@ TARGET = afadv
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+SOURCES += main.cpp \
+        mainwindow.cpp \
+        gameengine.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h gameengine.h
 
 FORMS    += mainwindow.ui

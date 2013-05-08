@@ -5,6 +5,7 @@
 #include <QCloseEvent>
 #include <QLabel>
 #include <QMainWindow>
+#include "gameengine.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +23,11 @@ public:
 public slots:
     void quit();
     void gameOver();
+    void take();
+    void drop();
+    void use();
+    void examine();
+
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -31,6 +37,7 @@ private:
     QLabel *turnsLabel;
     QButtonGroup *objectButtonGroup;
     QButtonGroup *inventoryButtonGroup;
+    GameEngine *e;
 };
 
 #endif // MAINWINDOW_H

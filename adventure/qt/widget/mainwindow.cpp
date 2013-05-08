@@ -1,17 +1,42 @@
+/*
+ * 
+ * The Abandoned Farm House Adventure
+ *
+ * Jeff Tranter <tranter@pobox.com>
+ *
+ * Copyright 2012-1013 Jeff Tranter
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 #include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "gameengine.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    e = new GameEngine;
     initialize();
 }
 
 MainWindow::~MainWindow()
 {
+    delete e;
     delete ui;
 }
 
@@ -23,8 +48,24 @@ void MainWindow::initialize()
     statusBar()->addPermanentWidget(locationLabel);
 
     // Signal/slot connections
-    connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(quit()));
     connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
+
+    connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(quit()));
+    connect(ui->takeButton, SIGNAL(clicked()), this, SLOT(take()));
+    connect(ui->dropButton, SIGNAL(clicked()), this, SLOT(drop()));
+    connect(ui->useButton, SIGNAL(clicked()), this, SLOT(use()));
+    connect(ui->examineButton, SIGNAL(clicked()), this, SLOT(examine()));
+
+    connect(ui->lookButton, SIGNAL(clicked()), e, SLOT(doLook()));
+    connect(ui->inventoryButton, SIGNAL(clicked()), e, SLOT(doInventory()));
+    connect(ui->helpButton, SIGNAL(clicked()), e, SLOT(doHelp()));
+
+    connect(ui->upButton, SIGNAL(clicked()), e, SLOT(doMoveUp()));
+    connect(ui->downButton, SIGNAL(clicked()), e, SLOT(doMoveDown()));
+    connect(ui->northButton, SIGNAL(clicked()), e, SLOT(doMoveNorth()));
+    connect(ui->southButton, SIGNAL(clicked()), e, SLOT(doMoveSouth()));
+    connect(ui->eastButton, SIGNAL(clicked()), e, SLOT(doMoveEast()));
+    connect(ui->westButton, SIGNAL(clicked()), e, SLOT(doMoveWest()));
 
     objectButtonGroup = new QButtonGroup();
     objectButtonGroup->addButton(ui->objectButton1, 0);
@@ -76,6 +117,22 @@ void MainWindow::gameOver()
     if (button == QMessageBox::No) {
         qApp->quit();
     }
+}
+
+void MainWindow::take()
+{
+}
+
+void MainWindow::drop()
+{
+}
+
+void MainWindow::use()
+{
+}
+
+void MainWindow::examine()
+{
 }
 
 // This intercepts the window close so we can ask the user to confirm.
