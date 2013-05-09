@@ -40,8 +40,12 @@ public:
 
     // Accessors
     QStringList inventoryItems() const;
+    QStringList localItems() const;
     int turnsPlayed() const;
     QString currentLocation() const;
+
+    // Methods
+    void start();
 
 public slots:
     // Global commands
@@ -69,5 +73,10 @@ public slots:
     void updateInventoryItems(QStringList items);
     void updateLocalItems(QStringList items);
     void updateValidMoves(QStringList moves);
+
+ private:
+    int m_turns;
+    QStringList m_inventoryItems;
+    QStringList m_localItems;
 };
 #endif /* GAMEENGINE_H */

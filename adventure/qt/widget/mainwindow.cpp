@@ -20,6 +20,8 @@
  *
  */
 
+#include <QDebug>
+#include <QButtonGroup>
 #include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -49,6 +51,14 @@ void MainWindow::initialize()
 
     // Signal/slot connections
     connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
+    connect (e, SIGNAL(sendOutput(QString)), this, SLOT(updateWindow(QString)));
+
+    // Use button group to make checkable item buttons exclusive.
+    QButtonGroup *itemButtons = new QButtonGroup();
+    itemButtons->addButton(ui->takeButton);
+    itemButtons->addButton(ui->dropButton);
+    itemButtons->addButton(ui->useButton);
+    itemButtons->addButton(ui->examineButton);
 
     connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(quit()));
     connect(ui->takeButton, SIGNAL(clicked()), this, SLOT(take()));
@@ -67,6 +77,25 @@ void MainWindow::initialize()
     connect(ui->eastButton, SIGNAL(clicked()), e, SLOT(doMoveEast()));
     connect(ui->westButton, SIGNAL(clicked()), e, SLOT(doMoveWest()));
 
+    // Put inventory buttons in a group.
+    inventoryButtonGroup = new QButtonGroup();
+    inventoryButtonGroup->addButton(ui->inventoryButton1, 0);
+    inventoryButtonGroup->addButton(ui->inventoryButton2, 1);
+    inventoryButtonGroup->addButton(ui->inventoryButton3, 2);
+    inventoryButtonGroup->addButton(ui->inventoryButton4, 3);
+    inventoryButtonGroup->addButton(ui->inventoryButton5, 4);
+
+    int i = 0;
+    foreach (QString item, e->inventoryItems()) {
+        qDebug() << item;
+        inventoryButtonGroup->button(i)->setText(item);
+        i++;
+    }
+    for (; i < 5; ++i) {
+        inventoryButtonGroup->button(i)->setText(tr("-"));
+    }
+
+    // Put local object buttons in a group.
     objectButtonGroup = new QButtonGroup();
     objectButtonGroup->addButton(ui->objectButton1, 0);
     objectButtonGroup->addButton(ui->objectButton2, 1);
@@ -75,31 +104,17 @@ void MainWindow::initialize()
     objectButtonGroup->addButton(ui->objectButton5, 4);
     objectButtonGroup->addButton(ui->objectButton6, 5);
 
-    for (int i = 0; i < 6; ++i) {
+    i = 0;
+    foreach (QString item, e->localItems()) {
+        qDebug() << item;
+        objectButtonGroup->button(i)->setText(item);
+        i++;
+    }
+    for (; i < 6; ++i) {
         objectButtonGroup->button(i)->setText(tr("-"));
     }
 
-    inventoryButtonGroup = new QButtonGroup();
-    inventoryButtonGroup->addButton(ui->inventoryButton1, 0);
-    inventoryButtonGroup->addButton(ui->inventoryButton2, 1);
-    inventoryButtonGroup->addButton(ui->inventoryButton3, 2);
-    inventoryButtonGroup->addButton(ui->inventoryButton4, 3);
-    inventoryButtonGroup->addButton(ui->inventoryButton5, 4);
-
-    for (int i = 0; i < 5; ++i) {
-        inventoryButtonGroup->button(i)->setText(tr("-"));
-    }
-
-    ui->textEdit->setText(
-"                        Abandoned Farmhouse Adventure\n"
-"                                By Jeff Tranter\n"
-"\n"
-"Your three-year-old grandson has gone missing and was last seen headed in the\n"
-"direction of the abandoned family farm. It's a dangerous place to play.\n"
-"You have to find him before he gets hurt, and it will be getting dark soon...\n"
-"? "
-);
-
+    e->start();
 }
 
 void MainWindow::quit()
@@ -140,4 +155,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     quit();
     event->ignore(); // If we got here we do not want to quit.
+}
+
+// This updates the text when the game engine sends some output.
+void MainWindow::updateWindow(QString s)
+{
+    ui->textEdit->append(s);
 }

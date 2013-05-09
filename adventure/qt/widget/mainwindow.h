@@ -27,6 +27,7 @@ public slots:
     void drop();
     void use();
     void examine();
+    void updateWindow(QString s);
 
 protected:
     void closeEvent(QCloseEvent *event);
