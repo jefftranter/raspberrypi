@@ -70,12 +70,14 @@ public slots:
 
  signals:
     void sendOutput(QString output);
+    void locationChanged();
     void updateInventoryItems(QStringList items);
     void updateLocalItems(QStringList items);
     void updateValidMoves(QStringList moves);
 
  private:
     int m_turns;
+    QString m_location;
     QStringList m_inventoryItems;
     QStringList m_localItems;
 };

@@ -26,6 +26,10 @@
 // Constructor
 GameEngine::GameEngine()
 {
+    m_turns = 0;
+    m_location = "driveway";
+    m_inventoryItems << "flashlight";
+    m_localItems << "key";
 }
 
 // Destructor
@@ -50,7 +54,7 @@ int GameEngine::turnsPlayed() const
 
 QString GameEngine::currentLocation() const
 {
-    return "driveway";
+    return m_location;
 }
 
 void GameEngine::doLook()
@@ -75,6 +79,20 @@ void GameEngine::doInventory()
 
 void GameEngine:: doHelp()
 {
+    emit sendOutput(
+    "Valid commands:\n"
+    "go east/west/north/south/up/down\n"
+    "look\n"
+    "use <object>\n"
+    "examine <object>\n"
+    "take <object>\n"
+    "drop <object>\n"
+    "inventory\n"
+    "help\n"
+    "quit\n"
+    "You can abbreviate commands and directions to the first letter.\n"
+    "Type just the first letter of a direction to move.\n");
+
 }
 
 void GameEngine::doQuit()
@@ -103,10 +121,13 @@ void GameEngine::doExamine(QString item)
 
 void GameEngine::doMoveUp()
 {
+    emit sendOutput("You can't go up from here.\n");
 }
 
 void GameEngine::doMoveDown()
 {
+    m_location = "barn";
+    emit locationChanged();
 }
 
 void GameEngine::doMoveNorth()
@@ -131,10 +152,6 @@ void GameEngine::doMoveWest()
 
 void GameEngine::start()
 {
-    m_turns = 0;
-    m_inventoryItems << "flashlight";
-    m_localItems << "key";
-
     emit sendOutput(
 "                        Abandoned Farmhouse Adventure\n"
 "                                By Jeff Tranter\n"

@@ -45,7 +45,7 @@ MainWindow::~MainWindow()
 void MainWindow::initialize()
 {
     locationLabel = new QLabel(tr("Turns: 0"));
-    turnsLabel = new QLabel(tr("Location: driveway"));
+    turnsLabel = new QLabel(e->currentLocation());
     statusBar()->addPermanentWidget(turnsLabel, 1);
     statusBar()->addPermanentWidget(locationLabel);
 
@@ -87,12 +87,12 @@ void MainWindow::initialize()
 
     int i = 0;
     foreach (QString item, e->inventoryItems()) {
-        qDebug() << item;
         inventoryButtonGroup->button(i)->setText(item);
         i++;
     }
     for (; i < 5; ++i) {
         inventoryButtonGroup->button(i)->setText(tr("-"));
+        inventoryButtonGroup->button(i)->setEnabled(false);
     }
 
     // Put local object buttons in a group.
@@ -106,12 +106,12 @@ void MainWindow::initialize()
 
     i = 0;
     foreach (QString item, e->localItems()) {
-        qDebug() << item;
         objectButtonGroup->button(i)->setText(item);
         i++;
     }
     for (; i < 6; ++i) {
         objectButtonGroup->button(i)->setText(tr("-"));
+        objectButtonGroup->button(i)->setEnabled(false);
     }
 
     e->start();
