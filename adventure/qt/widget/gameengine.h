@@ -74,12 +74,14 @@ signals:
     void updateTurns(int turns);
     void updateInventoryItems(QStringList items);
     void updateLocalItems(QStringList items);
-    void updateValidMoves(QStringList moves);
+    void updateValidDirections(QStringList moves);
+    void gameOver();
 
 private:
     int m_turns;
     QString m_location;
     QStringList m_inventoryItems;
     QStringList m_localItems;
+    QStringList m_validDirections;
 };
 #endif /* GAMEENGINE_H */

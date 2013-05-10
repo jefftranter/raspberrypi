@@ -23,26 +23,25 @@ public:
 public slots:
     void quit();
     void gameOver();
-    void take();
-    void drop();
-    void use();
-    void examine();
-    void updateWindow(QString s);
-    void updateTurns(int);
+    void commandOnItem(QAbstractButton *button);
+    void updateWindow(QString msg);
+    void updateTurns(int turns);
     void updateLocation(QString location);
-    void updateInventoryItems(QStringList);
-    void updateLocalItems(QStringList);
+    void updateInventoryItems(QStringList items);
+    void updateLocalItems(QStringList items);
+    void updateValidDirections(QStringList moves);
 
 protected:
     void closeEvent(QCloseEvent *event);
 
 private:
     Ui::MainWindow *ui;
-    QLabel *locationLabel;
-    QLabel *turnsLabel;
-    QButtonGroup *objectButtonGroup;
-    QButtonGroup *inventoryButtonGroup;
-    GameEngine *e;
+    QLabel *m_locationLabel;
+    QLabel *m_turnsLabel;
+    QLabel *m_directionsLabel;
+    QButtonGroup *m_objectButtonGroup;
+    QButtonGroup *m_inventoryButtonGroup;
+    GameEngine *m_game;
 };
 
 #endif // MAINWINDOW_H

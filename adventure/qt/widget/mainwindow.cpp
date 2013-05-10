@@ -32,30 +32,44 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    e = new GameEngine;
     initialize();
 }
 
 MainWindow::~MainWindow()
 {
-    delete e;
+    delete m_game;
     delete ui;
 }
 
 void MainWindow::initialize()
 {
-    locationLabel = new QLabel();
-    turnsLabel = new QLabel();
-    statusBar()->addPermanentWidget(turnsLabel, 1);
-    statusBar()->addPermanentWidget(locationLabel);
+    // Create game engine
+    m_game = new GameEngine;
 
-    // Signal/slot connections
-    connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
-    connect (e, SIGNAL(sendOutput(QString)), this, SLOT(updateWindow(QString)));
-    connect (e, SIGNAL(updateLocation(QString)), this, SLOT(updateLocation(QString)));
-    connect (e, SIGNAL(updateTurns(int)), this, SLOT(updateTurns(int)));
-    connect (e, SIGNAL(updateInventoryItems(QStringList)), this, SLOT(updateInventoryItems(QStringList)));
-    connect (e, SIGNAL(updateLocalItems(QStringList)), this, SLOT(updateLocalItems(QStringList)));
+    // Create labels in status bar
+    m_locationLabel = new QLabel();
+    m_turnsLabel = new QLabel();
+    m_directionsLabel = new QLabel();
+    statusBar()->addWidget(m_turnsLabel, 1);
+    statusBar()->addWidget(m_locationLabel, 1);
+    statusBar()->addWidget(m_directionsLabel, 1);
+
+    // Put inventory buttons in a group.
+    m_inventoryButtonGroup = new QButtonGroup();
+    m_inventoryButtonGroup->addButton(ui->inventoryButton1, 0);
+    m_inventoryButtonGroup->addButton(ui->inventoryButton2, 1);
+    m_inventoryButtonGroup->addButton(ui->inventoryButton3, 2);
+    m_inventoryButtonGroup->addButton(ui->inventoryButton4, 3);
+    m_inventoryButtonGroup->addButton(ui->inventoryButton5, 4);
+
+    // Put local object buttons in a group.
+    m_objectButtonGroup = new QButtonGroup();
+    m_objectButtonGroup->addButton(ui->objectButton1, 0);
+    m_objectButtonGroup->addButton(ui->objectButton2, 1);
+    m_objectButtonGroup->addButton(ui->objectButton3, 2);
+    m_objectButtonGroup->addButton(ui->objectButton4, 3);
+    m_objectButtonGroup->addButton(ui->objectButton5, 4);
+    m_objectButtonGroup->addButton(ui->objectButton6, 5);
 
     // Use button group to make checkable item buttons exclusive.
     QButtonGroup *itemButtons = new QButtonGroup();
@@ -64,42 +78,34 @@ void MainWindow::initialize()
     itemButtons->addButton(ui->useButton);
     itemButtons->addButton(ui->examineButton);
 
+    // Signal/slot connections
+    connect(m_game, SIGNAL(sendOutput(QString)), this, SLOT(updateWindow(QString)));
+    connect(m_game, SIGNAL(updateLocation(QString)), this, SLOT(updateLocation(QString)));
+    connect(m_game, SIGNAL(updateTurns(int)), this, SLOT(updateTurns(int)));
+    connect(m_game, SIGNAL(updateInventoryItems(QStringList)), this, SLOT(updateInventoryItems(QStringList)));
+    connect(m_game, SIGNAL(updateLocalItems(QStringList)), this, SLOT(updateLocalItems(QStringList)));
+    connect(m_game, SIGNAL(updateValidDirections(QStringList)), this, SLOT(updateValidDirections(QStringList)));
+    connect(m_game, SIGNAL(gameOver()), this, SLOT(gameOver()));
+
+    connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
     connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(quit()));
-    connect(ui->takeButton, SIGNAL(clicked()), this, SLOT(take()));
-    connect(ui->dropButton, SIGNAL(clicked()), this, SLOT(drop()));
-    connect(ui->useButton, SIGNAL(clicked()), this, SLOT(use()));
-    connect(ui->examineButton, SIGNAL(clicked()), this, SLOT(examine()));
+    connect(ui->lookButton, SIGNAL(clicked()), m_game, SLOT(doLook()));
+    connect(ui->inventoryButton, SIGNAL(clicked()), m_game, SLOT(doInventory()));
+    connect(ui->helpButton, SIGNAL(clicked()), m_game, SLOT(doHelp()));
+    connect(ui->upButton, SIGNAL(clicked()), m_game, SLOT(doMoveUp()));
+    connect(ui->downButton, SIGNAL(clicked()), m_game, SLOT(doMoveDown()));
+    connect(ui->northButton, SIGNAL(clicked()), m_game, SLOT(doMoveNorth()));
+    connect(ui->southButton, SIGNAL(clicked()), m_game, SLOT(doMoveSouth()));
+    connect(ui->eastButton, SIGNAL(clicked()), m_game, SLOT(doMoveEast()));
+    connect(ui->westButton, SIGNAL(clicked()), m_game, SLOT(doMoveWest()));
+    connect(m_inventoryButtonGroup, SIGNAL(buttonClicked(QAbstractButton *)), this, SLOT(commandOnItem(QAbstractButton *)));
+    connect(m_objectButtonGroup, SIGNAL(buttonClicked(QAbstractButton *)), this, SLOT(commandOnItem(QAbstractButton *)));
 
-    connect(ui->lookButton, SIGNAL(clicked()), e, SLOT(doLook()));
-    connect(ui->inventoryButton, SIGNAL(clicked()), e, SLOT(doInventory()));
-    connect(ui->helpButton, SIGNAL(clicked()), e, SLOT(doHelp()));
-
-    connect(ui->upButton, SIGNAL(clicked()), e, SLOT(doMoveUp()));
-    connect(ui->downButton, SIGNAL(clicked()), e, SLOT(doMoveDown()));
-    connect(ui->northButton, SIGNAL(clicked()), e, SLOT(doMoveNorth()));
-    connect(ui->southButton, SIGNAL(clicked()), e, SLOT(doMoveSouth()));
-    connect(ui->eastButton, SIGNAL(clicked()), e, SLOT(doMoveEast()));
-    connect(ui->westButton, SIGNAL(clicked()), e, SLOT(doMoveWest()));
-
-    // Put inventory buttons in a group.
-    inventoryButtonGroup = new QButtonGroup();
-    inventoryButtonGroup->addButton(ui->inventoryButton1, 0);
-    inventoryButtonGroup->addButton(ui->inventoryButton2, 1);
-    inventoryButtonGroup->addButton(ui->inventoryButton3, 2);
-    inventoryButtonGroup->addButton(ui->inventoryButton4, 3);
-    inventoryButtonGroup->addButton(ui->inventoryButton5, 4);
-
-    // Put local object buttons in a group.
-    objectButtonGroup = new QButtonGroup();
-    objectButtonGroup->addButton(ui->objectButton1, 0);
-    objectButtonGroup->addButton(ui->objectButton2, 1);
-    objectButtonGroup->addButton(ui->objectButton3, 2);
-    objectButtonGroup->addButton(ui->objectButton4, 3);
-    objectButtonGroup->addButton(ui->objectButton5, 4);
-    objectButtonGroup->addButton(ui->objectButton6, 5);
+    // Initially check one item command button.
+    ui->takeButton->setChecked(true);
 
     // Start the game engine playing.
-    e->start();
+    m_game->start();
 }
 
 void MainWindow::quit()
@@ -112,27 +118,11 @@ void MainWindow::quit()
 
 void MainWindow::gameOver()
 {
-    int turns = 47;
+    int turns = m_game->turnsPlayed();
     int button = QMessageBox::question(this, tr("Game Over"), tr("Game over after %1 turns.\nDo you want to play again?").arg(turns));
     if (button == QMessageBox::No) {
         qApp->quit();
     }
-}
-
-void MainWindow::take()
-{
-}
-
-void MainWindow::drop()
-{
-}
-
-void MainWindow::use()
-{
-}
-
-void MainWindow::examine()
-{
 }
 
 // This intercepts the window close so we can ask the user to confirm.
@@ -151,13 +141,19 @@ void MainWindow::updateWindow(QString s)
 // This updates the label with number of turns.
 void MainWindow::updateTurns(int turns)
 {
-    locationLabel->setText(tr("Turns: %1").arg(turns));
+    m_turnsLabel->setText(tr("Turns: %1").arg(turns));
 }
 
 // This updates the label with current location.
 void MainWindow::updateLocation(QString location)
 {
-    turnsLabel->setText(tr("Location: %1").arg(e->currentLocation()));
+    m_locationLabel->setText(tr("Location: %1").arg(location));
+}
+
+// This updates the label with valid directions
+void MainWindow::updateValidDirections(QStringList moves)
+{
+    m_directionsLabel->setText(tr("Can move: %1").arg(moves.join(tr(", "))));
 }
 
 // This updates the UI when inventory items change.
@@ -165,12 +161,13 @@ void MainWindow::updateInventoryItems(QStringList items)
 {
     int i = 0;
     foreach (QString item, items) {
-        inventoryButtonGroup->button(i)->setText(item);
+        m_inventoryButtonGroup->button(i)->setText(item);
+        m_inventoryButtonGroup->button(i)->setEnabled(true);
         i++;
     }
     for (; i < 5; ++i) {
-        inventoryButtonGroup->button(i)->setText(tr("-"));
-        inventoryButtonGroup->button(i)->setEnabled(false);
+        m_inventoryButtonGroup->button(i)->setText(tr("-"));
+        m_inventoryButtonGroup->button(i)->setEnabled(false);
     }
 }
 
@@ -179,11 +176,32 @@ void MainWindow::updateLocalItems(QStringList items)
 {
     int i = 0;
     foreach (QString item, items) {
-        objectButtonGroup->button(i)->setText(item);
+        m_objectButtonGroup->button(i)->setText(item);
+        m_inventoryButtonGroup->button(i)->setEnabled(true);
         i++;
     }
     for (; i < 6; ++i) {
-        objectButtonGroup->button(i)->setText(tr("-"));
-        objectButtonGroup->button(i)->setEnabled(false);
+        m_objectButtonGroup->button(i)->setText(tr("-"));
+        m_objectButtonGroup->button(i)->setEnabled(false);
+    }
+}
+
+// Handle pressing button to perform a command on an item.
+void MainWindow::commandOnItem(QAbstractButton *button)
+{
+    QString item = button->text();
+    Q_ASSERT(!item.isEmpty());
+    Q_ASSERT(item != tr("-"));
+
+    if (ui->takeButton->isChecked()) {
+        m_game->doTake(item);
+    } else if (ui->dropButton->isChecked()) {
+        m_game->doDrop(item);
+    } else if (ui->useButton->isChecked()) {
+        m_game->doUse(item);
+    } else if (ui->examineButton->isChecked()) {
+        m_game->doExamine(item);
+    } else {
+        Q_ASSERT(false);
     }
 }

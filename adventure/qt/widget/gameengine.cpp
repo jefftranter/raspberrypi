@@ -33,26 +33,31 @@ GameEngine::~GameEngine()
 {
 }
 
+// Return current inventory items.
 QStringList GameEngine::inventoryItems() const
 {
     return m_inventoryItems;
 }
 
+// Return local items.
 QStringList GameEngine::localItems() const
 {
     return m_localItems;
 }
 
+// Return number of turns played.
 int GameEngine::turnsPlayed() const
 {
     return m_turns;
 }
 
+// Return current location (a short string).
 QString GameEngine::currentLocation() const
 {
     return m_location;
 }
 
+// Look command
 void GameEngine::doLook()
 {
     QString msg;
@@ -67,6 +72,7 @@ void GameEngine::doLook()
     emit sendOutput(msg);
 }
 
+// Inventory command
 void GameEngine::doInventory()
 {
     QString msg;
@@ -77,6 +83,8 @@ void GameEngine::doInventory()
     emit sendOutput(msg);
 }
 
+// Help command
+// TODO: Output more appropriate help text for GUI version.
 void GameEngine:: doHelp()
 {
     emit sendOutput(
@@ -95,72 +103,100 @@ void GameEngine:: doHelp()
 
 }
 
+// Quit command
 void GameEngine::doQuit()
 {
 }
 
+// Take command.
 void GameEngine::doTake(QString item)
 {
-    qDebug() << "Take: " << item;
+    emit sendOutput("You take the " + item + ".");
 }
 
+// Drop command.
 void GameEngine::doDrop(QString item)
 {
-    qDebug() << "Drop: " << item;
+    emit sendOutput("You drop the " + item + ".");
 }
 
+// USe command.
 void GameEngine::doUse(QString item)
 {
-    qDebug() << "Use: " << item;
+    emit sendOutput("You use the " + item + ".");
 }
 
+// Examine command.
 void GameEngine::doExamine(QString item)
 {
-    qDebug() << "Examine: " << item;
+    emit sendOutput("You examine the " + item + ".");
 }
 
+// Move command.
 void GameEngine::doMoveUp()
 {
-    emit sendOutput(tr("You can't go up from here.\n"));
+    emit sendOutput(tr("You cannot go up from here.\n"));
 }
 
+// Move command.
 void GameEngine::doMoveDown()
 {
+    emit sendOutput("You move down.");
     m_location = tr("barn");
     emit updateLocation(m_location);
     m_turns++;
     emit updateTurns(m_turns);
 }
 
+// Move command.
 void GameEngine::doMoveNorth()
 {
+    emit sendOutput("You move north.");
+    m_location = tr("barn");
+    emit updateLocation(m_location);
+    m_turns++;
+    emit updateTurns(m_turns);
+
+    emit updateValidDirections(m_validDirections);
+
+    if (m_turns > 10) {
+        emit sendOutput("You took too many turns so you get... nothing!\nYou lose! Good day, sir!");
+        emit gameOver();
+    }
 }
 
+// Move command.
 void GameEngine::doMoveSouth()
 {
+    emit sendOutput("You move south.");
 }
 
+// Move command.
 void GameEngine::doMoveEast()
 {
+    emit sendOutput("You move east.");
 }
 
+// Move command.
 void GameEngine::doMoveWest()
 {
+    emit sendOutput("You move west.");
 }
 
-
+// Start (or restart) the game.
 void GameEngine::start()
 {
     m_turns = 0;
     m_location = tr("driveway");
     m_inventoryItems << tr("flashlight") << "doll" << "pitchfork" << "lamp";
     m_localItems << tr("key") << "toy car" << "matches";
+    m_validDirections << tr("up") << tr("north") << tr("south");
 
     emit updateTurns(m_turns);
     emit updateLocation(m_location);
     emit updateInventoryItems(m_inventoryItems);
     emit updateLocalItems(m_localItems);
-    //emit updateValidMoves(QStringList moves);
+    emit updateValidDirections(m_validDirections);
 
     emit sendOutput(
 "                        Abandoned Farmhouse Adventure\n"
