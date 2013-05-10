@@ -62,13 +62,13 @@ void GameEngine::doLook()
 {
     QString msg;
 
-    msg = tr("You are in the driveway near your car.\nYou see:");
+    msg = tr("\nYou are in the driveway near your car.\nYou see:");
 
     foreach (QString item, m_localItems) {
-        msg += tr("\n  ") + item;
+        msg += tr("\n  %1").arg(item);
     }
 
-    msg += tr("\nYou can go: up north south");
+    msg += tr("\nYou can go: up, north, south.");
     emit sendOutput(msg);
 }
 
@@ -76,9 +76,9 @@ void GameEngine::doLook()
 void GameEngine::doInventory()
 {
     QString msg;
-    msg = tr("You are carrying:");
+    msg = tr("\nYou are carrying:");
     foreach (QString item, m_inventoryItems) {
-        msg += tr("\n  ") + item;
+        msg += tr("\n  %1").arg(item);
     }
     emit sendOutput(msg);
 }
@@ -86,7 +86,7 @@ void GameEngine::doInventory()
 // Help command
 void GameEngine:: doHelp()
 {
-    emit sendOutput(tr("Here are a few hints: I suggest drawing out a map on a piece of paper and making notes as you play the game. Pay attention to any messages, like needing food or water, as these will soon become important in the game. Not all items in the game are necessarily needed to solve it; some may be red herrings. The game will take some time to solve. Keep at it. If you get frustrated, set it aside for a while and you may think of some new insight into how to solve it."));
+    emit sendOutput(tr("\nHere are a few hints: I suggest drawing out a map on a piece of paper and making notes as you play the game. Pay attention to any messages, like needing food or water, as these will soon become important in the game. Not all items in the game are necessarily needed to solve it; some may be red herrings. The game will take some time to solve. Keep at it. If you get frustrated, set it aside for a while and you may think of some new insight into how to solve it."));
 }
 
 // Quit command
@@ -97,37 +97,37 @@ void GameEngine::doQuit()
 // Take command.
 void GameEngine::doTake(QString item)
 {
-    emit sendOutput("You take the " + item + ".");
+    emit sendOutput(tr("\nYou take the %1.").arg(item));
 }
 
 // Drop command.
 void GameEngine::doDrop(QString item)
 {
-    emit sendOutput("You drop the " + item + ".");
+    emit sendOutput(tr("\nYou drop the %1.").arg(item));
 }
 
 // USe command.
 void GameEngine::doUse(QString item)
 {
-    emit sendOutput("You use the " + item + ".");
+    emit sendOutput(tr("\nYou use the %1.").arg(item));
 }
 
 // Examine command.
 void GameEngine::doExamine(QString item)
 {
-    emit sendOutput("You examine the " + item + ".");
+    emit sendOutput(tr("\nYou examine the %1.").arg(item));
 }
 
 // Move command.
 void GameEngine::doMoveUp()
 {
-    emit sendOutput(tr("You cannot go up from here."));
+    emit sendOutput(tr("\nYou cannot go up from here."));
 }
 
 // Move command.
 void GameEngine::doMoveDown()
 {
-    emit sendOutput("You move down.");
+    emit sendOutput(tr("\nYou move down."));
     m_location = tr("barn");
     emit updateLocation(m_location);
     m_turns++;
@@ -137,7 +137,7 @@ void GameEngine::doMoveDown()
 // Move command.
 void GameEngine::doMoveNorth()
 {
-    emit sendOutput(tr("You move north."));
+    emit sendOutput(tr("\nYou move north."));
     m_location = tr("barn");
     emit updateLocation(m_location);
     m_turns++;
@@ -146,7 +146,7 @@ void GameEngine::doMoveNorth()
     emit updateValidDirections(m_validDirections);
 
     if (m_turns > 10) {
-        emit sendOutput(tr("You took too many turns so you get... nothing!\nYou lose! Good day, sir!"));
+        emit sendOutput(tr("\nYou took too many turns so you get... nothing!\nYou lose! Good day, sir!"));
         emit gameOver();
     }
 }
@@ -154,19 +154,19 @@ void GameEngine::doMoveNorth()
 // Move command.
 void GameEngine::doMoveSouth()
 {
-    emit sendOutput(tr("You move south."));
+    emit sendOutput(tr("\nYou move south."));
 }
 
 // Move command.
 void GameEngine::doMoveEast()
 {
-    emit sendOutput(tr("You move east."));
+    emit sendOutput(tr("\nYou move east."));
 }
 
 // Move command.
 void GameEngine::doMoveWest()
 {
-    emit sendOutput(tr("You move west."));
+    emit sendOutput(tr("\nYou move west."));
 }
 
 // Start (or restart) the game.
