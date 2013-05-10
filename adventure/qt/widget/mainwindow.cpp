@@ -192,7 +192,7 @@ void MainWindow::updateLocalItems(QStringList items)
     int i = 0;
     foreach (QString item, items) {
         m_objectButtonGroup->button(i)->setText(item);
-        m_inventoryButtonGroup->button(i)->setEnabled(true);
+        m_objectButtonGroup->button(i)->setEnabled(true);
         i++;
     }
 

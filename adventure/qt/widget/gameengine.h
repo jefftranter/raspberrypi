@@ -46,6 +46,8 @@ public:
 
     // Methods
     void start();
+    bool itemIsHere(const char *item);
+    bool carryingItem(const char *item);
 
 public slots:
     // Global commands
@@ -77,8 +79,19 @@ signals:
     void updateValidDirections(QStringList moves);
     void gameOver();
 
+ private:
+    // Private methods
+    void doSpecialActions();
+
 private:
-    int m_turns;
+    int m_turns;              // Number of turns played
+    int m_currentLocation;    // Current location
+    bool m_lampLit;           // True if player has lit the lamp
+    bool m_lampFilled;        // True if lamp filled with oil
+    bool m_ateFood;           // True if player ate food
+    bool m_drankWater;        // True if player drank water
+    int m_ratAttack;          // Incremented each turn you are in the tunnel
+    int m_wolfState;          // Tracks state of wolf attack
     QString m_location;
     QStringList m_inventoryItems;
     QStringList m_localItems;
