@@ -53,12 +53,12 @@ void MainWindow::initialize()
     m_game = new GameEngine;
 
     // Create labels in status bar
-    m_locationLabel = new QLabel();
     m_turnsLabel = new QLabel();
     m_directionsLabel = new QLabel();
+    m_locationLabel = new QLabel();
     statusBar()->addWidget(m_turnsLabel, 1);
-    statusBar()->addWidget(m_locationLabel, 1);
     statusBar()->addWidget(m_directionsLabel, 1);
+    statusBar()->addWidget(m_locationLabel, 1);
 
     // Put inventory buttons in a group.
     m_inventoryButtonGroup = new QButtonGroup();
@@ -152,19 +152,21 @@ void MainWindow::updateWindow(QString s)
 // This updates the label with number of turns.
 void MainWindow::updateTurns(int turns)
 {
-    m_turnsLabel->setText(tr("Turns: %1").arg(turns));
+    m_turnsLabel->setText(tr("<b>Turns:</b> %1").arg(turns));
 }
 
 // This updates the label with current location.
 void MainWindow::updateLocation(QString location)
 {
-    m_locationLabel->setText(tr("Location: %1").arg(location));
+    m_locationLabel->setText(tr("<b>Location:</b> %1").arg(location));
 }
 
-// This updates the label with valid directions
+// This updates the label with valid directions and enabled the appropriate move buttons.
 void MainWindow::updateValidDirections(QStringList moves)
 {
-    m_directionsLabel->setText(tr("Can move: %1").arg(moves.join(tr(", "))));
+    m_directionsLabel->setText(tr("<b>Can move:</b> %1").arg(moves.join(tr(", "))));
+
+    // TODO: Enable the appropriate move buttons
 }
 
 // This updates the UI when inventory items change.

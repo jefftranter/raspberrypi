@@ -241,45 +241,45 @@ bool GameEngine::itemIsHere(const char *item)
 void GameEngine::doSpecialActions()
 {
     if ((m_turns == 10) && !m_lampLit) {
-        printf("It will be getting dark soon. You need some kind of light or soon you won't be able to see.\n");
+        emit sendOutput(tr("\nIt will be getting dark soon. You need some kind of light or soon you won't be able to see."));
     }
 
     if ((m_turns >= 60) && (!m_lampLit || (!itemIsHere("lamp") && !carryingItem("lamp")))) {
-        printf("It is dark out and you have no light. You stumble around for a while and then fall, hit your head, and pass out.\n");
-        //bGameOver = 1;
+        emit sendOutput(tr("\nIt is dark out and you have no light. You stumble around for a while and then fall, hit your head, and pass out."));
+        emit gameOver();
         return;
     }
 
     if ((m_turns == 20) && !m_drankWater) {
-        printf("You are getting very thirsty. You need to get a drink soon.\n");
+        emit sendOutput(tr("\nYou are getting very thirsty. You need to get a drink soon."));
     }
 
     if ((m_turns == 30) && !m_ateFood) {
-        printf("You are getting very hungry. You need to find something to eat.\n");
+        emit sendOutput(tr("\nYou are getting very hungry. You need to find something to eat."));
     }
 
     if ((m_turns == 50) && !m_drankWater) {
-        printf("You pass out due to thirst.\n");
-        //bGameOver = 1;
+        emit sendOutput(tr("\nYou pass out due to thirst."));
+        emit gameOver();
         return;
     }
 
     if ((m_turns == 40) && !m_ateFood) {
-        printf("You pass out from hunger.\n");
-        //bGameOver = 1;
+        emit sendOutput(tr("\nYou pass out from hunger."));
+        emit gameOver();
         return;
     }
 
     if (m_currentLocation == Tunnel) {
         if (itemIsHere("cheese")) {
-            printf("The rats go after the cheese.\n");
+            emit sendOutput(tr("\nThe rats go after the cheese."));
         } else {
             if (m_ratAttack < 3) {
-                printf("The rats are coming towards you!\n");
+                emit sendOutput(tr("\nThe rats are coming towards you!"));
                 ++m_ratAttack;
             } else {
-                printf("The rats attack and you pass out.\n");
-                //bGameOver = 1;
+                emit sendOutput(tr("\nThe rats attack and you pass out."));
+                emit gameOver();
                 return;
             }
         }
@@ -289,14 +289,14 @@ void GameEngine::doSpecialActions()
     if (m_currentLocation == WolfTree) {
         switch (m_wolfState) {
             case 0:
-                printf("A wolf is circling around the tree. Matthew is up in the tree.\nYou have to save him! If only you had some kind of weapon!\n");
+                emit sendOutput(tr("\nA wolf is circling around the tree. Matthew is up in the tree.\nYou have to save him! If only you had some kind of weapon!"));
                 break;
             case 1:
-                printf("Matthew is afraid to come down from the tree.\nIf only you had something to coax him with.\n");
+                emit sendOutput(tr("\nMatthew is afraid to come down from the tree.\nIf only you had something to coax him with."));
                 break;
             case 2:
-                printf("Congratulations! You succeeded and won the game.\nI hope you had as much fun playing the game as I did creating it.\n- Jeff Tranter <tranter@pobox.com>\n");
-                //bGameOver = 1;
+                emit sendOutput(tr("\nCongratulations! You succeeded and won the game.\nI hope you had as much fun playing the game as I did creating it.\n- Jeff Tranter <tranter@pobox.com>"));
+                emit gameOver();
                 return;
                 break;
             }
@@ -733,10 +733,6 @@ void GameEngine::doMoveNorth()
 
     emit updateValidDirections(m_validDirections);
 
-    if (m_turns > 10) {
-        emit sendOutput(tr("\nYou took too many turns so you get... nothing!\nYou lose! Good day, sir!"));
-        emit gameOver();
-    }
     doSpecialActions();
 }
 
@@ -803,7 +799,7 @@ void GameEngine::start()
 
     m_turns = 0;
 
-    m_location = tr("driveway");
+    m_location = DescriptionOfLocation[m_currentLocation];
 
     m_inventoryItems.clear();
     for (int i = 0; i < MAXITEMS; i++) {
