@@ -28,6 +28,10 @@ public slots:
     void use();
     void examine();
     void updateWindow(QString s);
+    void updateTurns(int);
+    void updateLocation(QString location);
+    void updateInventoryItems(QStringList);
+    void updateLocalItems(QStringList);
 
 protected:
     void closeEvent(QCloseEvent *event);

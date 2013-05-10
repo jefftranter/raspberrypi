@@ -44,14 +44,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::initialize()
 {
-    locationLabel = new QLabel(tr("Turns: 0"));
-    turnsLabel = new QLabel(e->currentLocation());
+    locationLabel = new QLabel();
+    turnsLabel = new QLabel();
     statusBar()->addPermanentWidget(turnsLabel, 1);
     statusBar()->addPermanentWidget(locationLabel);
 
     // Signal/slot connections
     connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
     connect (e, SIGNAL(sendOutput(QString)), this, SLOT(updateWindow(QString)));
+    connect (e, SIGNAL(updateLocation(QString)), this, SLOT(updateLocation(QString)));
+    connect (e, SIGNAL(updateTurns(int)), this, SLOT(updateTurns(int)));
+    connect (e, SIGNAL(updateInventoryItems(QStringList)), this, SLOT(updateInventoryItems(QStringList)));
+    connect (e, SIGNAL(updateLocalItems(QStringList)), this, SLOT(updateLocalItems(QStringList)));
 
     // Use button group to make checkable item buttons exclusive.
     QButtonGroup *itemButtons = new QButtonGroup();
@@ -85,16 +89,6 @@ void MainWindow::initialize()
     inventoryButtonGroup->addButton(ui->inventoryButton4, 3);
     inventoryButtonGroup->addButton(ui->inventoryButton5, 4);
 
-    int i = 0;
-    foreach (QString item, e->inventoryItems()) {
-        inventoryButtonGroup->button(i)->setText(item);
-        i++;
-    }
-    for (; i < 5; ++i) {
-        inventoryButtonGroup->button(i)->setText(tr("-"));
-        inventoryButtonGroup->button(i)->setEnabled(false);
-    }
-
     // Put local object buttons in a group.
     objectButtonGroup = new QButtonGroup();
     objectButtonGroup->addButton(ui->objectButton1, 0);
@@ -104,16 +98,7 @@ void MainWindow::initialize()
     objectButtonGroup->addButton(ui->objectButton5, 4);
     objectButtonGroup->addButton(ui->objectButton6, 5);
 
-    i = 0;
-    foreach (QString item, e->localItems()) {
-        objectButtonGroup->button(i)->setText(item);
-        i++;
-    }
-    for (; i < 6; ++i) {
-        objectButtonGroup->button(i)->setText(tr("-"));
-        objectButtonGroup->button(i)->setEnabled(false);
-    }
-
+    // Start the game engine playing.
     e->start();
 }
 
@@ -161,4 +146,44 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::updateWindow(QString s)
 {
     ui->textEdit->append(s);
+}
+
+// This updates the label with number of turns.
+void MainWindow::updateTurns(int turns)
+{
+    locationLabel->setText(tr("Turns: %1").arg(turns));
+}
+
+// This updates the label with current location.
+void MainWindow::updateLocation(QString location)
+{
+    turnsLabel->setText(tr("Location: %1").arg(e->currentLocation()));
+}
+
+// This updates the UI when inventory items change.
+void MainWindow::updateInventoryItems(QStringList items)
+{
+    int i = 0;
+    foreach (QString item, items) {
+        inventoryButtonGroup->button(i)->setText(item);
+        i++;
+    }
+    for (; i < 5; ++i) {
+        inventoryButtonGroup->button(i)->setText(tr("-"));
+        inventoryButtonGroup->button(i)->setEnabled(false);
+    }
+}
+
+// This updates the UI when local items change.
+void MainWindow::updateLocalItems(QStringList items)
+{
+    int i = 0;
+    foreach (QString item, items) {
+        objectButtonGroup->button(i)->setText(item);
+        i++;
+    }
+    for (; i < 6; ++i) {
+        objectButtonGroup->button(i)->setText(tr("-"));
+        objectButtonGroup->button(i)->setEnabled(false);
+    }
 }

@@ -26,10 +26,6 @@
 // Constructor
 GameEngine::GameEngine()
 {
-    m_turns = 0;
-    m_location = "driveway";
-    m_inventoryItems << "flashlight";
-    m_localItems << "key";
 }
 
 // Destructor
@@ -127,7 +123,9 @@ void GameEngine::doMoveUp()
 void GameEngine::doMoveDown()
 {
     m_location = "barn";
-    emit locationChanged();
+    emit updateLocation(m_location);
+    m_turns++;
+    emit updateTurns(m_turns);
 }
 
 void GameEngine::doMoveNorth()
@@ -146,12 +144,20 @@ void GameEngine::doMoveWest()
 {
 }
 
-// emit updateInventoryItems(QStringList items);
-// emit updateLocalItems(QStringList items);
-// emit updateValidMoves(QStringList moves);
 
 void GameEngine::start()
 {
+    m_turns = 0;
+    m_location = tr("driveway");
+    m_inventoryItems << tr("flashlight") << "doll" << "pitchfork" << "lamp";
+    m_localItems << tr("key") << "toy car" << "matches";
+
+    emit updateTurns(m_turns);
+    emit updateLocation(m_location);
+    emit updateInventoryItems(m_inventoryItems);
+    emit updateLocalItems(m_localItems);
+    //emit updateValidMoves(QStringList moves);
+
     emit sendOutput(
 "                        Abandoned Farmhouse Adventure\n"
 "                                By Jeff Tranter\n"

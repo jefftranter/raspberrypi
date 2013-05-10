@@ -70,7 +70,8 @@ public slots:
 
  signals:
     void sendOutput(QString output);
-    void locationChanged();
+    void updateLocation(QString location);
+    void updateTurns(int turns);
     void updateInventoryItems(QStringList items);
     void updateLocalItems(QStringList items);
     void updateValidMoves(QStringList moves);
