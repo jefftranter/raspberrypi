@@ -68,7 +68,7 @@ void GameEngine::doLook()
         msg += tr("\n  ") + item;
     }
 
-    msg += tr("\nYou can go: up north south\n");
+    msg += tr("\nYou can go: up north south");
     emit sendOutput(msg);
 }
 
@@ -84,23 +84,9 @@ void GameEngine::doInventory()
 }
 
 // Help command
-// TODO: Output more appropriate help text for GUI version.
 void GameEngine:: doHelp()
 {
-    emit sendOutput(
-    "Valid commands:\n"
-    "go east/west/north/south/up/down\n"
-    "look\n"
-    "use <object>\n"
-    "examine <object>\n"
-    "take <object>\n"
-    "drop <object>\n"
-    "inventory\n"
-    "help\n"
-    "quit\n"
-    "You can abbreviate commands and directions to the first letter.\n"
-    "Type just the first letter of a direction to move.\n");
-
+    emit sendOutput(tr("Here are a few hints: I suggest drawing out a map on a piece of paper and making notes as you play the game. Pay attention to any messages, like needing food or water, as these will soon become important in the game. Not all items in the game are necessarily needed to solve it; some may be red herrings. The game will take some time to solve. Keep at it. If you get frustrated, set it aside for a while and you may think of some new insight into how to solve it."));
 }
 
 // Quit command
@@ -135,7 +121,7 @@ void GameEngine::doExamine(QString item)
 // Move command.
 void GameEngine::doMoveUp()
 {
-    emit sendOutput(tr("You cannot go up from here.\n"));
+    emit sendOutput(tr("You cannot go up from here."));
 }
 
 // Move command.
@@ -188,8 +174,11 @@ void GameEngine::start()
 {
     m_turns = 0;
     m_location = tr("driveway");
+    m_inventoryItems.clear();
     m_inventoryItems << tr("flashlight") << "doll" << "pitchfork" << "lamp";
+    m_localItems.clear();
     m_localItems << tr("key") << "toy car" << "matches";
+    m_validDirections.clear();
     m_validDirections << tr("up") << tr("north") << tr("south");
 
     emit updateTurns(m_turns);
@@ -202,9 +191,7 @@ void GameEngine::start()
 "                        Abandoned Farmhouse Adventure\n"
 "                                By Jeff Tranter\n"
 "\n"
-"Your four year old grandson has gone missing and was last seen headed in the\n"
-"direction of the abandoned family farm. It's a dangerous place to play.\n"
-"You have to find him before he gets hurt, and it will be getting dark soon...\n"
+"Your four year old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
 );
 
 }

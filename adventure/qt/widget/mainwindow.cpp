@@ -27,6 +27,10 @@
 #include "ui_mainwindow.h"
 #include "gameengine.h"
 
+const int numInventoryButtons = 5; // Number of inventory buttons in UI
+const int numLocalItemButtons = 6; // Number of local item buttons in UI
+
+// Constructor.
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -35,12 +39,14 @@ MainWindow::MainWindow(QWidget *parent) :
     initialize();
 }
 
+// Destructor.
 MainWindow::~MainWindow()
 {
     delete m_game;
     delete ui;
 }
 
+// Do iniitalization
 void MainWindow::initialize()
 {
     // Create game engine
@@ -108,6 +114,7 @@ void MainWindow::initialize()
     m_game->start();
 }
 
+// Handle quit.
 void MainWindow::quit()
 {
     int button = QMessageBox::question(this, tr("Confirm Quit"), tr("Are you sure you want to quit?"));
@@ -116,12 +123,16 @@ void MainWindow::quit()
     }
 }
 
+// Handle game ending.
 void MainWindow::gameOver()
 {
     int turns = m_game->turnsPlayed();
     int button = QMessageBox::question(this, tr("Game Over"), tr("Game over after %1 turns.\nDo you want to play again?").arg(turns));
     if (button == QMessageBox::No) {
         qApp->quit();
+    } else {
+        ui->textEdit->clear();
+        m_game->start();
     }
 }
 
@@ -159,13 +170,16 @@ void MainWindow::updateValidDirections(QStringList moves)
 // This updates the UI when inventory items change.
 void MainWindow::updateInventoryItems(QStringList items)
 {
+    Q_ASSERT(items.size() <= numInventoryButtons);
     int i = 0;
     foreach (QString item, items) {
         m_inventoryButtonGroup->button(i)->setText(item);
         m_inventoryButtonGroup->button(i)->setEnabled(true);
         i++;
     }
-    for (; i < 5; ++i) {
+
+    // Set remaining buttons to blank and disable them.
+    for (; i < numInventoryButtons; ++i) {
         m_inventoryButtonGroup->button(i)->setText(tr("-"));
         m_inventoryButtonGroup->button(i)->setEnabled(false);
     }
@@ -174,13 +188,16 @@ void MainWindow::updateInventoryItems(QStringList items)
 // This updates the UI when local items change.
 void MainWindow::updateLocalItems(QStringList items)
 {
+    Q_ASSERT(items.size() <= numLocalItemButtons);
     int i = 0;
     foreach (QString item, items) {
         m_objectButtonGroup->button(i)->setText(item);
         m_inventoryButtonGroup->button(i)->setEnabled(true);
         i++;
     }
-    for (; i < 6; ++i) {
+
+    // Set remaining buttons to blank and disable them.
+    for (; i < numLocalItemButtons; ++i) {
         m_objectButtonGroup->button(i)->setText(tr("-"));
         m_objectButtonGroup->button(i)->setEnabled(false);
     }

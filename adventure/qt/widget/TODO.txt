@@ -1,0 +1,6 @@
+To Do List
+
+- implement game functions
+- make sure all text is localized
+- use constants for any magic numbers
+- make backwards compatible with Qt 4
