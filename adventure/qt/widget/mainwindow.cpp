@@ -117,7 +117,7 @@ void MainWindow::initialize()
 // Handle quit.
 void MainWindow::quit()
 {
-    int button = QMessageBox::question(this, tr("Confirm Quit"), tr("Are you sure you want to quit?"));
+    int button = QMessageBox::question(this, tr("Confirm Quit"), tr("Are you sure you want to quit?"), QMessageBox::Yes|QMessageBox::No);
     if (button == QMessageBox::Yes) {
         qApp->quit();
     }
@@ -127,7 +127,7 @@ void MainWindow::quit()
 void MainWindow::gameOver()
 {
     int turns = m_game->turnsPlayed();
-    int button = QMessageBox::question(this, tr("Game Over"), tr("Game over after %1 turns.\nDo you want to play again?").arg(turns));
+    int button = QMessageBox::question(this, tr("Game Over"), tr("Game over after %1 turns.\nDo you want to play again?").arg(turns), QMessageBox::Yes|QMessageBox::No);
     if (button == QMessageBox::No) {
         qApp->quit();
     } else {
