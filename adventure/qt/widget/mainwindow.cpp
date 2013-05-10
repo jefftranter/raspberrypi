@@ -166,7 +166,13 @@ void MainWindow::updateValidDirections(QStringList moves)
 {
     m_directionsLabel->setText(tr("<b>Can move:</b> %1").arg(moves.join(tr(", "))));
 
-    // TODO: Enable the appropriate move buttons
+    // Enable the appropriate move buttons
+    ui->upButton->setEnabled(moves.contains(tr("up")));
+    ui->downButton->setEnabled(moves.contains(tr("down")));
+    ui->northButton->setEnabled(moves.contains(tr("north")));
+    ui->southButton->setEnabled(moves.contains(tr("south")));
+    ui->eastButton->setEnabled(moves.contains(tr("east")));
+    ui->westButton->setEnabled(moves.contains(tr("west")));
 }
 
 // This updates the UI when inventory items change.

@@ -33,16 +33,6 @@
 
 /* TYPES */
 
-/* Directions */
-typedef enum {
-    North,
-    South,
-    East,
-    West,
-    Up,
-    Down
-} Direction_t;
-
 /* Items */
 typedef enum {
     NoItem,
@@ -210,7 +200,7 @@ int Move[NUMLOCATIONS][6] = {
     {  0,30, 0,29, 0, 0 }, /* 31 */
 };
 
-/* Return if carrying an item */
+// Return if carrying an item
 bool GameEngine::carryingItem(const char *item)
 {
     for (int i = 0; i < MAXITEMS; i++) {
@@ -220,13 +210,13 @@ bool GameEngine::carryingItem(const char *item)
     return 0;
 }
 
-/* Return if item is at current location (but not carried) */
+// Return if item is at current location (but not carried)
 bool GameEngine::itemIsHere(const char *item)
 {
-    /* Find number of the item. */
+    // Find number of the item.
     for (int i = 1; i <= LastItem; i++) {
         if (!strcmp(item, DescriptionOfItem[i])) {
-            /* Found it, but is it here? */
+            // Found it, but is it here?
             if (locationOfItem[i] == m_currentLocation) {
                 return 1;
             } else {
@@ -237,7 +227,7 @@ bool GameEngine::itemIsHere(const char *item)
     return 0;
 }
 
-/* Do special things unrelated to command being executed. */
+// Do special things unrelated to command being executed.
 void GameEngine::doSpecialActions()
 {
     if ((m_turns == 10) && !m_lampLit) {
@@ -285,7 +275,7 @@ void GameEngine::doSpecialActions()
         }
     }
 
-    /* wolfState values:  0 - wolf attacking 1 - wolf gone, Matthew in tree. 2 - Matthew safe, you won. Game over. */
+    // wolfState values:  0 - wolf attacking 1 - wolf gone, Matthew in tree. 2 - Matthew safe, you won. Game over.
     if (m_currentLocation == WolfTree) {
         switch (m_wolfState) {
             case 0:
@@ -405,32 +395,26 @@ void GameEngine::doQuit()
 // Take command.
 void GameEngine::doTake(QString item)
 {
-    /* Find number of the item. */
+    // Find number of the item.
     for (int i = 1; i <= LastItem; i++) {
         if (!strcmp(item.toLatin1(), DescriptionOfItem[i])) {
-            /* Found it, but is it here? */
+            // Found it, but is it here?
             if (locationOfItem[i] == m_currentLocation) {
-            /* It is here. Add to inventory. */
+            // It is here. Add to inventory.
             for (int j = 0; j < MAXITEMS; j++) {
                 if (Inventory[j] == 0) {
                     Inventory[j] = (Item_t)i;
-                    /* And remove from location. */
+                    // And remove from location.
                     locationOfItem[i] = (Location_t)0;
                     emit sendOutput(tr("\nTook %1.").arg(item));
 
+                    recalculateLocalVariables();
+
                     // Send notification that inventory changed
-                    // TODO: Factor out into common code
-                    m_inventoryItems.clear();
-                    for (int i = 0; i < MAXITEMS; i++) {
-                        if (Inventory[i] != 0) {
-                            QString item = DescriptionOfItem[Inventory[i]];
-                            m_inventoryItems << item;
-                        }
-                    }
                     emit updateInventoryItems(m_inventoryItems);
 
                     // Send notification that local items changed
-                    // TODO: Factor out into common code
+                    emit updateLocalItems(m_localItems);
 
                     // Increment turns and notify
                     m_turns++;
@@ -439,14 +423,19 @@ void GameEngine::doTake(QString item)
                 }
             }
 
-            /* Reached maximum number of items to carry */ 
+            // Reached maximum number of items to carry
             emit sendOutput(tr("\nYou can't carry any more. Drop something."));
             return;
             }
         }
     }
 
-    /* If here, don't see it. */
+    if (carryingItem(item.toLatin1())) {
+        emit sendOutput(tr("\nYou already have it."));
+        return;
+    }
+
+    // If here, don't see it.
     emit sendOutput(tr("\nI see no %1 here.").arg(item));
 
     doSpecialActions();
@@ -466,21 +455,12 @@ void GameEngine::doDrop(QString item)
             Inventory[i] = (Item_t)0;
             emit sendOutput(tr("\nDropped %1.").arg(item));
 
-            // Send notification that inventory changed
-            // TODO: Factor out into common code
-            m_inventoryItems.clear();
-            for (int i = 0; i < MAXITEMS; i++) {
-                if (Inventory[i] != 0) {
-                    QString item = DescriptionOfItem[Inventory[i]];
-                    m_inventoryItems << item;
-                }
-            }
+            recalculateLocalVariables();
 
+            // Send notification that inventory changed
             emit updateInventoryItems(m_inventoryItems);
 
             // Send notification that local items changed
-            // TODO: Factor out into common code
-            m_localItems <<item;
             emit updateLocalItems(m_localItems);
 
             // Increment turns and notify
@@ -501,102 +481,94 @@ void GameEngine::doUse(QString item)
 {
     emit sendOutput(tr("\nYou use the %1.").arg(item));
 
-    char *sp;
-
-    /* Command line should be like "U[SE] ITEM" Item name will be after after first space. */
-    //sp = strchr(buffer, ' ');
-    if (sp == NULL) {
-        printf("Use what?\n");
-        return;
-    }
-
-    item = sp + 1;
-
-    /* Make sure item is being carried or is in the current location */
+    // Make sure item is being carried or is in the current location
     if (!carryingItem(item.toLatin1()) && !itemIsHere(item.toLatin1())) {
-        printf("I don't see it here.\n");
+        emit sendOutput(tr("\nI don't see it here."));
         return;
     }
 
-////    m_turns++;
+    m_turns++;
+    emit updateTurns(m_turns);
 
-    /* Use key */
-    if (!strcmp(item.toLatin1(), "key") && (m_currentLocation == VacantRoom)) {
-        printf("You insert the key in the door and it opens, revealing a tunnel.\n");
+    // Use key
+    if ((item == "key") && (m_currentLocation == VacantRoom)) {
+        emit sendOutput(tr("\nYou insert the key in the door and it opens, revealing a tunnel."));
         Move[21][North] = 23;
+        recalculateLocalVariables();
+        emit updateValidDirections(m_validDirections);
         return;
     }
 
-    /* Use pitchfork */
-    if (!strcmp(item.toLatin1(), "pitchfork") && (m_currentLocation == WolfTree) && (m_wolfState == 0)) {
-        printf("You jab the wolf with the pitchfork. It howls and runs away.\n");
+    // Use pitchfork
+    if ((item == "pitchfork") && (m_currentLocation == WolfTree) && (m_wolfState == 0)) {
+        emit sendOutput(tr("\nYou jab the wolf with the pitchfork. It howls and runs away."));
         m_wolfState = 1;
         return;
     }
 
-    /* Use toy car */
-    if (!strcmp(item.toLatin1(), "toy car") && (m_currentLocation == WolfTree && m_wolfState == 1)) {
-        printf("You show matthew the toy car and he comes down to take it.\nYou take Matthew in your arms and carry him home.\n");
+    // Use toy car
+    if ((item ==  "toy car") && (m_currentLocation == WolfTree && m_wolfState == 1)) {
+        emit sendOutput(tr("\nYou show Matthew the toy car and he comes down to take it. You take Matthew in your arms and carry him home."));
         m_wolfState = 2;
         return;
     }
 
-    /* Use oil */
-    if (!strcmp(item.toLatin1(), "oil")) {
+    // Use oil
+    if (item == "oil") {
         if (carryingItem("lamp")) {
-            printf("You fill the lamp with oil.\n");
+            emit sendOutput(tr("\nYou fill the lamp with oil."));
             m_lampFilled = 1;
             return;
         } else {
-            printf("You don't have anything to use it with.\n");
+            emit sendOutput(tr("\nYou don't have anything to use it with."));
             return;
         }
     }
 
-    /* Use matches */
-    if (!strcmp(item.toLatin1(), "matches")) {
+    // Use matches
+    if (item == "matches") {
         if (carryingItem("lamp")) {
             if (m_lampFilled) {
-                printf("You light the lamp. You can see!\n");
+                emit sendOutput(tr("\nYou light the lamp. You can see!"));
                 m_lampLit = 1;
                 return;
             } else {
-                printf("You can't light the lamp. It needs oil.\n");
+                emit sendOutput(tr("\nYou can't light the lamp. It needs oil."));
                 return;
             }
         } else {
-            printf("Nothing here to light\n");
+            emit sendOutput(tr("\nNothing here to light"));
         }
     }
                 
-    /* Use candybar */
-    if (!strcmp(item.toLatin1(), "candybar")) {
-        printf("That hit the spot. You no longer feel hungry.\n");
+    // Use candybar
+    if (item == "candybar") {
+        emit sendOutput(tr("\nThat hit the spot. You no longer feel hungry."));
         m_ateFood = 1;
         return;
     }
 
-    /* Use bottle */
-    if (!strcmp(item.toLatin1(), "bottle")) {
+    // Use bottle
+    if (item == "bottle") {
         if (m_currentLocation == Cistern) {
-            printf("You fill the bottle with water from the cistern and take a drink.\nYou no longer feel thirsty.\n");
+            emit sendOutput(tr("\nYou fill the bottle with water from the cistern and take a drink.\nYou no longer feel thirsty."));
             m_drankWater = 1;
             return;
         } else {
-            printf("The bottle is empty. If only you had some water to fill it!\n");
+            emit sendOutput(tr("\nThe bottle is empty. If only you had some water to fill it!"));
             return;
         }
     }
 
-    /* Use stale meat */
-    if (!strcmp(item.toLatin1(), "stale meat")) {
-        printf("The meat looked and tasted bad. You feel very sick and pass out.\n");
-        //bGameOver = 1;
+    // Use stale meat
+    if (item == "stale meat") {
+        emit sendOutput(tr("\nThe meat looked and tasted bad. You feel very sick and pass out."));
+        emit gameOver();
         return;
     }
 
-    /* Default */
-    printf("Nothing happens\n");
+    // Default
+    emit sendOutput(tr("\nNothing happens."));
 
     doSpecialActions();
 }
@@ -606,57 +578,50 @@ void GameEngine::doExamine(QString item)
 {
     emit sendOutput(tr("\nYou examine the %1.").arg(item));
 
-    char *sp;
+    m_turns++;
+    emit updateTurns(m_turns);
 
-    /* Command line should be like "E[XAMINE] ITEM" Item name will be after after first space. */
-    //sp = strchr(buffer, ' ');
-    if (sp == NULL) {
-        printf("Examine what?\n");
-        return;
-    }
-
-    item = sp + 1;
-////    m_turns++;
-
-    /* Examine bookcase - not an object */
+    // Examine bookcase - not an object
     if (item == "bookcase") {
-        printf("You pull back a book and the bookcase opens up to reveal a secret room.\n");
+        emit sendOutput(tr("\nYou pull back a book and the bookcase opens up to reveal a secret room."));
         Move[17][North] = 18;
+        recalculateLocalVariables();
+        emit updateValidDirections(m_validDirections);
         return;
     }
 
-    /* Make sure item is being carried or is in the current location */
+    // Make sure item is being carried or is in the current location
     if (!carryingItem(item.toLatin1()) && !itemIsHere(item.toLatin1())) {
-        printf("I don't see it here.\n");
+        emit sendOutput(tr("\nI don't see it here."));
         return;
     }
 
-    /* Examine Book */
+    // Examine Book
     if (item == "book") {
-        printf("It is a very old book entitled \"Apple 1 Operation Manual\".\n");
+        emit sendOutput(tr("\nIt is a very old book entitled \"Apple 1 Operation Manual\"."));
         return;
     }
 
-    /* Examine Flashlight */
+    // Examine Flashlight
     if (item == "flashlight") {
-        printf("It doesn't have any batteries.\n");
+        emit sendOutput(tr("\nIt doesn't have any batteries."));
         return;
     }
 
-    /* Examine toy car */
+    // Examine toy car
     if (item == "toy car") {
-        printf("It is a nice toy car. Your grandson Matthew would like it.\n");
+        emit sendOutput(tr("\nIt is a nice toy car. Your grandson Matthew would like it."));
         return;
     }
 
-    /* Examine old radio */
+    // Examine old radio
     if (item == "old radio") {
-        printf("It is a 1940 Zenith 8-S-563 console with an 8A02 chassis. You'd turn it on but the electricity is off.\n");
+        emit sendOutput(tr("\nIt is a 1940 Zenith 8-S-563 console with an 8A02 chassis. You'd turn it on but the electricity is off."));
         return;
     }
 
-   /* Nothing special about this item */
-   printf("You see nothing special about it.\n");
+    // Nothing special about this item
+    emit sendOutput(tr("\nYou see nothing special about it."));
 
     doSpecialActions();
 }
@@ -664,104 +629,107 @@ void GameEngine::doExamine(QString item)
 // Move command.
 void GameEngine::doMoveUp()
 {
-    emit sendOutput(tr("\nYou cannot go up from here."));
-
-    char *sp;
-    char dirChar;
-    Direction_t dir;
-
-    /* Command line should be like "G[O] N[ORTH]" Direction will be
-       the first letter after a space. Or just a single letter
-       direction N S E W U D or full directon NORTH etc. */
-
-    //sp = strrchr(buffer, ' ');
-    if (sp != NULL) {
-        dirChar = *(sp+1);
-    } else {
-        //dirChar = buffer[0];
-    }
-
-    if (dirChar == 'n') {
-        dir = North;
-    } else if (dirChar == 's') {
-        dir = South;
-    } else if (dirChar == 'e') {
-        dir = East;
-    } else if (dirChar == 'w') {
-        dir = West;
-    } else if (dirChar == 'u') {
-        dir = Up;
-    } else if (dirChar == 'd') {
-        dir = Down;
-    } else {
-        printf("Go where?\n");
-        return;
-    }
-
-    if (Move[m_currentLocation][dir] == 0) {
-        printf("You can't go %s from here.\n", DescriptionOfDirection[dir]);
-        return;
-    }
-
-    /* We can move */
-    m_currentLocation = Move[m_currentLocation][dir];
-    printf("You are %s.\n", DescriptionOfLocation[m_currentLocation]);
-    m_turns++;
-
-    doSpecialActions();
+    doMove(Up);
 }
 
 // Move command.
 void GameEngine::doMoveDown()
 {
-    emit sendOutput(tr("\nYou move down."));
-    m_location = tr("barn");
-    emit updateLocation(m_location);
-    m_turns++;
-    emit updateTurns(m_turns);
-    doSpecialActions();
+    doMove(Down);
 }
 
 // Move command.
 void GameEngine::doMoveNorth()
 {
-    emit sendOutput(tr("\nYou move north."));
-    m_location = tr("barn");
-    emit updateLocation(m_location);
-    m_turns++;
-    emit updateTurns(m_turns);
-
-    emit updateValidDirections(m_validDirections);
-
-    doSpecialActions();
+    doMove(North);
 }
 
 // Move command.
 void GameEngine::doMoveSouth()
 {
-    emit sendOutput(tr("\nYou move south."));
-    doSpecialActions();
+    doMove(South);
 }
 
 // Move command.
 void GameEngine::doMoveEast()
 {
-    emit sendOutput(tr("\nYou move east."));
-    doSpecialActions();
+    doMove(East);
 }
 
 // Move command.
 void GameEngine::doMoveWest()
 {
-    emit sendOutput(tr("\nYou move west."));
+    doMove(West);
+}
+
+// Common Move command.
+void GameEngine::doMove(Direction_t dir)
+{
+    if (Move[m_currentLocation][dir] == 0) {
+        emit sendOutput(tr("\nYou can't go %1 from here.").arg(DescriptionOfDirection[dir]));
+        return;
+    }
+
+    // We can move
+    m_currentLocation = Move[m_currentLocation][dir];
+
+    recalculateLocalVariables();
+
+    emit sendOutput(tr("\nYou are %1.").arg(m_location));
+
+    m_turns++;
+    emit updateTurns(m_turns);
+
+    emit updateLocation(m_location);
+    emit updateValidDirections(m_validDirections);
+    emit updateLocalItems(m_localItems);
+
     doSpecialActions();
+}
+
+// Update instance variables based in current game state
+void GameEngine::recalculateLocalVariables()
+{
+    // Current location
+    m_location = DescriptionOfLocation[m_currentLocation];
+
+    // Valid directions to move
+    m_validDirections.clear();
+    if (Move[m_currentLocation][Up])
+        m_validDirections << tr("up");
+    if (Move[m_currentLocation][Down])
+        m_validDirections << tr("down");
+    if (Move[m_currentLocation][North])
+        m_validDirections << tr("north");
+    if (Move[m_currentLocation][South])
+        m_validDirections << tr("south");
+    if (Move[m_currentLocation][East])
+        m_validDirections << tr("east");
+    if (Move[m_currentLocation][West])
+        m_validDirections << tr("west");
+
+    m_inventoryItems.clear();
+    for (int i = 0; i < MAXITEMS; i++) {
+        if (Inventory[i] != 0) {
+            QString item = DescriptionOfItem[Inventory[i]];
+            m_inventoryItems << item;
+        }
+    }
+
+    m_localItems.clear();
+    for (int i = 1; i <= LastItem; i++) {
+        if (locationOfItem[i] == m_currentLocation) {
+            QString item = DescriptionOfItem[i];
+            m_localItems << item;
+        }
+    }
 }
 
 // Start (or restart) the game.
 void GameEngine::start()
 {
 
-    /* Set variables to values for start of game */
+    // Set variables to values for start of game
     m_currentLocation = Driveway1;
     m_lampFilled = false;
     m_lampLit = false;
@@ -770,15 +738,15 @@ void GameEngine::start()
     m_ratAttack = 0;
     m_wolfState = 0;
 
-    /* These doors can get changed during game and may need to be reset */
+    // These doors can get changed during game and may need to be reset
     Move[17][North] = 0;
     Move[21][North] = 0;
 
-    /* Set inventory to default */
+    // Set inventory to default
     memset(Inventory, 0, sizeof(Inventory[0])*MAXITEMS);
     Inventory[0] = Flashlight;
 
-    /* Put items in their default locations */
+    // Put items in their default locations
     locationOfItem[0]  = (Location_t)0;    /* NoItem */
     locationOfItem[1]  = Driveway1;        /* Key */
     locationOfItem[2]  = Hayloft;          /* Pitchfork */
@@ -799,20 +767,7 @@ void GameEngine::start()
 
     m_turns = 0;
 
-    m_location = DescriptionOfLocation[m_currentLocation];
-
-    m_inventoryItems.clear();
-    for (int i = 0; i < MAXITEMS; i++) {
-        if (Inventory[i] != 0) {
-            QString item = DescriptionOfItem[Inventory[i]];
-            m_inventoryItems << item;
-        }
-    }
-
-    m_localItems.clear();
-
-    m_validDirections.clear();
-    m_validDirections << tr("up") << tr("north") << tr("south");
+    recalculateLocalVariables();
 
     emit updateTurns(m_turns);
     emit updateLocation(m_location);
@@ -821,10 +776,8 @@ void GameEngine::start()
     emit updateValidDirections(m_validDirections);
 
     emit sendOutput(tr(
-"                    The Abandoned Farmhouse Adventure\n"
-"                    By Jeff Tranter <tranter@pobox.com>\n"
-"\n"
-"Your four-year-old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
+"\n                    The Abandoned Farmhouse Adventure"
+"\n                    By Jeff Tranter <tranter@pobox.com>"
+"\nYour four-year-old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
                        ));
-
 }

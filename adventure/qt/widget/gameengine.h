@@ -31,6 +31,16 @@ class GameEngine : public QObject
 {
     Q_OBJECT;
 
+/* Directions */
+typedef enum {
+    North,
+    South,
+    East,
+    West,
+    Up,
+    Down
+} Direction_t;
+
 public:
     // Constructor
     GameEngine();
@@ -82,6 +92,8 @@ signals:
  private:
     // Private methods
     void doSpecialActions();
+    void recalculateLocalVariables();
+    void doMove(Direction_t dir);
 
 private:
     int m_turns;              // Number of turns played
