@@ -68,7 +68,7 @@ public slots:
     void doMoveEast();
     void doMoveWest();
 
- signals:
+signals:
     void sendOutput(QString output);
     void updateLocation(QString location);
     void updateTurns(int turns);
@@ -76,7 +76,7 @@ public slots:
     void updateLocalItems(QStringList items);
     void updateValidMoves(QStringList moves);
 
- private:
+private:
     int m_turns;
     QString m_location;
     QStringList m_inventoryItems;

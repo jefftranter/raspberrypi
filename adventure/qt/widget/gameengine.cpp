@@ -55,12 +55,16 @@ QString GameEngine::currentLocation() const
 
 void GameEngine::doLook()
 {
-    emit sendOutput(
-"You are in the driveway near your car.\n"
-"You see:\n"
-"  key\n"
-"You can go: north\n");
+    QString msg;
 
+    msg = tr("You are in the driveway near your car.\nYou see:");
+
+    foreach (QString item, m_localItems) {
+        msg += tr("\n  ") + item;
+    }
+
+    msg += tr("\nYou can go: up north south\n");
+    emit sendOutput(msg);
 }
 
 void GameEngine::doInventory()
@@ -68,7 +72,7 @@ void GameEngine::doInventory()
     QString msg;
     msg = tr("You are carrying:");
     foreach (QString item, m_inventoryItems) {
-        msg += "\n  " + item;
+        msg += tr("\n  ") + item;
     }
     emit sendOutput(msg);
 }
@@ -117,12 +121,12 @@ void GameEngine::doExamine(QString item)
 
 void GameEngine::doMoveUp()
 {
-    emit sendOutput("You can't go up from here.\n");
+    emit sendOutput(tr("You can't go up from here.\n"));
 }
 
 void GameEngine::doMoveDown()
 {
-    m_location = "barn";
+    m_location = tr("barn");
     emit updateLocation(m_location);
     m_turns++;
     emit updateTurns(m_turns);
@@ -162,7 +166,7 @@ void GameEngine::start()
 "                        Abandoned Farmhouse Adventure\n"
 "                                By Jeff Tranter\n"
 "\n"
-"Your three-year-old grandson has gone missing and was last seen headed in the\n"
+"Your four year old grandson has gone missing and was last seen headed in the\n"
 "direction of the abandoned family farm. It's a dangerous place to play.\n"
 "You have to find him before he gets hurt, and it will be getting dark soon...\n"
 );
