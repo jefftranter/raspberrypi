@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2012-12-22T09:35:47
-#
-#-------------------------------------------------
-
 QT       += core gui
 
 # Uncomment the next line to enable debug build

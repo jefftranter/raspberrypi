@@ -137,7 +137,7 @@ void GameEngine::doMoveDown()
 // Move command.
 void GameEngine::doMoveNorth()
 {
-    emit sendOutput("You move north.");
+    emit sendOutput(tr("You move north."));
     m_location = tr("barn");
     emit updateLocation(m_location);
     m_turns++;
@@ -146,7 +146,7 @@ void GameEngine::doMoveNorth()
     emit updateValidDirections(m_validDirections);
 
     if (m_turns > 10) {
-        emit sendOutput("You took too many turns so you get... nothing!\nYou lose! Good day, sir!");
+        emit sendOutput(tr("You took too many turns so you get... nothing!\nYou lose! Good day, sir!"));
         emit gameOver();
     }
 }
@@ -154,19 +154,19 @@ void GameEngine::doMoveNorth()
 // Move command.
 void GameEngine::doMoveSouth()
 {
-    emit sendOutput("You move south.");
+    emit sendOutput(tr("You move south."));
 }
 
 // Move command.
 void GameEngine::doMoveEast()
 {
-    emit sendOutput("You move east.");
+    emit sendOutput(tr("You move east."));
 }
 
 // Move command.
 void GameEngine::doMoveWest()
 {
-    emit sendOutput("You move west.");
+    emit sendOutput(tr("You move west."));
 }
 
 // Start (or restart) the game.
@@ -175,9 +175,9 @@ void GameEngine::start()
     m_turns = 0;
     m_location = tr("driveway");
     m_inventoryItems.clear();
-    m_inventoryItems << tr("flashlight") << "doll" << "pitchfork" << "lamp";
+    m_inventoryItems << tr("flashlight") << tr("doll") << tr("pitchfork") << tr("lamp");
     m_localItems.clear();
-    m_localItems << tr("key") << "toy car" << "matches";
+    m_localItems << tr("key") << tr("toy car") << tr("matches");
     m_validDirections.clear();
     m_validDirections << tr("up") << tr("north") << tr("south");
 
@@ -187,11 +187,11 @@ void GameEngine::start()
     emit updateLocalItems(m_localItems);
     emit updateValidDirections(m_validDirections);
 
-    emit sendOutput(
-"                        Abandoned Farmhouse Adventure\n"
-"                                By Jeff Tranter\n"
+    emit sendOutput(tr(
+"                    The Abandoned Farmhouse Adventure\n"
+"                    By Jeff Tranter <tranter@pobox.com>\n"
 "\n"
-"Your four year old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
-);
+"Your four-year-old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
+                       ));
 
 }
