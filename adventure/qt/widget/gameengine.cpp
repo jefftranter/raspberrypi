@@ -237,7 +237,7 @@ void GameEngine::doSpecialActions()
 
     if ((m_turns >= 60) && (!m_lampLit || (!itemIsHere("lamp") && !carryingItem("lamp")))) {
         emit sendOutput(tr("\nIt is dark out and you have no light. You stumble around for a while and then fall, hit your head, and pass out."));
-        //emit gameOver();
+        emit gameOver();
         return;
     }
 
@@ -251,13 +251,13 @@ void GameEngine::doSpecialActions()
 
     if ((m_turns == 50) && !m_drankWater) {
         emit sendOutput(tr("\nYou pass out due to thirst."));
-        //emit gameOver();
+        emit gameOver();
         return;
     }
 
     if ((m_turns == 40) && !m_ateFood) {
         emit sendOutput(tr("\nYou pass out from hunger."));
-        //emit gameOver();
+        emit gameOver();
         return;
     }
 
@@ -270,7 +270,7 @@ void GameEngine::doSpecialActions()
                 ++m_ratAttack;
             } else {
                 emit sendOutput(tr("\nThe rats attack and you pass out."));
-                //emit gameOver();
+                emit gameOver();
                 return;
             }
         }
@@ -286,7 +286,7 @@ void GameEngine::doSpecialActions()
                 emit sendOutput(tr("\nMatthew is afraid to come down from the tree. If only you had something to coax him with."));
                 break;
             case 2:
-                emit sendOutput(tr("\nCongratulations! You succeeded and won the game. I hope you had as much fun playing the game as I did creating it.\n- Jeff Tranter <tranter@pobox.com>"));
+                emit sendOutput(tr("\nCongratulations! You succeeded and won the game. I hope you had as much fun playing the game as I did creating it.Jeff Tranter <tranter@pobox.com>"));
                 emit gameOver();
                 return;
                 break;
@@ -785,8 +785,8 @@ void GameEngine::start()
     emit updateValidDirections(m_validDirections);
 
     emit sendOutput(tr(
-"\n                    The Abandoned Farmhouse Adventure"
-"\n                    by Jeff Tranter <tranter@pobox.com>"
+"The Abandoned Farmhouse Adventure"
+"\nby Jeff Tranter <tranter@pobox.com>"
 "\n\nYour four-year-old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
                        ));
 }

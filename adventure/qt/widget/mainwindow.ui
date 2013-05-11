@@ -33,12 +33,18 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <widget class="QGroupBox" name="directionsGroupBox">
+             <property name="toolTip">
+              <string>Moving commands</string>
+             </property>
              <property name="title">
               <string>Move Commands:</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
               <item row="1" column="1">
                <widget class="QPushButton" name="eastButton">
+                <property name="toolTip">
+                 <string>Click to move east</string>
+                </property>
                 <property name="text">
                  <string>E&amp;ast</string>
                 </property>
@@ -46,6 +52,9 @@
               </item>
               <item row="1" column="0">
                <widget class="QPushButton" name="westButton">
+                <property name="toolTip">
+                 <string>Click to move west</string>
+                </property>
                 <property name="text">
                  <string>&amp;West</string>
                 </property>
@@ -53,6 +62,9 @@
               </item>
               <item row="2" column="0">
                <widget class="QPushButton" name="downButton">
+                <property name="toolTip">
+                 <string>Click to move down</string>
+                </property>
                 <property name="text">
                  <string>D&amp;own</string>
                 </property>
@@ -60,6 +72,9 @@
               </item>
               <item row="0" column="1">
                <widget class="QPushButton" name="northButton">
+                <property name="toolTip">
+                 <string>Click to move north</string>
+                </property>
                 <property name="text">
                  <string>&amp;North</string>
                 </property>
@@ -67,6 +82,9 @@
               </item>
               <item row="0" column="0">
                <widget class="QPushButton" name="upButton">
+                <property name="toolTip">
+                 <string>Click to move up</string>
+                </property>
                 <property name="text">
                  <string>U&amp;p</string>
                 </property>
@@ -74,6 +92,9 @@
               </item>
               <item row="2" column="1">
                <widget class="QPushButton" name="southButton">
+                <property name="toolTip">
+                 <string>Click to move south</string>
+                </property>
                 <property name="text">
                  <string>&amp;South</string>
                 </property>
@@ -96,12 +117,18 @@
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
             <widget class="QGroupBox" name="commandsGroupBox">
+             <property name="toolTip">
+              <string>Commands that don't act on an item</string>
+             </property>
              <property name="title">
               <string>Global Commands:</string>
              </property>
              <layout class="QGridLayout" name="gridLayout">
               <item row="0" column="0">
                <widget class="QPushButton" name="lookButton">
+                <property name="toolTip">
+                 <string>Click to look around</string>
+                </property>
                 <property name="text">
                  <string>&amp;Look</string>
                 </property>
@@ -109,6 +136,9 @@
               </item>
               <item row="0" column="1">
                <widget class="QPushButton" name="inventoryButton">
+                <property name="toolTip">
+                 <string>Show items you are carrying</string>
+                </property>
                 <property name="text">
                  <string>&amp;Inventory</string>
                 </property>
@@ -116,6 +146,9 @@
               </item>
               <item row="1" column="0">
                <widget class="QPushButton" name="helpButton">
+                <property name="toolTip">
+                 <string>Get some hints on help</string>
+                </property>
                 <property name="text">
                  <string>&amp;Help</string>
                 </property>
@@ -123,6 +156,9 @@
               </item>
               <item row="1" column="1">
                <widget class="QPushButton" name="quitButton">
+                <property name="toolTip">
+                 <string>Click to quit the game</string>
+                </property>
                 <property name="text">
                  <string>&amp;Quit</string>
                 </property>
@@ -153,12 +189,18 @@
              <bold>false</bold>
             </font>
            </property>
+           <property name="toolTip">
+            <string>Commands that act on an item</string>
+           </property>
            <property name="title">
             <string>Item Commands:</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_2">
             <item row="0" column="0">
              <widget class="QPushButton" name="takeButton">
+              <property name="toolTip">
+               <string>Click button and then click on item to take</string>
+              </property>
               <property name="text">
                <string>&amp;Take</string>
               </property>
@@ -169,6 +211,9 @@
             </item>
             <item row="0" column="1">
              <widget class="QPushButton" name="dropButton">
+              <property name="toolTip">
+               <string>Click button and then click on item to drop</string>
+              </property>
               <property name="text">
                <string>&amp;Drop</string>
               </property>
@@ -179,6 +224,9 @@
             </item>
             <item row="0" column="2">
              <widget class="QPushButton" name="useButton">
+              <property name="toolTip">
+               <string>Click button and then click on item to use</string>
+              </property>
               <property name="text">
                <string>&amp;Use</string>
               </property>
@@ -189,6 +237,9 @@
             </item>
             <item row="1" column="0">
              <widget class="QPushButton" name="examineButton">
+              <property name="toolTip">
+               <string>Click button and then click on item to examine</string>
+              </property>
               <property name="text">
                <string>&amp;Examine</string>
               </property>
@@ -202,6 +253,9 @@
          </item>
          <item>
           <widget class="QGroupBox" name="inventoryGroupBox">
+           <property name="toolTip">
+            <string>Items you are carrying</string>
+           </property>
            <property name="title">
             <string>Inventory Items:</string>
            </property>
@@ -246,6 +300,9 @@
          </item>
          <item>
           <widget class="QGroupBox" name="groupBox">
+           <property name="toolTip">
+            <string>Items nearby</string>
+           </property>
            <property name="title">
             <string>Local Items:</string>
            </property>
@@ -302,6 +359,9 @@
     </item>
     <item>
      <widget class="QGroupBox" name="groupBox3">
+      <property name="toolTip">
+       <string>Shows game status</string>
+      </property>
       <property name="title">
        <string>Status:</string>
       </property>
@@ -318,8 +378,8 @@
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>

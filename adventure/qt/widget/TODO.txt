@@ -1,6 +1,11 @@
 To Do List
 
-- implement game functions
+- colour in some text messages
 - make sure all text is localized
 - use constants for any magic numbers
-- make backwards compatible with Qt 4
+- add icon
+- test on multiple platforms
+- refactor C code to use Qt containers, etc.
+
+Future:
+- save/load functionality
