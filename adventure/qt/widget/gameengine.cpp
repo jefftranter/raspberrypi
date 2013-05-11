@@ -52,7 +52,8 @@ typedef enum {
     Book,
     Cheese,
     OldRadio,
-    LastItem=OldRadio
+    BookCase,
+    LastItem=BookCase
 } Item_t;
 
 /* Locations */
@@ -117,6 +118,7 @@ const char *DescriptionOfItem[LastItem+1] = {
     "book",
     "cheese",
     "old radio",
+    "bookcase",
 };
 
 /* Names of locations */
@@ -236,7 +238,7 @@ void GameEngine::doSpecialActions()
 
     if ((m_turns >= 60) && (!m_lampLit || (!itemIsHere("lamp") && !carryingItem("lamp")))) {
         emit sendOutput(tr("\nIt is dark out and you have no light. You stumble around for a while and then fall, hit your head, and pass out."));
-        emit gameOver();
+        //emit gameOver();
         return;
     }
 
@@ -250,13 +252,13 @@ void GameEngine::doSpecialActions()
 
     if ((m_turns == 50) && !m_drankWater) {
         emit sendOutput(tr("\nYou pass out due to thirst."));
-        emit gameOver();
+        //emit gameOver();
         return;
     }
 
     if ((m_turns == 40) && !m_ateFood) {
         emit sendOutput(tr("\nYou pass out from hunger."));
-        emit gameOver();
+        //emit gameOver();
         return;
     }
 
@@ -269,7 +271,7 @@ void GameEngine::doSpecialActions()
                 ++m_ratAttack;
             } else {
                 emit sendOutput(tr("\nThe rats attack and you pass out."));
-                emit gameOver();
+                //emit gameOver();
                 return;
             }
         }
@@ -395,6 +397,13 @@ void GameEngine::doQuit()
 // Take command.
 void GameEngine::doTake(QString item)
 {
+
+    // Special case: Can't take bookcase.
+    if (item == "bookcase") {
+        emit sendOutput(tr("\nIt is too big to carry."));
+        return;
+    }
+
     // Find number of the item.
     for (int i = 1; i <= LastItem; i++) {
         if (!strcmp(item.toLatin1(), DescriptionOfItem[i])) {
@@ -473,13 +482,20 @@ void GameEngine::doDrop(QString item)
 
     // If here, don't have it.
     emit sendOutput(tr("\nNot carrying %1.").arg(item));
+
     doSpecialActions();
 }
 
 // Use command.
 void GameEngine::doUse(QString item)
 {
-    emit sendOutput(tr("\nYou use the %1.").arg(item));
+    // Use bookcase - not an object
+    if (item == "bookcase") {
+        emit sendOutput(tr("\nThere is something unusual about the bookcase."));
+        return;
+    }
+
+    //emit sendOutput(tr("\nYou use the %1.").arg(item));
 
     // Make sure item is being carried or is in the current location
     if (!carryingItem(item.toLatin1()) && !itemIsHere(item.toLatin1())) {
@@ -764,6 +780,7 @@ void GameEngine::start()
     locationOfItem[14] = DrawingRoom;      /* Book */
     locationOfItem[15] = LaundryRoom;      /* Cheese */
     locationOfItem[16] = MasterBedroom;    /* OldRadio */
+    locationOfItem[17] = MasterBedroom;    /* BookCase */
 
     m_turns = 0;
 
