@@ -20,7 +20,6 @@
  *
  */
 
-#include <QDebug>
 #include <QButtonGroup>
 #include <QMessageBox>
 #include "mainwindow.h"
@@ -92,7 +91,6 @@ void MainWindow::initialize()
     connect(m_game, SIGNAL(updateLocalItems(QStringList)), this, SLOT(updateLocalItems(QStringList)));
     connect(m_game, SIGNAL(updateValidDirections(QStringList)), this, SLOT(updateValidDirections(QStringList)));
     connect(m_game, SIGNAL(gameOver()), this, SLOT(gameOver()));
-
     connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
     connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(quit()));
     connect(ui->lookButton, SIGNAL(clicked()), m_game, SLOT(doLook()));
@@ -178,12 +176,15 @@ void MainWindow::updateValidDirections(QStringList moves)
 // This updates the UI when inventory items change.
 void MainWindow::updateInventoryItems(QStringList items)
 {
-    Q_ASSERT(items.size() <= numInventoryButtons);
     int i = 0;
     foreach (QString item, items) {
         m_inventoryButtonGroup->button(i)->setText(item);
         m_inventoryButtonGroup->button(i)->setEnabled(true);
         i++;
+        // Should not be possible to have more items than buttons but handle it just in case.
+        if (i == numInventoryButtons) {
+            return;
+        }
     }
 
     // Set remaining buttons to blank and disable them.
@@ -196,12 +197,15 @@ void MainWindow::updateInventoryItems(QStringList items)
 // This updates the UI when local items change.
 void MainWindow::updateLocalItems(QStringList items)
 {
-    Q_ASSERT(items.size() <= numLocalItemButtons);
     int i = 0;
     foreach (QString item, items) {
         m_objectButtonGroup->button(i)->setText(item);
         m_objectButtonGroup->button(i)->setEnabled(true);
         i++;
+        // It is possible to have more items than buttons.
+        if (i == numLocalItemButtons) {
+            return;
+        }
     }
 
     // Set remaining buttons to blank and disable them.

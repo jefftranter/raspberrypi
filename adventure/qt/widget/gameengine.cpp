@@ -20,20 +20,19 @@
  *
  */
 
-#include <QDebug>
 #include "gameengine.h"
 
-/* CONSTANTS */
+// CONSTANTS
 
-/* Maximum number of items user can carry */
+// Maximum number of items user can carry
 #define MAXITEMS 5
 
-/* Number of locations */
+// Number of locations
 #define NUMLOCATIONS 32
 
-/* TYPES */
+// TYPES
 
-/* Items */
+// Items
 typedef enum {
     NoItem,
     Key,
@@ -56,7 +55,7 @@ typedef enum {
     LastItem=BookCase
 } Item_t;
 
-/* Locations */
+// Locations
 typedef enum {
     NoLocation,
     Driveway1,
@@ -92,14 +91,14 @@ typedef enum {
     Woods31,
 } Location_t;
 
-/* TABLES */
+// TABLES
 
-/* Names of directions */
+// Names of directions
 const char *DescriptionOfDirection[] = {
     "north", "south", "east", "west", "up", "down"
 };
 
-/* Names of items */
+// Names of items
 const char *DescriptionOfItem[LastItem+1] = {
     "",
     "key",
@@ -121,7 +120,7 @@ const char *DescriptionOfItem[LastItem+1] = {
     "bookcase",
 };
 
-/* Names of locations */
+// Names of locations
 const char *DescriptionOfLocation[NUMLOCATIONS] = {
     "",
     "in the driveway near your car",
@@ -157,49 +156,49 @@ const char *DescriptionOfLocation[NUMLOCATIONS] = {
     "in the woods",
 };
 
-/* DATA */
+// DATA
 
-/* Inventory of what player is carrying */
+// Inventory of what player is carrying
 Item_t Inventory[MAXITEMS];
 
-/* Location of each item. Index is the item number, returns the location. 0 if item is gone */
+// Location of each item. Index is the item number, returns the location. 0 if item is gone
 Location_t locationOfItem[LastItem+1];
 
-/* Map. Given a location and a direction to move, returns the location it connects to, or 0 if not a valid move. Map can change during game play. */
+// Map. Given a location and a direction to move, returns the location it connects to, or 0 if not a valid move. Map can change during game play.
 int Move[NUMLOCATIONS][6] = {
-    /* N  S  E  W  U  D */
-    {  0, 0, 0, 0, 0, 0 }, /* 0 */
-    {  2, 0, 0, 0, 0, 0 }, /* 1 */
-    {  4, 1, 3, 5, 0, 0 }, /* 2 */
-    {  0, 0, 6, 2, 0, 0 }, /* 3 */
-    {  7, 2, 0, 0, 0, 0 }, /* 4 */
-    {  0, 0, 2, 9, 0, 0 }, /* 5 */
-    {  0, 0, 0, 3, 0, 0 }, /* 6 */
-    {  0, 4, 0, 0, 8, 0 }, /* 7 */
-    {  0, 0, 0, 0, 0, 7 }, /* 8 */
-    {  0,10, 5, 0, 0,19 }, /* 9 */
-    {  9, 0, 0,11, 0, 0 }, /* 10 */
-    {  0, 0,10,12,14, 0 }, /* 11 */
-    { 13, 0,11, 0, 0, 0 }, /* 12 */
-    {  0,12, 0, 0, 0, 0 }, /* 13 */
-    { 16, 0,15,17, 0,11 }, /* 14 */
-    {  0, 0, 0,14, 0, 0 }, /* 15 */
-    {  0,14, 0, 0, 0, 0 }, /* 16 */
-    {  0, 0,14, 0, 0, 0 }, /* 17 */
-    {  0, 0, 0, 0, 0,13 }, /* 18 */
-    {  0, 0, 0,20, 9, 0 }, /* 19 */
-    { 21, 0,19, 0, 0, 0 }, /* 20 */
-    {  0,20, 0,22, 0, 0 }, /* 21 */
-    {  0, 0,21, 0, 0, 0 }, /* 22 */
-    { 24,21, 0, 0, 0, 0 }, /* 23 */
-    { 29,23, 0,26, 0, 0 }, /* 24 */
-    { 26, 0,24, 0, 0, 0 }, /* 25 */
-    { 27,25,29, 0, 0, 0 }, /* 26 */
-    {  0,26,28, 0, 0, 0 }, /* 27 */
-    {  0,29,31,27, 0, 0 }, /* 28 */
-    { 28,24,30,26, 0, 0 }, /* 29 */
-    { 31, 0, 0,29, 0, 0 }, /* 30 */
-    {  0,30, 0,29, 0, 0 }, /* 31 */
+    // N  S  E  W  U  D
+    {  0, 0, 0, 0, 0, 0 }, // 0
+    {  2, 0, 0, 0, 0, 0 }, // 1
+    {  4, 1, 3, 5, 0, 0 }, // 2
+    {  0, 0, 6, 2, 0, 0 }, // 3
+    {  7, 2, 0, 0, 0, 0 }, // 4
+    {  0, 0, 2, 9, 0, 0 }, // 5
+    {  0, 0, 0, 3, 0, 0 }, // 6
+    {  0, 4, 0, 0, 8, 0 }, // 7
+    {  0, 0, 0, 0, 0, 7 }, // 8
+    {  0,10, 5, 0, 0,19 }, // 9
+    {  9, 0, 0,11, 0, 0 }, // 10
+    {  0, 0,10,12,14, 0 }, // 11
+    { 13, 0,11, 0, 0, 0 }, // 12
+    {  0,12, 0, 0, 0, 0 }, // 13
+    { 16, 0,15,17, 0,11 }, // 14
+    {  0, 0, 0,14, 0, 0 }, // 15
+    {  0,14, 0, 0, 0, 0 }, // 16
+    {  0, 0,14, 0, 0, 0 }, // 17
+    {  0, 0, 0, 0, 0,13 }, // 18
+    {  0, 0, 0,20, 9, 0 }, // 19
+    { 21, 0,19, 0, 0, 0 }, // 20
+    {  0,20, 0,22, 0, 0 }, // 21
+    {  0, 0,21, 0, 0, 0 }, // 22
+    { 24,21, 0, 0, 0, 0 }, // 23
+    { 29,23, 0,26, 0, 0 }, // 24
+    { 26, 0,24, 0, 0, 0 }, // 25
+    { 27,25,29, 0, 0, 0 }, // 26
+    {  0,26,28, 0, 0, 0 }, // 27
+    {  0,29,31,27, 0, 0 }, // 28
+    { 28,24,30,26, 0, 0 }, // 29
+    { 31, 0, 0,29, 0, 0 }, // 30
+    {  0,30, 0,29, 0, 0 }, // 31
 };
 
 // Return if carrying an item
@@ -281,13 +280,13 @@ void GameEngine::doSpecialActions()
     if (m_currentLocation == WolfTree) {
         switch (m_wolfState) {
             case 0:
-                emit sendOutput(tr("\nA wolf is circling around the tree. Matthew is up in the tree.\nYou have to save him! If only you had some kind of weapon!"));
+                emit sendOutput(tr("\nA wolf is circling around the tree. Matthew is up in the tree. You have to save him! If only you had some kind of weapon!"));
                 break;
             case 1:
-                emit sendOutput(tr("\nMatthew is afraid to come down from the tree.\nIf only you had something to coax him with."));
+                emit sendOutput(tr("\nMatthew is afraid to come down from the tree. If only you had something to coax him with."));
                 break;
             case 2:
-                emit sendOutput(tr("\nCongratulations! You succeeded and won the game.\nI hope you had as much fun playing the game as I did creating it.\n- Jeff Tranter <tranter@pobox.com>"));
+                emit sendOutput(tr("\nCongratulations! You succeeded and won the game. I hope you had as much fun playing the game as I did creating it.\n- Jeff Tranter <tranter@pobox.com>"));
                 emit gameOver();
                 return;
                 break;
@@ -495,8 +494,6 @@ void GameEngine::doUse(QString item)
         return;
     }
 
-    //emit sendOutput(tr("\nYou use the %1.").arg(item));
-
     // Make sure item is being carried or is in the current location
     if (!carryingItem(item.toLatin1()) && !itemIsHere(item.toLatin1())) {
         emit sendOutput(tr("\nI don't see it here."));
@@ -567,7 +564,7 @@ void GameEngine::doUse(QString item)
     // Use bottle
     if (item == "bottle") {
         if (m_currentLocation == Cistern) {
-            emit sendOutput(tr("\nYou fill the bottle with water from the cistern and take a drink.\nYou no longer feel thirsty."));
+            emit sendOutput(tr("\nYou fill the bottle with water from the cistern and take a drink. You no longer feel thirsty."));
             m_drankWater = 1;
             return;
         } else {
@@ -594,50 +591,45 @@ void GameEngine::doExamine(QString item)
 {
     emit sendOutput(tr("\nYou examine the %1.").arg(item));
 
-    m_turns++;
-    emit updateTurns(m_turns);
-
     // Examine bookcase - not an object
     if (item == "bookcase") {
-        emit sendOutput(tr("\nYou pull back a book and the bookcase opens up to reveal a secret room."));
+        emit sendOutput(tr("You pull back a book and the bookcase opens up to reveal a secret room."));
         Move[17][North] = 18;
         recalculateLocalVariables();
         emit updateValidDirections(m_validDirections);
-        return;
-    }
+    } else
 
     // Make sure item is being carried or is in the current location
     if (!carryingItem(item.toLatin1()) && !itemIsHere(item.toLatin1())) {
-        emit sendOutput(tr("\nI don't see it here."));
-        return;
-    }
+        emit sendOutput(tr("I don't see it here."));
+    } else
 
     // Examine Book
     if (item == "book") {
-        emit sendOutput(tr("\nIt is a very old book entitled \"Apple 1 Operation Manual\"."));
-        return;
-    }
+        emit sendOutput(tr("It is a very old book entitled \"Apple 1 Operation Manual\"."));
+    } else
 
     // Examine Flashlight
     if (item == "flashlight") {
-        emit sendOutput(tr("\nIt doesn't have any batteries."));
-        return;
-    }
+        emit sendOutput(tr("It doesn't have any batteries."));
+    } else
 
     // Examine toy car
     if (item == "toy car") {
-        emit sendOutput(tr("\nIt is a nice toy car. Your grandson Matthew would like it."));
-        return;
-    }
+        emit sendOutput(tr("It is a nice toy car. Your grandson Matthew would like it."));
+    } else
 
     // Examine old radio
     if (item == "old radio") {
-        emit sendOutput(tr("\nIt is a 1940 Zenith 8-S-563 console with an 8A02 chassis. You'd turn it on but the electricity is off."));
+        emit sendOutput(tr("It is a 1940 Zenith 8-S-563 console with an 8A02 chassis. You'd turn it on but the electricity is off."));
         return;
+    } else {
+        // Nothing special about this item
+        emit sendOutput(tr("You see nothing special about it."));
     }
 
-    // Nothing special about this item
-    emit sendOutput(tr("\nYou see nothing special about it."));
+    m_turns++;
+    emit updateTurns(m_turns);
 
     doSpecialActions();
 }
@@ -763,24 +755,24 @@ void GameEngine::start()
     Inventory[0] = Flashlight;
 
     // Put items in their default locations
-    locationOfItem[0]  = (Location_t)0;    /* NoItem */
-    locationOfItem[1]  = Driveway1;        /* Key */
-    locationOfItem[2]  = Hayloft;          /* Pitchfork */
-    locationOfItem[3]  = (Location_t)0;    /* Flashlight */
-    locationOfItem[4]  = WorkRoom;         /* Lamp */
-    locationOfItem[5]  = Garage;           /* Oil */
-    locationOfItem[6]  = Kitchen;          /* Candybar */
-    locationOfItem[7]  = Driveway2;        /* Bottle */
-    locationOfItem[8]  = GirlsBedroom;     /* Doll */
-    locationOfItem[9]  = BoysBedroom;      /* ToyCar */
-    locationOfItem[10] = ServantsQuarters; /* Matches */
-    locationOfItem[11] = Woods25;          /* GoldCoin */
-    locationOfItem[12] = Woods29;          /* SilverCoin */
-    locationOfItem[13] = DiningRoom;       /* StaleMeat */
-    locationOfItem[14] = DrawingRoom;      /* Book */
-    locationOfItem[15] = LaundryRoom;      /* Cheese */
-    locationOfItem[16] = MasterBedroom;    /* OldRadio */
-    locationOfItem[17] = MasterBedroom;    /* BookCase */
+    locationOfItem[0]  = (Location_t)0;    // NoItem
+    locationOfItem[1]  = Driveway1;        // Key
+    locationOfItem[2]  = Hayloft;          // Pitchfork
+    locationOfItem[3]  = (Location_t)0;    // Flashlight
+    locationOfItem[4]  = WorkRoom;         // Lamp
+    locationOfItem[5]  = Garage;           // Oil
+    locationOfItem[6]  = Kitchen;          // Candybar
+    locationOfItem[7]  = Driveway2;        // Bottle
+    locationOfItem[8]  = GirlsBedroom;     // Doll
+    locationOfItem[9]  = BoysBedroom;      // ToyCar
+    locationOfItem[10] = ServantsQuarters; // Matches
+    locationOfItem[11] = Woods25;          // GoldCoin
+    locationOfItem[12] = Woods29;          // SilverCoin
+    locationOfItem[13] = DiningRoom;       // StaleMeat
+    locationOfItem[14] = DrawingRoom;      // Book
+    locationOfItem[15] = LaundryRoom;      // Cheese
+    locationOfItem[16] = MasterBedroom;    // OldRadio
+    locationOfItem[17] = MasterBedroom;    // BookCase
 
     m_turns = 0;
 
@@ -794,7 +786,7 @@ void GameEngine::start()
 
     emit sendOutput(tr(
 "\n                    The Abandoned Farmhouse Adventure"
-"\n                    By Jeff Tranter <tranter@pobox.com>"
-"\nYour four-year-old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
+"\n                    by Jeff Tranter <tranter@pobox.com>"
+"\n\nYour four-year-old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
                        ));
 }
