@@ -52,7 +52,7 @@ const QString DescriptionOfItem[GameEngine::LastItem+1] = {
 };
 
 // Names of locations
-const QString DescriptionOfLocation[GameEngine::NUMLOCATIONS] = {
+const QString DescriptionOfLocation[GameEngine::numLocations] = {
     "",
     "in the driveway near your car",
     "in the driveway",
@@ -90,13 +90,13 @@ const QString DescriptionOfLocation[GameEngine::NUMLOCATIONS] = {
 // DATA
 
 // Inventory of what player is carrying
-GameEngine::Item_t Inventory[GameEngine::MAXITEMS];
+GameEngine::Item_t Inventory[GameEngine::maxItems];
 
 // Location of each item. Index is the item number, returns the location. 0 if item is gone
 GameEngine::Location_t locationOfItem[GameEngine::LastItem+1];
 
 // Map. Given a location and a direction to move, returns the location it connects to, or 0 if not a valid move. Map can change during game play.
-int Move[GameEngine::NUMLOCATIONS][6] = {
+int Move[GameEngine::numLocations][6] = {
     // N  S  E  W  U  D
     {  0, 0, 0, 0, 0, 0 }, // 0
     {  2, 0, 0, 0, 0, 0 }, // 1
@@ -135,7 +135,7 @@ int Move[GameEngine::NUMLOCATIONS][6] = {
 // Return if carrying an item
 bool GameEngine::carryingItem(QString item)
 {
-    for (int i = 0; i < MAXITEMS; i++) {
+    for (int i = 0; i < maxItems; i++) {
         if ((Inventory[i] != 0) && (DescriptionOfItem[Inventory[i]] == item))
             return 1;
     }
@@ -200,7 +200,7 @@ void GameEngine::doSpecialActions()
                 emit sendOutput(tr("\n<font color=\"red\">The rats are coming towards you!</font>"));
                 ++m_ratAttack;
             } else {
-                emit sendOutput(tr("\n</font color=\"red\">The rats attack and you pass out.</font>"));
+                emit sendOutput(tr("\n<font color=\"red\">The rats attack and you pass out.</font>"));
                 emit gameOver();
                 return;
             }
@@ -298,7 +298,7 @@ void GameEngine::doInventory()
 
     msg = tr("\nYou are carrying:");
 
-    for (int i = 0; i < MAXITEMS; i++) {
+    for (int i = 0; i < maxItems; i++) {
         if (Inventory[i] != 0) {
             QString item = DescriptionOfItem[Inventory[i]];
             msg += tr("\n  %1").arg(item);
@@ -340,7 +340,7 @@ void GameEngine::doTake(QString item)
             // Found it, but is it here?
             if (locationOfItem[i] == m_currentLocation) {
             // It is here. Add to inventory.
-            for (int j = 0; j < MAXITEMS; j++) {
+            for (int j = 0; j < maxItems; j++) {
                 if (Inventory[j] == 0) {
                     Inventory[j] = (Item_t)i;
                     // And remove from location.
@@ -386,7 +386,7 @@ void GameEngine::doDrop(QString item)
     Q_ASSERT(!item.isEmpty());
 
     // See if we have the item
-    for (int i = 0; i < MAXITEMS; i++) {
+    for (int i = 0; i < maxItems; i++) {
         if ((Inventory[i] != 0) && (DescriptionOfItem[Inventory[i]] == item)) {
             // We have it. Add to location.
             locationOfItem[(Location_t)Inventory[i]] = (Location_t)m_currentLocation;
@@ -648,7 +648,7 @@ void GameEngine::recalculateLocalVariables()
         m_validDirections << tr("west");
 
     m_inventoryItems.clear();
-    for (int i = 0; i < MAXITEMS; i++) {
+    for (int i = 0; i < maxItems; i++) {
         if (Inventory[i] != 0) {
             QString item = DescriptionOfItem[Inventory[i]];
             m_inventoryItems << item;
@@ -682,7 +682,7 @@ void GameEngine::start()
     Move[21][North] = 0;
 
     // Set inventory to default
-    memset(Inventory, 0, sizeof(Inventory[0])*MAXITEMS);
+    memset(Inventory, 0, sizeof(Inventory[0])*maxItems);
     Inventory[0] = Flashlight;
 
     // Put items in their default locations

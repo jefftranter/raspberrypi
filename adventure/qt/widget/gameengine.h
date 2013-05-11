@@ -36,10 +36,10 @@ public:
 // CONSTANTS
 
 // Maximum number of items user can carry
-static const int MAXITEMS = 5;
+static const int maxItems = 5;
 
 // Number of locations
-static const int NUMLOCATIONS = 32;
+static const int numLocations = 32;
 
 // TYPES
 
