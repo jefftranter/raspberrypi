@@ -1,9 +1,6 @@
 To Do List
 
-- colour in some text messages
-- make sure all text is localized
 - use constants for any magic numbers
-- add icon
 - test on multiple platforms
 - refactor C code to use Qt containers, etc.
 

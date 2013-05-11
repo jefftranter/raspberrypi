@@ -56,8 +56,8 @@ public:
 
     // Methods
     void start();
-    bool itemIsHere(const char *item);
-    bool carryingItem(const char *item);
+    bool itemIsHere(const QString item);
+    bool carryingItem(const QString item);
 
 public slots:
     // Global commands
@@ -67,10 +67,10 @@ public slots:
     void doQuit();
 
     // Item commands
-    void doTake(QString item);
-    void doDrop(QString item);
-    void doUse(QString item);
-    void doExamine(QString item);
+    void doTake(const QString item);
+    void doDrop(const QString item);
+    void doUse(const QString item);
+    void doExamine(const QString item);
 
     // Move commands
     void doMoveUp();
@@ -81,12 +81,12 @@ public slots:
     void doMoveWest();
 
 signals:
-    void sendOutput(QString output);
-    void updateLocation(QString location);
+    void sendOutput(const QString output);
+    void updateLocation(const QString location);
     void updateTurns(int turns);
-    void updateInventoryItems(QStringList items);
-    void updateLocalItems(QStringList items);
-    void updateValidDirections(QStringList moves);
+    void updateInventoryItems(const QStringList items);
+    void updateLocalItems(const QStringList items);
+    void updateValidDirections(const QStringList moves);
     void gameOver();
 
  private:

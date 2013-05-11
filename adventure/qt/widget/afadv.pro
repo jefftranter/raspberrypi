@@ -1,7 +1,7 @@
 QT       += core gui
 
 # Uncomment the next line to enable debug build
-CONFIG += debug
+#CONFIG += debug
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

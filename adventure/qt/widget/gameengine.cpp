@@ -25,10 +25,10 @@
 // CONSTANTS
 
 // Maximum number of items user can carry
-#define MAXITEMS 5
+const int MAXITEMS = 5;
 
 // Number of locations
-#define NUMLOCATIONS 32
+const int NUMLOCATIONS = 32;
 
 // TYPES
 
@@ -94,12 +94,12 @@ typedef enum {
 // TABLES
 
 // Names of directions
-const char *DescriptionOfDirection[] = {
+const QString DescriptionOfDirection[] = {
     "north", "south", "east", "west", "up", "down"
 };
 
 // Names of items
-const char *DescriptionOfItem[LastItem+1] = {
+const QString DescriptionOfItem[LastItem+1] = {
     "",
     "key",
     "pitchfork",
@@ -121,7 +121,7 @@ const char *DescriptionOfItem[LastItem+1] = {
 };
 
 // Names of locations
-const char *DescriptionOfLocation[NUMLOCATIONS] = {
+const QString DescriptionOfLocation[NUMLOCATIONS] = {
     "",
     "in the driveway near your car",
     "in the driveway",
@@ -145,7 +145,7 @@ const char *DescriptionOfLocation[NUMLOCATIONS] = {
     "in the furnace room",
     "in a vacant room next to a locked door",
     "in the cistern",
-    "in an underground tunnel. there are rats here",
+    "in an underground tunnel. There are rats here",
     "in the woods near a trapdoor",
     "in the woods",
     "in the woods",
@@ -202,21 +202,21 @@ int Move[NUMLOCATIONS][6] = {
 };
 
 // Return if carrying an item
-bool GameEngine::carryingItem(const char *item)
+bool GameEngine::carryingItem(QString item)
 {
     for (int i = 0; i < MAXITEMS; i++) {
-        if ((Inventory[i] != 0) && (!strcmp(DescriptionOfItem[Inventory[i]], item)))
+        if ((Inventory[i] != 0) && (DescriptionOfItem[Inventory[i]] == item))
             return 1;
     }
     return 0;
 }
 
 // Return if item is at current location (but not carried)
-bool GameEngine::itemIsHere(const char *item)
+bool GameEngine::itemIsHere(QString item)
 {
     // Find number of the item.
     for (int i = 1; i <= LastItem; i++) {
-        if (!strcmp(item, DescriptionOfItem[i])) {
+        if (item == DescriptionOfItem[i]) {
             // Found it, but is it here?
             if (locationOfItem[i] == m_currentLocation) {
                 return 1;
@@ -232,44 +232,44 @@ bool GameEngine::itemIsHere(const char *item)
 void GameEngine::doSpecialActions()
 {
     if ((m_turns == 10) && !m_lampLit) {
-        emit sendOutput(tr("\nIt will be getting dark soon. You need some kind of light or soon you won't be able to see."));
+        emit sendOutput(tr("\n<font color=\"red\">It will be getting dark soon. You need some kind of light or soon you won't be able to see.</font>"));
     }
 
     if ((m_turns >= 60) && (!m_lampLit || (!itemIsHere("lamp") && !carryingItem("lamp")))) {
-        emit sendOutput(tr("\nIt is dark out and you have no light. You stumble around for a while and then fall, hit your head, and pass out."));
+        emit sendOutput(tr("\n<font color=\"red\">It is dark out and you have no light. You stumble around for a while and then fall, hit your head, and pass out.</font>"));
         emit gameOver();
         return;
     }
 
     if ((m_turns == 20) && !m_drankWater) {
-        emit sendOutput(tr("\nYou are getting very thirsty. You need to get a drink soon."));
+        emit sendOutput(tr("\n<font color=\"red\">You are getting very thirsty. You need to get a drink soon.</font>"));
     }
 
     if ((m_turns == 30) && !m_ateFood) {
-        emit sendOutput(tr("\nYou are getting very hungry. You need to find something to eat."));
+        emit sendOutput(tr("\n<font color=\"red\">You are getting very hungry. You need to find something to eat.</font>"));
     }
 
     if ((m_turns == 50) && !m_drankWater) {
-        emit sendOutput(tr("\nYou pass out due to thirst."));
+        emit sendOutput(tr("\n<font color=\"red\">You pass out due to thirst.</font>"));
         emit gameOver();
         return;
     }
 
     if ((m_turns == 40) && !m_ateFood) {
-        emit sendOutput(tr("\nYou pass out from hunger."));
+        emit sendOutput(tr("\n<font color=\"red\">You pass out from hunger.</font>"));
         emit gameOver();
         return;
     }
 
     if (m_currentLocation == Tunnel) {
         if (itemIsHere("cheese")) {
-            emit sendOutput(tr("\nThe rats go after the cheese."));
+            emit sendOutput(tr("\n<font color=\"red\">The rats go after the cheese.</font>"));
         } else {
             if (m_ratAttack < 3) {
-                emit sendOutput(tr("\nThe rats are coming towards you!"));
+                emit sendOutput(tr("\n<font color=\"red\">The rats are coming towards you!</font>"));
                 ++m_ratAttack;
             } else {
-                emit sendOutput(tr("\nThe rats attack and you pass out."));
+                emit sendOutput(tr("\n</font color=\"red\">The rats attack and you pass out.</font>"));
                 emit gameOver();
                 return;
             }
@@ -280,13 +280,13 @@ void GameEngine::doSpecialActions()
     if (m_currentLocation == WolfTree) {
         switch (m_wolfState) {
             case 0:
-                emit sendOutput(tr("\nA wolf is circling around the tree. Matthew is up in the tree. You have to save him! If only you had some kind of weapon!"));
+                emit sendOutput(tr("\n<font color=\"red\">A wolf is circling around the tree. Matthew is up in the tree. You have to save him! If only you had some kind of weapon!</font>"));
                 break;
             case 1:
-                emit sendOutput(tr("\nMatthew is afraid to come down from the tree. If only you had something to coax him with."));
+                emit sendOutput(tr("\n<font color=\"red\">Matthew is afraid to come down from the tree. If only you had something to coax him with.</font>"));
                 break;
             case 2:
-                emit sendOutput(tr("\nCongratulations! You succeeded and won the game. I hope you had as much fun playing the game as I did creating it.Jeff Tranter <tranter@pobox.com>"));
+                emit sendOutput(tr("\n<font color=\"green\">Congratulations! You succeeded and won the game. I hope you had as much fun playing the game as I did creating it.Jeff Tranter <tranter@pobox.com></font>"));
                 emit gameOver();
                 return;
                 break;
@@ -405,7 +405,7 @@ void GameEngine::doTake(QString item)
 
     // Find number of the item.
     for (int i = 1; i <= LastItem; i++) {
-        if (!strcmp(item.toLatin1(), DescriptionOfItem[i])) {
+        if (item == DescriptionOfItem[i]) {
             // Found it, but is it here?
             if (locationOfItem[i] == m_currentLocation) {
             // It is here. Add to inventory.
@@ -438,7 +438,7 @@ void GameEngine::doTake(QString item)
         }
     }
 
-    if (carryingItem(item.toLatin1())) {
+    if (carryingItem(item)) {
         emit sendOutput(tr("\nYou already have it."));
         return;
     }
@@ -456,7 +456,7 @@ void GameEngine::doDrop(QString item)
 
     // See if we have the item
     for (int i = 0; i < MAXITEMS; i++) {
-        if ((Inventory[i] != 0) && (!strcmp(DescriptionOfItem[Inventory[i]], item.toLatin1()))) {
+        if ((Inventory[i] != 0) && (DescriptionOfItem[Inventory[i]] == item)) {
             // We have it. Add to location.
             locationOfItem[(Location_t)Inventory[i]] = (Location_t)m_currentLocation;
             // And remove from inventory
@@ -495,7 +495,7 @@ void GameEngine::doUse(QString item)
     }
 
     // Make sure item is being carried or is in the current location
-    if (!carryingItem(item.toLatin1()) && !itemIsHere(item.toLatin1())) {
+    if (!carryingItem(item) && !itemIsHere(item)) {
         emit sendOutput(tr("\nI don't see it here."));
         return;
     }
@@ -575,7 +575,7 @@ void GameEngine::doUse(QString item)
 
     // Use stale meat
     if (item == "stale meat") {
-        emit sendOutput(tr("\nThe meat looked and tasted bad. You feel very sick and pass out."));
+        emit sendOutput(tr("\n<font color=\"red\">The meat looked and tasted bad. You feel very sick and pass out.</font>"));
         emit gameOver();
         return;
     }
@@ -600,7 +600,7 @@ void GameEngine::doExamine(QString item)
     } else
 
     // Make sure item is being carried or is in the current location
-    if (!carryingItem(item.toLatin1()) && !itemIsHere(item.toLatin1())) {
+    if (!carryingItem(item) && !itemIsHere(item)) {
         emit sendOutput(tr("I don't see it here."));
     } else
 
