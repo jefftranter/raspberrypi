@@ -31,6 +31,18 @@ class GameEngine : public QObject
 {
     Q_OBJECT;
 
+public:
+
+// CONSTANTS
+
+// Maximum number of items user can carry
+static const int MAXITEMS = 5;
+
+// Number of locations
+static const int NUMLOCATIONS = 32;
+
+// TYPES
+
 /* Directions */
 typedef enum {
     North,
@@ -41,7 +53,65 @@ typedef enum {
     Down
 } Direction_t;
 
-public:
+// Items
+typedef enum {
+    NoItem,
+    Key,
+    Pitchfork,
+    Flashlight,
+    Lamp,
+    Oil,
+    Candybar,
+    Bottle,
+    Doll,
+    ToyCar,
+    Matches,
+    GoldCoin,
+    SilverCoin,
+    StaleMeat,
+    Book,
+    Cheese,
+    OldRadio,
+    BookCase,
+    LastItem=BookCase
+} Item_t;
+
+// Locations
+typedef enum {
+    NoLocation,
+    Driveway1,
+    Driveway2,
+    Driveway3,
+    Driveway4,
+    Driveway5,
+    Garage,
+    WorkRoom,
+    Hayloft,
+    Kitchen,
+    DiningRoom,
+    BottomStairs,
+    DrawingRoom,
+    Study,
+    TopStairs,
+    BoysBedroom,
+    GirlsBedroom,
+    MasterBedroom,
+    ServantsQuarters,
+    LaundryRoom,
+    FurnaceRoom,
+    VacantRoom,
+    Cistern,
+    Tunnel,
+    Woods24,
+    Woods25,
+    Woods26,
+    WolfTree,
+    Woods28,
+    Woods29,
+    Woods30,
+    Woods31,
+} Location_t;
+
     // Constructor
     GameEngine();
 

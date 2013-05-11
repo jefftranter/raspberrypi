@@ -22,75 +22,6 @@
 
 #include "gameengine.h"
 
-// CONSTANTS
-
-// Maximum number of items user can carry
-const int MAXITEMS = 5;
-
-// Number of locations
-const int NUMLOCATIONS = 32;
-
-// TYPES
-
-// Items
-typedef enum {
-    NoItem,
-    Key,
-    Pitchfork,
-    Flashlight,
-    Lamp,
-    Oil,
-    Candybar,
-    Bottle,
-    Doll,
-    ToyCar,
-    Matches,
-    GoldCoin,
-    SilverCoin,
-    StaleMeat,
-    Book,
-    Cheese,
-    OldRadio,
-    BookCase,
-    LastItem=BookCase
-} Item_t;
-
-// Locations
-typedef enum {
-    NoLocation,
-    Driveway1,
-    Driveway2,
-    Driveway3,
-    Driveway4,
-    Driveway5,
-    Garage,
-    WorkRoom,
-    Hayloft,
-    Kitchen,
-    DiningRoom,
-    BottomStairs,
-    DrawingRoom,
-    Study,
-    TopStairs,
-    BoysBedroom,
-    GirlsBedroom,
-    MasterBedroom,
-    ServantsQuarters,
-    LaundryRoom,
-    FurnaceRoom,
-    VacantRoom,
-    Cistern,
-    Tunnel,
-    Woods24,
-    Woods25,
-    Woods26,
-    WolfTree,
-    Woods28,
-    Woods29,
-    Woods30,
-    Woods31,
-} Location_t;
-
 // TABLES
 
 // Names of directions
@@ -99,7 +30,7 @@ const QString DescriptionOfDirection[] = {
 };
 
 // Names of items
-const QString DescriptionOfItem[LastItem+1] = {
+const QString DescriptionOfItem[GameEngine::LastItem+1] = {
     "",
     "key",
     "pitchfork",
@@ -121,7 +52,7 @@ const QString DescriptionOfItem[LastItem+1] = {
 };
 
 // Names of locations
-const QString DescriptionOfLocation[NUMLOCATIONS] = {
+const QString DescriptionOfLocation[GameEngine::NUMLOCATIONS] = {
     "",
     "in the driveway near your car",
     "in the driveway",
@@ -159,13 +90,13 @@ const QString DescriptionOfLocation[NUMLOCATIONS] = {
 // DATA
 
 // Inventory of what player is carrying
-Item_t Inventory[MAXITEMS];
+GameEngine::Item_t Inventory[GameEngine::MAXITEMS];
 
 // Location of each item. Index is the item number, returns the location. 0 if item is gone
-Location_t locationOfItem[LastItem+1];
+GameEngine::Location_t locationOfItem[GameEngine::LastItem+1];
 
 // Map. Given a location and a direction to move, returns the location it connects to, or 0 if not a valid move. Map can change during game play.
-int Move[NUMLOCATIONS][6] = {
+int Move[GameEngine::NUMLOCATIONS][6] = {
     // N  S  E  W  U  D
     {  0, 0, 0, 0, 0, 0 }, // 0
     {  2, 0, 0, 0, 0, 0 }, // 1
