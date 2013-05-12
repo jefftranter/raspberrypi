@@ -217,7 +217,7 @@ void GameEngine::doSpecialActions()
                 emit sendOutput(tr("\n<font color=\"red\">Matthew is afraid to come down from the tree. If only you had something to coax him with.</font>"));
                 break;
             case 2:
-                emit sendOutput(tr("\n<font color=\"green\">Congratulations! You succeeded and won the game. I hope you had as much fun playing the game as I did creating it.Jeff Tranter <tranter@pobox.com></font>"));
+                emit sendOutput(tr("\n<font color=\"green\">Congratulations! You succeeded and won the game. I hope you had as much fun playing the game as I did creating it.\nJeff Tranter <tranter@pobox.com></font>"));
                 emit gameOver();
                 return;
                 break;
