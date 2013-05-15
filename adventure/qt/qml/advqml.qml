@@ -1,66 +1,95 @@
-import QtQuick 2.0
+import QtQuick 2.1
+import QtQuick.Controls 1.0
+import QtQuick.Layouts 1.0
 
-Column {
+ColumnLayout {
 
-Row {
+RowLayout {
 
-Column {
+ColumnLayout {
 
-Text {
-     text: "Commands:"
-}
+GroupBox {
+    title: qsTr("Move Commands:")
 
-Grid {
-    columns: 3
-    spacing: 2
-
-    Button {
-        text: "Go"
-        onClicked: {
-        console.log("Go button clicked")
-        }
-    }
-    Button { text: "Look" }
-    Button { text: "Use"  }
-    Button { text: "Examine" }
-    Button { text: "Take" }
-    Button { text: "Drop" }
-    Button { text: "Inventory" }
-    Button { text: "Help" }
-    Button { text: "Quit" }
-}
-
-}
-
-Column {
-
-    Text {
-        text: "Directions:"
-    }
-
-    Grid {
+GridLayout {
         columns: 2
-        spacing: 2
+        Button { text: qsTr("U&p"); }
+        Button { text: qsTr("&North") }
+        Button { text: qsTr("&West") }
+        Button { text: qsTr("E&ast") }
+        Button { text: qsTr("D&own"); }
+        Button { text: qsTr("&South"); }
+    }
+}
 
-        Button { text: "Up" }
-        Button { text: "North" }
-        Button { text: "West" }
-        Button { text: "East" }
-        Button { text: "Down" }
-        Button { text: "South" }
+GroupBox {
+    title: qsTr("Global Commands:")
+
+GridLayout {
+        columns: 2
+        Button { text: qsTr("&Look"); }
+        Button { text: qsTr("&Inventory") }
+        Button { text: qsTr("&Help") }
+        Button { text: qsTr("&Quit") }
     }
 }
 
 }
+
+ColumnLayout {
+
+GroupBox {
+    title: qsTr("Item Commands:")
+
+    GridLayout {
+        columns: 3
+        Button { text: qsTr("&Take"); checkable: true; checked: true }
+        Button { text: qsTr("&Drop"); checkable: true }
+        Button { text: qsTr("&Use") ; checkable: true }
+        Button { text: qsTr("&Examine"); checkable: true }
+    }
+}
+
+GroupBox {
+    title: qsTr("Inventory Items:")
+
+    GridLayout {
+        columns: 3
+        Button { text: qsTr("flashlight") }
+        Button { text: qsTr("-") }
+        Button { text: qsTr("-") }
+        Button { text: qsTr("-") }
+        Button { text: qsTr("-") }
+    }
+}
+
+GroupBox {
+    title: qsTr("Local Items:")
+
+    GridLayout {
+        columns: 3
+        Button { text: qsTr("key") }
+        Button { text: qsTr("-") }
+        Button { text: qsTr("-") }
+        Button { text: qsTr("-") }
+        Button { text: qsTr("-") }
+        Button { text: qsTr("-") }
+    }
+}
+
+}
+
+}
+
+GroupBox {
+    title: qsTr("Status:")
+    width: parent.width
 
 TextEdit {
-    id: textEdit
-    width: 100
-    height: 100
-    focus: true
-    cursorVisible: true
-    text: "Abandoned Farmhouse Adventure\nBy Jeff Tranter\n? "
-    Component.onCompleted: textEdit.cursorPosition = textEdit.length
+    width: parent.width
+    text: "The Abandoned Farmhouse Adventure\nby Jeff Tranter <tranter@pobox.com>"
+}
+
 }
 
 }
