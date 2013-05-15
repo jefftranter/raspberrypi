@@ -27,10 +27,10 @@ GroupBox {
 
 GridLayout {
         columns: 2
-        Button { text: qsTr("&Look"); }
+        Button { text: qsTr("&Look"); onClicked: edit.insert(edit.text.length, "\n\nYou see nothing special.") }
         Button { text: qsTr("&Inventory") }
         Button { text: qsTr("&Help") }
-        Button { text: qsTr("&Quit") }
+        Button { text: qsTr("&Quit"); onClicked: Qt.quit() }
     }
 }
 
@@ -85,10 +85,37 @@ GroupBox {
     title: qsTr("Status:")
     width: parent.width
 
-TextEdit {
-    width: parent.width
-    text: "The Abandoned Farmhouse Adventure\nby Jeff Tranter <tranter@pobox.com>"
-}
+Flickable {
+     id: flick
+
+     height: 200
+     width: parent.width
+     contentWidth: edit.paintedWidth
+     contentHeight: edit.paintedHeight
+     clip: true
+
+     function ensureVisible(r)
+     {
+         if (contentX >= r.x)
+             contentX = r.x;
+         else if (contentX+width <= r.x+r.width)
+             contentX = r.x+r.width-width;
+         if (contentY >= r.y)
+             contentY = r.y;
+         else if (contentY+height <= r.y+r.height)
+             contentY = r.y+r.height-height;
+     }
+
+     TextEdit {
+         id: edit
+         text: "The Abandoned Farmhouse Adventure\nby Jeff Tranter <tranter@pobox.com>"
+         width: flick.width
+         height: flick.height
+         focus: true
+         wrapMode: TextEdit.Wrap
+         onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
+     }
+ }
 
 }
 
