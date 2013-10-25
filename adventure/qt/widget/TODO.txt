@@ -1,8 +1,7 @@
 To Do List
 
-- use constants for any magic numbers
 - test on multiple platforms
-- refactor C code to use Qt containers, etc.
 
 Future:
 - save/load functionality
+- map and/or images
