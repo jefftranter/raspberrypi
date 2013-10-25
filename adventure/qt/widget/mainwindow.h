@@ -44,6 +44,7 @@ public:
 
 public slots:
     void quit();
+    void about();
     void gameOver();
     void commandOnItem(QAbstractButton *button);
     void updateWindow(QString msg);
