@@ -150,6 +150,10 @@ public slots:
     void doMoveEast();
     void doMoveWest();
 
+    // Load and save
+    void save(const QString & fileName);
+    void load(const QString & fileName);
+
 signals:
     void sendOutput(const QString output);
     void updateLocation(const QString location);

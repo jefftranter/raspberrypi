@@ -53,6 +53,9 @@ public slots:
     void updateInventoryItems(QStringList items);
     void updateLocalItems(QStringList items);
     void updateValidDirections(QStringList moves);
+    void save();
+    void saveAs();
+    void open();
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -65,6 +68,7 @@ private:
     QButtonGroup *m_objectButtonGroup;
     QButtonGroup *m_inventoryButtonGroup;
     GameEngine *m_game;
+    QString m_fileName;
 };
 
 #endif // MAINWINDOW_H

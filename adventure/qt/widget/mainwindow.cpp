@@ -22,6 +22,7 @@
 
 #include <QButtonGroup>
 #include <QMessageBox>
+#include <QFileDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "gameengine.h"
@@ -94,6 +95,9 @@ void MainWindow::initialize()
     connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
     connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(quit()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(save()));
+    connect(ui->actionSaveAs, SIGNAL(triggered()), this, SLOT(saveAs()));
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
     connect(ui->lookButton, SIGNAL(clicked()), m_game, SLOT(doLook()));
     connect(ui->inventoryButton, SIGNAL(clicked()), m_game, SLOT(doInventory()));
     connect(ui->helpButton, SIGNAL(clicked()), m_game, SLOT(doHelp()));
@@ -258,5 +262,54 @@ void MainWindow::commandOnItem(QAbstractButton *button)
         m_game->doExamine(item);
     } else {
         Q_ASSERT(false);
+    }
+}
+
+// File / Save As...
+void MainWindow::saveAs()
+{
+    // Get filename to save to
+    QString f = QFileDialog::getSaveFileName(0, tr("Save As"));
+
+    // Save game
+    if (!f.isEmpty()) {
+        m_fileName = f;
+        m_game->save(m_fileName);
+
+        // Put message in status bar
+        statusBar()->showMessage(tr("Game Saved"), 2000);
+    }
+}
+
+// File / Save
+void MainWindow::save()
+{
+    // Call saveAs() if game previously not saved
+    if (m_fileName.isEmpty()) {
+        saveAs();
+    }
+
+    // Save game
+    m_game->save(m_fileName);
+
+    // Put message in status bar
+    statusBar()->showMessage(tr("Game Saved"), 2000);
+}
+
+// File / Open...
+void MainWindow::open()
+{
+    // Confirm if current game is not saved.
+
+    // Get file name to open
+    QString f = QFileDialog::getOpenFileName(0, tr("Open"));
+
+    // Load game from file
+    if (!f.isEmpty()) {
+        m_fileName = f;
+        m_game->load(m_fileName);
+
+        // Put message in status bar
+        statusBar()->showMessage(tr("Game Loaded"), 2000);
     }
 }

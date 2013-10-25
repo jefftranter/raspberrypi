@@ -721,3 +721,15 @@ void GameEngine::start()
 "\n\nYour four-year-old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
                        ));
 }
+
+// Save game
+void GameEngine::save(const QString & fileName)
+{
+    qDebug("Game saved");
+}
+
+// Load game
+void GameEngine::load(const QString & fileName)
+{
+    qDebug("Game loaded");
+}
