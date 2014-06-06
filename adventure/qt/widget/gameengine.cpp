@@ -4,7 +4,7 @@
  *
  * Jeff Tranter <tranter@pobox.com>
  *
- * Copyright 2012-1013 Jeff Tranter
+ * Copyright 2012-2014 Jeff Tranter
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -718,18 +718,22 @@ void GameEngine::start()
     emit sendOutput(tr(
 "The Abandoned Farmhouse Adventure"
 "\nby Jeff Tranter <tranter@pobox.com>"
-"\n\nYour four-year-old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
+"\n\nYour five-year-old grandson has gone missing and was last seen headed in the direction of the abandoned family farm. It's a dangerous place to play. You have to find him before he gets hurt, and it will be getting dark soon..."
                        ));
 }
 
 // Save game
 void GameEngine::save(const QString & fileName)
 {
+    // TODO: Implement save.
+    Q_UNUSED(fileName)
     qDebug("Game saved");
 }
 
 // Load game
 void GameEngine::load(const QString & fileName)
 {
+    // TODO: Implement load.
+    Q_UNUSED(fileName)
     qDebug("Game loaded");
 }

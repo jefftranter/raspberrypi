@@ -5,7 +5,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = afadv
+TARGET = Adventure
 TEMPLATE = app
 
 SOURCES = main.cpp \
@@ -15,3 +15,8 @@ SOURCES = main.cpp \
 HEADERS  += mainwindow.h gameengine.h
 
 FORMS    += mainwindow.ui
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+OTHER_FILES += \
+    android/AndroidManifest.xml

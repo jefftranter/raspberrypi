@@ -4,7 +4,7 @@
  *
  * Jeff Tranter <tranter@pobox.com>
  *
- * Copyright 2012-1013 Jeff Tranter
+ * Copyright 2012-2014 Jeff Tranter
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -135,7 +135,7 @@ void MainWindow::about()
         tr(
 "The Abandoned Farm House Adventure\n"
 "by Jeff Tranter <tranter@pobox.com>\n"
-"Copyright 2012-1013 Jeff Tranter\n"
+"Copyright 2012-2014 Jeff Tranter\n"
 "\n"
 "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
 "you may not use this file except in compliance with the License.\n"
