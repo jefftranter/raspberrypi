@@ -56,9 +56,9 @@ void MainWindow::initialize()
     m_turnsLabel = new QLabel();
     m_directionsLabel = new QLabel();
     m_locationLabel = new QLabel();
-    statusBar()->addWidget(m_turnsLabel, 1);
-    statusBar()->addWidget(m_directionsLabel, 1);
-    statusBar()->addWidget(m_locationLabel, 1);
+    statusBar()->addWidget(m_turnsLabel, 0);
+    statusBar()->addWidget(m_directionsLabel, 0);
+    statusBar()->addWidget(m_locationLabel, 0);
 
     // Put inventory buttons in a group.
     m_inventoryButtonGroup = new QButtonGroup();
@@ -84,6 +84,11 @@ void MainWindow::initialize()
     itemButtons->addButton(ui->useButton);
     itemButtons->addButton(ui->examineButton);
 
+    // Load/Save not implemented yet
+    ui->actionSave->setDisabled(true);
+    ui->actionSaveAs->setDisabled(true);
+    ui->actionOpen->setDisabled(true);
+
     // Signal/slot connections
     connect(m_game, SIGNAL(sendOutput(QString)), this, SLOT(updateWindow(QString)));
     connect(m_game, SIGNAL(updateLocation(QString)), this, SLOT(updateLocation(QString)));
@@ -95,9 +100,9 @@ void MainWindow::initialize()
     connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
     connect(ui->quitButton, SIGNAL(clicked()), this, SLOT(quit()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
-    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(save()));
-    connect(ui->actionSaveAs, SIGNAL(triggered()), this, SLOT(saveAs()));
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
+    //connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(save()));
+    //connect(ui->actionSaveAs, SIGNAL(triggered()), this, SLOT(saveAs()));
+    //connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
     connect(ui->lookButton, SIGNAL(clicked()), m_game, SLOT(doLook()));
     connect(ui->inventoryButton, SIGNAL(clicked()), m_game, SLOT(doInventory()));
     connect(ui->helpButton, SIGNAL(clicked()), m_game, SLOT(doHelp()));
@@ -135,7 +140,7 @@ void MainWindow::about()
         tr(
 "The Abandoned Farm House Adventure\n"
 "by Jeff Tranter <tranter@pobox.com>\n"
-"Copyright 2012-2014 Jeff Tranter\n"
+"Copyright 2012-2014 Jeff Tranter.\n"
 "\n"
 "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
 "you may not use this file except in compliance with the License.\n"
@@ -180,19 +185,19 @@ void MainWindow::updateWindow(QString s)
 // This updates the label with number of turns.
 void MainWindow::updateTurns(int turns)
 {
-    m_turnsLabel->setText(tr("<b>Turns:</b> %1").arg(turns));
+    m_turnsLabel->setText(tr("<b>Turns:</b> %1 ").arg(turns));
 }
 
 // This updates the label with current location.
 void MainWindow::updateLocation(QString location)
 {
-    m_locationLabel->setText(tr("<b>Location:</b> %1").arg(location));
+    m_locationLabel->setText(tr("<b>Location:</b> %1.").arg(location));
 }
 
 // This updates the label with valid directions and enabled the appropriate move buttons.
 void MainWindow::updateValidDirections(QStringList moves)
 {
-    m_directionsLabel->setText(tr("<b>Can move:</b> %1").arg(moves.join(tr(", "))));
+    m_directionsLabel->setText(tr("<b>Can move:</b> %1. ").arg(moves.join(tr(", "))));
 
     // Enable the appropriate move buttons
     ui->upButton->setEnabled(moves.contains(tr("up")));
