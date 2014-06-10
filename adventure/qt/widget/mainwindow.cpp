@@ -139,9 +139,9 @@ void MainWindow::about()
         tr("About This Program"),
         tr(
 "The Abandoned Farm House Adventure\n"
-"version %1\n"
-"by Jeff Tranter <tranter@pobox.com>\n"
-"Copyright 2012-2014 Jeff Tranter.\n"
+"by Jeff Tranter <tranter@pobox.com>\n\n"
+"Copyright (C) 2012-2014 Jeff Tranter.\n"
+"Version %1 built on %2 using Qt version %3.\n"
 "\n"
 "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
 "you may not use this file except in compliance with the License.\n"
@@ -153,7 +153,7 @@ void MainWindow::about()
 "distributed under the License is distributed on an \"AS IS\" BASIS,\n"
 "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either \n"
 "express or implied. See the License for the specific language\n"
-"governing permissions and limitations under the License.").arg(m_game->version())
+"governing permissions and limitations under the License.").arg(m_game->version()).arg(__DATE__).arg(QT_VERSION_STR)
     );
 }
 
