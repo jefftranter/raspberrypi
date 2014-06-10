@@ -128,6 +128,7 @@ typedef enum {
     void start();
     bool itemIsHere(const QString item);
     bool carryingItem(const QString item);
+    QString version();
 
 public slots:
     // Global commands

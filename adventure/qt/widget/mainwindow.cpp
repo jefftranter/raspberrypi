@@ -139,6 +139,7 @@ void MainWindow::about()
         tr("About This Program"),
         tr(
 "The Abandoned Farm House Adventure\n"
+"version %1\n"
 "by Jeff Tranter <tranter@pobox.com>\n"
 "Copyright 2012-2014 Jeff Tranter.\n"
 "\n"
@@ -150,9 +151,9 @@ void MainWindow::about()
 "\n"
 "Unless required by applicable law or agreed to in writing, software\n"
 "distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n"
-"or implied. See the License for the specific language governing\n"
-"permissions and limitations under the License.")
+"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either \n"
+"express or implied. See the License for the specific language\n"
+"governing permissions and limitations under the License.").arg(m_game->version())
     );
 }
 

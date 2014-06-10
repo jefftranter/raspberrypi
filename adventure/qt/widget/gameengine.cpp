@@ -737,3 +737,9 @@ void GameEngine::load(const QString & fileName)
     Q_UNUSED(fileName)
     qDebug("Game loaded");
 }
+
+// Return game version
+QString GameEngine::version()
+{
+    return "1.0.0";
+}
