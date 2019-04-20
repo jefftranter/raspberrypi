@@ -1,4 +1,4 @@
 raspberrypi
 ===========
 
-Applications and documents for the Raspberry Pi computing platform.
+Applications, documents, and hardware for the Raspberry Pi computing platform.
