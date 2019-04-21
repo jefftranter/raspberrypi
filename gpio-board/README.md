@@ -23,10 +23,10 @@ TO DO
 While the circuit has been tested on a breadboard, I have not yet
 assembled or tested any PCBs.
 
-The board should be compatible with the GPIO connector on a Toradex
-i.MX series SOM mounted on a Colibri or Aster carrier board.
-Programming is slightly different from a Raspberry Pi as the GPIO
-devices names are numbered differently.
+The board is compatible with the GPIO connector on a Toradex i.MX
+series SOM mounted on a Colibri or Aster carrier board. Programming is
+slightly different from a Raspberry Pi as the GPIO devices names are
+numbered differently.
 
 PARTS LIST
 
@@ -56,16 +56,34 @@ connector mounts on the bottom (non silk-screened) side of the board.
 
 SOFTWARE
 
+Raspberry Pi 2/3:
+
 Function    P1 Pin  GPIO Name
 ----------  ------  ---------
-Red LED        3    GPIO2
-Green LED      5    GPIO3
-Yellow LED     7    GPIO4
-Switch        12    GPIO18
-DHT           16    GPIO23
+Red LED       18    GPIO24
+Green LED     22    GPIO25
+Yellow LED    29    GPIO5
+Switch        31    GPIO6
+DHT           37    GPIO26
 
-Sample programs (shell script and Python) are provided here. The DHT
-example requires downloading a AdaFruit DHT Python module.
+Toradex i.MX series with Colibri or Aster carrier board (you may need
+a modified device tree file to configure the GPIO pins):
+
+Function    P1 Pin  GPIO Name
+----------  ------  ---------
+Red LED       18    GPIO52
+Green LED     22    GPIO53
+Yellow LED    28    GPIO39
+Switch        31    GPIO93
+DHT           37    GPIO51
+
+Sample programs for the Raspberry Pi (shell script and Python) are
+provided here. The DHT example requires downloading a AdaFruit DHT
+Python module.
+
+To use the serial port, on the Raspberry Pi you can run raspi-config
+to enable a serial console and you should then be able to log in on
+the serial port using settings of 115200 bps 8N1.
 
 REFERENCES
 

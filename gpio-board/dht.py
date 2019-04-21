@@ -7,7 +7,7 @@ from time import sleep
 # Sensor type: dht22 or dht11
 sensor = 22
 # Sensor GPIO pin
-pin = 23
+pin = 26
 
 humidity, ctemp = Adafruit_DHT.read_retry(sensor, pin)
 

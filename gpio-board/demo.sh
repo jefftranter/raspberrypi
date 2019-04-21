@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # GPIO pin assignments
-led1=2
-led2=3
-led3=4
-sw1=18
+led1=24
+led2=25
+led3=5
+sw1=6
 
 # Make LED pins outputs
 gpio -g mode $led1 out
