@@ -14,14 +14,14 @@ provided are:
 4. A connector for an FTDI USB to serial adaptor which provides access
    to the Raspberry Pi's serial port/console.
 
+It is compatible with the Raspberry Pi 2 or 3. It is not compatible
+with the Raspberry Pi version 1 which had a smaller GPIO connector.
+It should work with the Raspberry Pi Zero.
+
 TO DO
 
 While the circuit has been tested on a breadboard, I have not yet
 assembled or tested any PCBs.
-
-It is compatible with the Raspberry Pi 2 or 3. It is not compatible
-with the Raspberry Pi version 1 which had a smaller GPIO connector.
-It should work with the Raspberry Pi Zero.
 
 The board should be compatible with the GPIO connector on a Toradex
 i.MX series SOM mounted on a Colibri or Aster carrier board.
