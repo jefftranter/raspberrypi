@@ -17,7 +17,7 @@ provided are:
 TO DO
 
 While the circuit has been tested on a breadboard, I have not yet
-assembled or tested an PCBs.
+assembled or tested any PCBs.
 
 It is compatible with the Raspberry Pi 2 or 3. It is not compatible
 with the Raspberry Pi version 1 which had a smaller GPIO connector.
@@ -64,7 +64,8 @@ Yellow LED     7    GPIO4
 Switch        12    GPIO18
 DHT           16    GPIO23
 
-Sample programs (shell script and Python) will be provided here later.
+Sample programs (shell script and Python) are provided here. The DHT
+example requires downloading a AdaFruit DHT Python module.
 
 REFERENCES
 
