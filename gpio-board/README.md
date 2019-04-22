@@ -87,13 +87,13 @@ the serial port using settings of 115200 bps 8N1.
 
 REFERENCES
 
-https://learn.adafruit.com/dht/overview
-http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
-https://www.adafruit.com/product/385
-https://tutorials-raspberrypi.com/raspberry-pi-measure-humidity-temperature-dht11-dht22/
-https://thepihut.com/blogs/raspberry-pi-tutorials/27968772-turning-on-an-led-with-your-raspberry-pis-gpio-pins
-https://raspberrypihq.com/use-a-push-button-with-raspberry-pi-gpio/
-https://www.raspberrypi.org/documentation/usage/gpio/python/README.md
-https://gpiozero.readthedocs.io/en/stable/recipes.html
-https://developer.toradex.com/knowledge-base/gpio-(linux)
-https://developer.toradex.com/getting-started/module-3-hardware-peripherals/basic-gpio-usage-aster-carrier-board-colibri-imx6
+1. https://learn.adafruit.com/dht/overview
+2. http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
+3. https://www.adafruit.com/product/385
+4. https://tutorials-raspberrypi.com/raspberry-pi-measure-humidity-temperature-dht11-dht22/
+5. https://thepihut.com/blogs/raspberry-pi-tutorials/27968772-turning-on-an-led-with-your-raspberry-pis-gpio-pins
+6. https://raspberrypihq.com/use-a-push-button-with-raspberry-pi-gpio/
+7. https://www.raspberrypi.org/documentation/usage/gpio/python/README.md
+8. https://gpiozero.readthedocs.io/en/stable/recipes.html
+9. https://developer.toradex.com/knowledge-base/gpio-(linux)
+10. https://developer.toradex.com/getting-started/module-3-hardware-peripherals/basic-gpio-usage-aster-carrier-board-colibri-imx6
