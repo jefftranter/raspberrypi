@@ -3,30 +3,20 @@
 
 INTRODUCTION
 
-This is a simple board which connects to a Raspberry Pi (or
-compatible) computer's GPIO connector and provides some simple
-functions for experimenting with GPIO programming. The functions
-provided are:
+This is a simple board which connects to a Raspberry Pi (or compatible) computer's GPIO connector and provides some simple functions for experimenting with GPIO programming. The functions provided are:
 
 1. Red, Green, and Yellow LEDs which can be individually turned on or off.
 2. A pushbutton whose status can be read.
 3. A DHT11 or DHT22 temperature/humidity sensor
-4. A connector for an FTDI USB to serial adaptor which provides access
-   to the Raspberry Pi's serial port/console.
+4. A connector for an FTDI USB to serial adaptor which provides access to the Raspberry Pi's serial port/console.
 
-It is compatible with the Raspberry Pi 2 or 3. It is not compatible
-with the Raspberry Pi version 1 which had a smaller GPIO connector.
-It should work with the Raspberry Pi Zero.
+It is compatible with the Raspberry Pi 2 or 3. It is not compatible with the Raspberry Pi version 1 which had a smaller GPIO connector. It should work with the Raspberry Pi Zero.
 
 TO DO
 
-While the circuit has been tested on a breadboard, I have not yet
-assembled or tested any PCBs.
+While the circuit has been tested on a breadboard, I have not yet assembled or tested any PCBs.
 
-The board is compatible with the GPIO connector on a Toradex i.MX
-series SOM mounted on a Colibri or Aster carrier board. Programming is
-slightly different from a Raspberry Pi as the GPIO devices names are
-numbered differently.
+The board is compatible with the GPIO connector on a Toradex i.MX series SOM mounted on a Colibri or Aster carrier board. Programming is slightly different from a Raspberry Pi as the GPIO devices names are numbered differently.
 
 PARTS LIST
 
@@ -34,56 +24,43 @@ See the file bom.csv.
 
 Make sure the tactile switch has the correct footprint for the PCB.
 
-Either a DHT11 or DHT22 temperature/humidity sensor can be used (they
-differ in price and accuracy). This can be omitted if desired. You can
-solder a header if you don't want to permanently solder in the sensor.
+Either a DHT11 or DHT22 temperature/humidity sensor can be used (they differ in price and accuracy). This can be omitted if desired. You can solder a header if you don't want to permanently solder in the sensor.
 
-Any suitable LEDs can be used. You may need to adjust the values of
-R3, R4, and R5 slightly to make all LEDs similar brightness, depending
-on the LEDs used.
+Any suitable LEDs can be used. You may need to adjust the values of R3, R4, and R5 slightly to make all LEDs similar brightness, depending on the LEDs used.
 
-The GPIO connector needs to be a suitable "female" connector to
-connect to the Raspberry Pi.
+The GPIO connector needs to be a suitable "female" connector to connect to the Raspberry Pi.
 
-The optional FTDI connector will work with most FTDI breakout boards
-such as the AdaFruit FTDI Friend or DFRobot Basic Breakout. The power
-pin is not used so it doesn't matter if it is set for 3.3V or 5V.
+The optional FTDI connector will work with most FTDI breakout boards such as the AdaFruit FTDI Friend or DFRobot Basic Breakout. The power pin is not used so it doesn't matter if it is set for 3.3V or 5V.
 
 ASSEMBLY
 
-All parts are through hole, not surface mount. Note that the GPIO
-connector mounts on the bottom (non silk-screened) side of the board.
+All parts are through hole, not surface mount. Note that the GPIO connector mounts on the bottom (non silk-screened) side of the board.
 
 SOFTWARE
 
 Raspberry Pi 2/3:
 
-Function    P1 Pin  GPIO Name
-----------  ------  ---------
-Red LED       18    GPIO24
-Green LED     22    GPIO25
-Yellow LED    29    GPIO5
-Switch        31    GPIO6
-DHT           37    GPIO26
+| Function   | P1 Pin | GPIO Name |
+| ---------- | ------ | --------- |
+| Red LED    | 18     | GPIO24    |
+| Green LED  | 22     | GPIO25    |
+| Yellow LED | 29     | GPIO5     |
+| Switch     | 31     | GPIO6     |
+| DHT        | 37     | GPIO26    |
 
-Toradex i.MX series with Colibri or Aster carrier board (you may need
-a modified device tree file to configure the GPIO pins):
+Toradex i.MX series with Colibri or Aster carrier board (you may need a modified device tree file to configure the GPIO pins):
 
-Function    P1 Pin  GPIO Name
-----------  ------  ---------
-Red LED       18    GPIO52
-Green LED     22    GPIO53
-Yellow LED    28    GPIO39
-Switch        31    GPIO93
-DHT           37    GPIO51
+| Function   | P1 Pin | GPIO Name |
+| ---------- | ------ | --------- |
+| Red LED    |   18   | GPIO52    |
+| Green LED  |   22   | GPIO53    |
+| Yellow LED |   28   | GPIO39    |
+| Switch     |   31   | GPIO93    |
+| DHT        |   37   | GPIO51    |
 
-Sample programs for the Raspberry Pi (shell script and Python) are
-provided here. The DHT example requires downloading a AdaFruit DHT
-Python module.
+Sample programs for the Raspberry Pi (shell script and Python) are provided here. The DHT example requires downloading a AdaFruit DHT Python module.
 
-To use the serial port, on the Raspberry Pi you can run raspi-config
-to enable a serial console and you should then be able to log in on
-the serial port using settings of 115200 bps 8N1.
+To use the serial port, on the Raspberry Pi you can run raspi-config to enable a serial console and you should then be able to log in on the serial port using settings of 115200 bps 8N1.
 
 REFERENCES
 
