@@ -57,7 +57,7 @@ Toradex i.MX series with Colibri or Aster carrier board (you may need a modified
 | Switch     |   31   | GPIO93    |
 | DHT        |   37   | GPIO51    |
 
-Sample programs for the Raspberry Pi (shell script and Python) are provided here. The DHT example requires downloading a AdaFruit DHT Python module.
+Sample programs for the Raspberry Pi (shell script and Python) are provided here. The DHT example requires downloading an AdaFruit DHT Python module.
 
 To use the serial port, on the Raspberry Pi you can run raspi-config to enable a serial console and you should then be able to log in on the serial port using settings of 115200 bps 8N1.
 
