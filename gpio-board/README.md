@@ -1,7 +1,6 @@
-                         GPIO LEARNING BOARD
-                         ===================
+# GPIO LEARNING BOARD
 
-# INTRODUCTION
+## INTRODUCTION
 
 This is a simple board which connects to a Raspberry Pi (or compatible) computer's GPIO connector and provides some simple functions for experimenting with GPIO programming. The functions provided are:
 
@@ -12,13 +11,13 @@ This is a simple board which connects to a Raspberry Pi (or compatible) computer
 
 It is compatible with the Raspberry Pi 2 or 3. It is not compatible with the Raspberry Pi version 1 which had a smaller GPIO connector. It should work with the Raspberry Pi Zero.
 
-# TO DO
+## TO DO
 
 While the circuit has been tested on a breadboard, I have not yet assembled or tested any PCBs.
 
 The board is compatible with the GPIO connector on a Toradex i.MX series SOM mounted on a Colibri or Aster carrier board. Programming is slightly different from a Raspberry Pi as the GPIO devices names are numbered differently.
 
-# PARTS LIST
+## PARTS LIST
 
 See the file bom.csv.
 
@@ -32,11 +31,11 @@ The GPIO connector needs to be a suitable "female" connector to connect to the R
 
 The optional FTDI connector will work with most FTDI breakout boards such as the AdaFruit FTDI Friend or DFRobot Basic Breakout. The power pin is not used so it doesn't matter if it is set for 3.3V or 5V.
 
-# ASSEMBLY
+## ASSEMBLY
 
 All parts are through hole, not surface mount. Note that the GPIO connector mounts on the bottom (non silk-screened) side of the board.
 
-# SOFTWARE
+## SOFTWARE
 
 Raspberry Pi 2/3:
 
@@ -62,7 +61,7 @@ Sample programs for the Raspberry Pi (shell script and Python) are provided here
 
 To use the serial port, on the Raspberry Pi you can run raspi-config to enable a serial console and you should then be able to log in on the serial port using settings of 115200 bps 8N1.
 
-# REFERENCES
+## REFERENCES
 
 1. https://learn.adafruit.com/dht/overview
 2. http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
