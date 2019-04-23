@@ -11,11 +11,12 @@ This is a simple board which connects to a Raspberry Pi (or compatible) computer
 
 It is compatible with the Raspberry Pi 2 or 3. It is not compatible with the Raspberry Pi version 1 which had a smaller GPIO connector. It should work with the Raspberry Pi Zero.
 
+The board is compatible with the GPIO connector on a Toradex Colibri i.MX6 series mounted on an Aster carrier board. Programming is slightly different from a Raspberry Pi as the GPIO devices names are numbered differently.
+
+
 ## TO DO
 
 While the circuit has been tested on a breadboard, I have not yet assembled or tested any PCBs.
-
-The board is compatible with the GPIO connector on a Toradex i.MX series SOM mounted on a Colibri or Aster carrier board. Programming is slightly different from a Raspberry Pi as the GPIO devices names are numbered differently.
 
 ## PARTS LIST
 
