@@ -28,7 +28,7 @@ Either a DHT11 or DHT22 temperature/humidity sensor can be used (they differ in 
 
 Any suitable LEDs can be used. You may need to adjust the values of R3, R4, and R5 slightly to make all LEDs similar brightness, depending on the LEDs used.
 
-The GPIO connector needs to be a suitable "female" connector to connect to the Raspberry Pi.
+The GPIO connector needs to be a suitable "female" connector to connect to the Raspberry Pi. A suitable part is http://adafru.it/2222
 
 The optional FTDI connector will work with most FTDI breakout boards such as the AdaFruit FTDI Friend or DFRobot Basic Breakout. The power pin is not used so it doesn't matter if it is set for 3.3V or 5V.
 
@@ -48,7 +48,7 @@ Raspberry Pi 2/3:
 | Switch     | 31     | GPIO6     |
 | DHT        | 37     | GPIO26    |
 
-Toradex i.MX series with Colibri or Aster carrier board (you may need a modified device tree file to configure the GPIO pins):
+Toradex i.MX6 series Colibri SOM with Aster carrier board:
 
 | Function   | P1 Pin | GPIO Name |
 | ---------- | ------ | --------- |
