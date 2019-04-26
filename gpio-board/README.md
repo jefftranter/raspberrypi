@@ -13,11 +13,6 @@ It is compatible with the Raspberry Pi 2 or 3. It is not compatible with the Ras
 
 The board is compatible with the GPIO connector on a Toradex Colibri i.MX6 series mounted on an Aster carrier board. Programming is slightly different from a Raspberry Pi as the GPIO devices names are numbered differently (see below).
 
-
-## TO DO
-
-While the circuit has been tested on a breadboard, I have not yet assembled or tested any PCBs.
-
 ## PARTS LIST
 
 See the file bom.csv.
@@ -35,7 +30,7 @@ The optional FTDI connector will work with most FTDI breakout boards such as the
 ## ASSEMBLY
 
 All parts are through hole, not surface mount. Note that the GPIO connector mounts on the bottom (non silk-screened) side of the board.
-The LEDs must be oriented correctly. Most LEDs have a flat side which should be lined up to match the symbol on the silscreen.
+The LEDs must be oriented correctly. Most LEDs have a flat side which should be lined up to match the symbol on the silkscreen.
 Make sure all component leads are cut flush to the bottom of the board after soldering so they don't short anything when the board is installed on a Raspberry Pi.
 
 ## SOFTWARE
