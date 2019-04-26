@@ -1,14 +1,15 @@
-Designator,Description,Comments
-P1,2x32 Female GPIO header,Mounted on underside of board. e.g.  http://adafrui.it/2222 
-P2,1x6 male header,
-R1,"Resistor, 10K, 1/4W, 5%",
-R2,"Resistor, 10K, 1/4W, 5%",
-R3,"Resistor, 330R, 1/4W, 5%",Adjust as needed for desired LED brightness.
-R4,"Resistor, 330R, 1/4W, 5%",Adjust as needed for desired LED brightness.
-R5,"Resistor, 330R, 1/4W, 5%",Adjust as needed for desired LED brightness.
-U1,DHT11 or DHT22 Temperature/Humidity Sensor,Optional. May want to use 1x6 female header.
-LED1,"LED, Red",
-LED2,"LED, Green",
-LED3,"LED, Yellow",
-SW1,"Pushbutton, momentary, tactile switch",
--,FTDI USB to serial adaptor,e.g. AdaFruit FTDI Friend or DFRobot Basic Breakout. Inserts into P2.
+Designator,Approx. Cost,Description,Example Vendor,Comments
+P1,$1.50,2x32 Female GPIO header,http://adafru.it/2222,Mount on underside of board.
+P2,$1.00,1x6 male header,http://adafru.it/3009,
+R1,$0.03,"Resistor, 10K, 1/4W, 5%",http://adafru.it/2784,
+R2,$0.03,"Resistor, 10K, 1/4W, 5%",http://adafru.it/2784,
+R3,$0.03,"Resistor, 330R, 1/4W, 5%",,Adjust as needed for desired LED brightness.
+R4,$0.03,"Resistor, 330R, 1/4W, 5%",,Adjust as needed for desired LED brightness.
+R5,$0.03,"Resistor, 330R, 1/4W, 5%",,Adjust as needed for desired LED brightness.
+U1,$9.95,DHT11 or DHT22 Temperature/Humidity Sensor,http://adafru.it/385,Optional. May want to use 1x6 female header.
+LED1,$1.00,"LED, Red",http://adafru.it/299,
+LED2,$1.00,"LED, Green",http://adafru.it/298,
+LED3,$1.00,"LED, Yellow",http://adafru.it/2700,
+SW1,$0.20,"Pushbutton, momentary, tactile switch",http://adafru.it/367,
+-,$14.75,FTDI USB to serial adaptor,http://adafru.it/284,Inserts into P2.
+-,$2.00,PCB,https://docs.easyeda.com/en/PCB/Order-PCB/,
