@@ -29,8 +29,11 @@ The optional FTDI connector will work with most FTDI breakout boards such as the
 
 ## ASSEMBLY
 
-All parts are through hole, not surface mount. Note that the GPIO connector mounts on the bottom (non silk-screened) side of the board.
-The LEDs must be oriented correctly. Most LEDs have a flat side which should be lined up to match the symbol on the silkscreen.
+All parts are through hole, making them easy to assemble. Note that the GPIO connector mounts on the bottom (non silk-screened) side of the board.
+
+The LEDs must be oriented correctly. Most LEDs have a flat side on the cathode pin which should be lined up to match the symbol on the silkscreen. Alternatively,
+the longer lead indicates the anode which should be on the left when looking at the top of the component side of the board with the GPIO connector at the top.
+
 Make sure all component leads are cut flush to the bottom of the board after soldering so they don't short anything when the board is installed on a Raspberry Pi.
 
 ## SOFTWARE
