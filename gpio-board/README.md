@@ -7,7 +7,7 @@ This is a simple board which connects to a Raspberry Pi (or compatible) computer
 1. Red, Green, and Yellow LEDs which can be individually turned on or off.
 2. A pushbutton whose status can be read.
 3. A DHT11 or DHT22 temperature/humidity sensor
-4. A connector for an FTDI USB to serial adaptor which provides access to the Raspberry Pi's serial port/console.
+4. A connector for an FTDI USB to serial adaptor which provides access to the serial port/console.
 
 It is compatible with the Raspberry Pi 2 or 3. It is not compatible with the Raspberry Pi version 1 which had a smaller GPIO connector. It should work with the Raspberry Pi Zero if it has a GPIO header installed.
 
@@ -21,7 +21,7 @@ Make sure the tactile switch has the correct footprint for the PCB.
 
 Either a DHT11 or DHT22 temperature/humidity sensor can be used (they differ in price and accuracy). This can be omitted if desired. You can solder a header if you don't want to permanently solder in the sensor.
 
-Any suitable LEDs can be used. You may need to adjust the values of R3, R4, and R5 slightly to make all LEDs similar brightness, depending on the LEDs used.
+Any suitable LEDs can be used provided they have 0.1" pin spacing. You may want to adjust the values of R3, R4, and R5 slightly to make all LEDs similar brightness, depending on the LEDs used.
 
 The GPIO connector needs to be a suitable "female" connector to connect to the Raspberry Pi. A suitable part is http://adafru.it/2222
 
@@ -29,7 +29,7 @@ The optional FTDI connector will work with most FTDI breakout boards such as the
 
 ## ASSEMBLY
 
-All parts are through hole, making them easy to assemble. Note that the GPIO connector mounts on the bottom (non silk-screened) side of the board.
+Refer to the pictures of an assembled board to aid in construction. All parts are through hole, making them easy to assemble. Note that the GPIO connector mounts on the bottom (non silk-screened) side of the board.
 
 The suggested order of installing and soldering is:
 - resistors
@@ -41,6 +41,8 @@ The suggested order of installing and soldering is:
 
 The LEDs must be oriented correctly. Most LEDs have a flat side on the cathode pin which should be lined up to match the symbol on the silkscreen. Alternatively,
 the longer lead indicates the anode which should be on the left when looking at the top of the component side of the board with the GPIO connector at the top.
+
+Make sure the DHT sensor is oriented correctly. The silkscreen indicates how it should be installed.
 
 Make sure all component leads are cut flush to the bottom of the board after soldering so they don't short anything when the board is installed on a Raspberry Pi.
 
@@ -62,13 +64,14 @@ Toradex i.MX6 series Colibri SOM with Aster carrier board:
 | ---------- | ------ | --------- |
 | Red LED    |   18   | GPIO52    |
 | Green LED  |   22   | GPIO53    |
-| Yellow LED |   28   | GPIO39    |
+| Yellow LED |   29   | GPIO63    |
 | Switch     |   31   | GPIO93    |
 | DHT        |   37   | GPIO51    |
 
 Sample programs for the Raspberry Pi (shell script and Python) are provided here. The DHT example requires downloading an AdaFruit DHT Python module.
 
 To use the serial port, on the Raspberry Pi you can run raspi-config to enable a serial console and you should then be able to log in on the serial port using settings of 115200 bps 8N1.
+The device file for the serial port is /dev/ttyS0. On the Toradex Colibri with Aster carrier board, the serial port shows up as UART B with device file /dev/ttymxc1. By default there is no login process connected to it. You need to be root to read or write the serial port. See reference [12] below for more details.
 
 ## REFERENCES
 
@@ -83,3 +86,4 @@ To use the serial port, on the Raspberry Pi you can run raspi-config to enable a
 9. https://gpiozero.readthedocs.io/en/stable/recipes.html
 10. https://developer.toradex.com/knowledge-base/gpio-(linux)
 11. https://developer.toradex.com/getting-started/module-3-hardware-peripherals/basic-gpio-usage-aster-carrier-board-colibri-imx6
+12. https://developer.toradex.com/getting-started/module-3-hardware-peripherals/basic-uart-usage-aster-carrier-board

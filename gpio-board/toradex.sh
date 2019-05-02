@@ -6,7 +6,7 @@
 # Pin assignments
 led1=52
 led2=53
-led3=39
+led3=63
 sw1=93
 
 # Unexport pins to avoid errors if case they were already exported.
@@ -31,35 +31,35 @@ do
   echo 0 >/sys/class/gpio/gpio$led1/value
   echo 0 >/sys/class/gpio/gpio$led2/value
   echo 0 >/sys/class/gpio/gpio$led3/value
-  sleep 1
+  usleep 200000
   echo 0 >/sys/class/gpio/gpio$led1/value
   echo 0 >/sys/class/gpio/gpio$led2/value
   echo 1 >/sys/class/gpio/gpio$led3/value
-  sleep 1
+  usleep 200000
   echo 0 >/sys/class/gpio/gpio$led1/value
   echo 1 >/sys/class/gpio/gpio$led2/value
   echo 0 >/sys/class/gpio/gpio$led3/value
-  sleep 1
+  usleep 200000
   echo 0 >/sys/class/gpio/gpio$led1/value
   echo 1 >/sys/class/gpio/gpio$led2/value
   echo 1 >/sys/class/gpio/gpio$led3/value
-  sleep 1
+  usleep 200000
   echo 1 >/sys/class/gpio/gpio$led1/value
   echo 0 >/sys/class/gpio/gpio$led2/value
   echo 0 >/sys/class/gpio/gpio$led3/value
-  sleep 1
+  usleep 200000
   echo 1 >/sys/class/gpio/gpio$led1/value
   echo 0 >/sys/class/gpio/gpio$led2/value
   echo 1 >/sys/class/gpio/gpio$led3/value
-  sleep 1
+  usleep 200000
   echo 1 >/sys/class/gpio/gpio$led1/value
   echo 1 >/sys/class/gpio/gpio$led2/value
   echo 0 >/sys/class/gpio/gpio$led3/value
-  sleep 1
+  usleep 200000
   echo 1 >/sys/class/gpio/gpio$led1/value
   echo 1 >/sys/class/gpio/gpio$led2/value
   echo 1 >/sys/class/gpio/gpio$led3/value
-  sleep 1
+  usleep 200000
 
   echo -n "switch = "
   cat /sys/class/gpio/gpio$sw1/value
