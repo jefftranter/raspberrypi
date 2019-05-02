@@ -3,9 +3,9 @@ P1,$1.0,2x32 Female GPIO header,http://adafru.it/2222,Mount on underside of boar
 P2,$1.00,1x6 male header,http://adafru.it/3009,For FTDI (cut to size)
 R1,$0.03,"Resistor, 10K, 1/4W, 5%",http://adafru.it/2784,
 R2,$0.03,"Resistor, 10K, 1/4W, 5%",http://adafru.it/2784,
-R3,$0.03,"Resistor, 220R, 1/4W, 5%",http://adafru.it/2780,,Adjust as needed for desired LED brightness.
-R4,$0.03,"Resistor, 220R, 1/4W, 5%",http://adafru.it/2780,,Adjust as needed for desired LED brightness.
-R5,$0.03,"Resistor, 220R, 1/4W, 5%",http://adafru.it/2780,,Adjust as needed for desired LED brightness.
+R3,$0.03,"Resistor, 220R, 1/4W, 5%",http://adafru.it/2780,Adjust as needed for desired LED brightness.
+R4,$0.03,"Resistor, 220R, 1/4W, 5%",http://adafru.it/2780,Adjust as needed for desired LED brightness.
+R5,$0.03,"Resistor, 220R, 1/4W, 5%",http://adafru.it/2780,Adjust as needed for desired LED brightness.
 U1,$9.95,DHT11 or DHT22 Temperature/Humidity Sensor,http://adafru.it/385,Optional. May want to use 1x4 female header.
 LED1,$1.00,"LED, Red",http://adafru.it/299,
 LED2,$1.00,"LED, Green",http://adafru.it/298,
