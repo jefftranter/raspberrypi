@@ -27,6 +27,6 @@ while True:
 
     sleep(0.2)
 
-    # Wait for button to be pressed (go low).
-    while not button.is_pressed:
+    # Wait if button is pressed.
+    while button.is_pressed:
       pass

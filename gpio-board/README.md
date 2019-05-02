@@ -31,6 +31,14 @@ The optional FTDI connector will work with most FTDI breakout boards such as the
 
 All parts are through hole, making them easy to assemble. Note that the GPIO connector mounts on the bottom (non silk-screened) side of the board.
 
+The suggested order of installing and soldering is:
+- resistors
+- LEDs
+- pushbutton
+- 6 pin SIP connector
+- GPIO connector
+- 4 pin SIP or DHT11/DHT22 sensor
+
 The LEDs must be oriented correctly. Most LEDs have a flat side on the cathode pin which should be lined up to match the symbol on the silkscreen. Alternatively,
 the longer lead indicates the anode which should be on the left when looking at the top of the component side of the board with the GPIO connector at the top.
 

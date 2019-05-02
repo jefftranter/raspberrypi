@@ -33,6 +33,6 @@ while True:
 
     time.sleep(0.2)
 
-    # Wait for button to be pressed (go low).
-    while GPIO.input(sw1) == GPIO.HIGH:
+    # Wait if button is pressed (is high).
+    while GPIO.input(sw1) == GPIO.LOW:
       pass
