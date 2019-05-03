@@ -6,9 +6,10 @@ R2,$0.03,"Resistor, 10K, 1/4W, 5%",http://adafru.it/2784,
 R3,$0.03,"Resistor, 220R, 1/4W, 5%",http://adafru.it/2780,Adjust as needed for desired LED brightness.
 R4,$0.03,"Resistor, 220R, 1/4W, 5%",http://adafru.it/2780,Adjust as needed for desired LED brightness.
 R5,$0.03,"Resistor, 220R, 1/4W, 5%",http://adafru.it/2780,Adjust as needed for desired LED brightness.
-U1,$9.95,DHT11 or DHT22 Temperature/Humidity Sensor,http://adafru.it/385,Optional.
-LED1,$1.00,"LED, Red",http://adafru.it/299,
-LED2,$1.00,"LED, Green",http://adafru.it/298,
+U1,$9.95,DHT22 Temperature/Humidity Sensor,http://adafru.it/385,Optional.
+U1,$5..00,DHT11 Temperature/Humidity Sensor,http://adafru.it/286,Optional.
+LED1,$1.00,"LED, Red",http://adafru.it/297,
+LED2,$1.00,"LED, Green",http://adafru.it/300,
 LED3,$1.00,"LED, Yellow",http://adafru.it/2700,
 SW1,$0.20,"Pushbutton, momentary, tactile switch",http://adafru.it/367,
 -,$1.00,1x4 female header,http://adafru.it/598,Optional for mounting DHT11/22 (cut to size)

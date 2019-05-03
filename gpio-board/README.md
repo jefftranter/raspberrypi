@@ -23,9 +23,11 @@ Either a DHT11 or DHT22 temperature/humidity sensor can be used (they differ in 
 
 Any suitable LEDs can be used provided they have 0.1" pin spacing. You may want to adjust the values of R3, R4, and R5 slightly to make all LEDs similar brightness, depending on the LEDs used.
 
-The GPIO connector needs to be a suitable "female" connector to connect to the Raspberry Pi. A suitable part is http://adafru.it/2222
+The GPIO connector needs to be a suitable "female" connector to connect to the Raspberry Pi. See the parts list.
 
 The optional FTDI connector will work with most FTDI breakout boards such as the AdaFruit FTDI Friend or DFRobot Basic Breakout. The power pin is not used so it doesn't matter if it is set for 3.3V or 5V.
+
+If you want to extend the board away from the Raspberry Pi or Toradex board, you could connect it via a 26-pin GPIO extension cable, which is available from a number of vendors.
 
 ## ASSEMBLY
 
