@@ -35,20 +35,23 @@ Refer to the pictures of an assembled board to aid in construction. All parts ar
 
 The suggested order of installing and soldering is:
 - resistors
-- LEDs
 - pushbutton
+- LEDs
 - 6 pin SIP connector
 - GPIO connector
 - 4 pin SIP or DHT11/DHT22 sensor
 
-The LEDs must be oriented correctly. Most LEDs have a flat side on the cathode pin which should be lined up to match the symbol on the silkscreen. Alternatively,
-the longer lead indicates the anode which should be on the left when looking at the top of the component side of the board with the GPIO connector at the top.
+The LEDs must be oriented correctly. Most LEDs have a flat side on the cathode pin which should be lined up to match the symbol on the silkscreen. Alternatively, the longer lead indicates the anode which should be on the left when looking at the top of the component side of the board with the GPIO connector at the top. A trick which often works to check the polarity and color of an LED it to connect it to a digital multimeter with the ohms function on the diode test range -- this usually supplied enough voltage to dimly light the LED.
 
 Make sure the DHT sensor is oriented correctly. The silkscreen indicates how it should be installed.
 
 Make sure all component leads are cut flush to the bottom of the board after soldering so they don't short anything when the board is installed on a Raspberry Pi.
 
+When inserting the GPIO board into the Raspberry Pi or Toradex, be sure to orient it correctly as the connectors are not keyed and can be installed backwards.
+
 ## SOFTWARE
+
+The GPIO pins and device names are assigned as follows.
 
 Raspberry Pi 2/3:
 
