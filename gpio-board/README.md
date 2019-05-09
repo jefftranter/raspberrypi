@@ -36,10 +36,11 @@ Refer to the pictures of an assembled board to aid in construction. All parts ar
 The suggested order of installing and soldering is:
 - resistors
 - pushbutton
+- 4 pin SIP for DHT11/DHT22 sensor (if used)
 - LEDs
 - 6 pin SIP connector
 - GPIO connector
-- 4 pin SIP or DHT11/DHT22 sensor
+- DHT11/DHT22 sensor (if not mounted on a SIP)
 
 The LEDs must be oriented correctly. Most LEDs have a flat side on the cathode pin which should be lined up to match the symbol on the silkscreen. Alternatively, the longer lead indicates the anode which should be on the left when looking at the top of the component side of the board with the GPIO connector at the top. A trick which often works to check the polarity and color of an LED it to connect it to a digital multimeter with the ohms function on the diode test range -- this usually supplied enough voltage to dimly light the LED.
 
