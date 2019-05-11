@@ -42,7 +42,7 @@ The suggested order of installing and soldering is:
 - GPIO connector
 - DHT11/DHT22 sensor (if not mounted on a SIP)
 
-The LEDs must be oriented correctly. Most LEDs have a flat side on the cathode pin which should be lined up to match the symbol on the silkscreen. Alternatively, the longer lead indicates the anode which should be on the left when looking at the top of the component side of the board with the GPIO connector at the top. A trick which often works to check the polarity and color of an LED it to connect it to a digital multimeter with the ohms function on the diode test range -- this usually supplied enough voltage to dimly light the LED.
+The LEDs must be oriented correctly. Many LEDs have a flat side on the cathode pin which should be lined up to match the symbol on the silkscreen, hoever this convention is not consistent across all LEDs. A better indicator is the longer lead indicating the anode which should be on the left when looking at the top of the component side of the board with the GPIO connector at the top. A trick which often works to check the polarity and color of an LED it to connect it to a digital multimeter with the ohms function on the diode test range -- this usually supplies enough voltage to dimly light the LED.
 
 Make sure the DHT sensor is oriented correctly. The silkscreen indicates how it should be installed.
 
