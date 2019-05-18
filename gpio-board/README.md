@@ -79,6 +79,12 @@ Sample programs for the Raspberry Pi (shell script and Python) are provided here
 To use the serial port, on the Raspberry Pi you can run raspi-config to enable a serial console and you should then be able to log in on the serial port using settings of 115200 bps 8N1.
 The device file for the serial port is /dev/ttyS0. On the Toradex Colibri with Aster carrier board, the serial port shows up as UART B with device file /dev/ttymxc1. By default there is no login process connected to it. You need to be root to read or write the serial port. See reference [12] below for more details.
 
+## AVAILABILITY
+
+This is Open Source Hardware, licensed under the The TAPR Open Hardware License. You are welcome to build the circuit and use my PCB layout.
+
+Assembled and tested boards are available from me for a nominal cost. Check eBay for "Raspberry Pi GPIO Learning Board" from seller Sordnax. Contact me directly about purchasing larger volumes of boards at a discount.
+
 ## REFERENCES
 
 1. https://learn.adafruit.com/dht/overview
