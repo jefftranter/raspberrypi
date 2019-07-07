@@ -9,7 +9,7 @@ This is a simple board which connects to a Raspberry Pi (or compatible) computer
 3. A DHT11 or DHT22 temperature/humidity sensor
 4. A connector for an FTDI USB to serial adaptor which provides access to the serial port/console.
 
-It is compatible with the Raspberry Pi 2 or 3. It is not compatible with the Raspberry Pi version 1 which had a smaller GPIO connector. It should work with the Raspberry Pi Zero if it has a GPIO header installed.
+It is compatible with the Raspberry Pi 2, 3 or 4. It is not compatible with the Raspberry Pi version 1 which had a smaller GPIO connector. It will work with the Raspberry Pi Zero if it has a GPIO header installed.
 
 The board is compatible with the GPIO connector on a Toradex Colibri i.MX6 series mounted on an Aster carrier board. Programming is slightly different from a Raspberry Pi as the GPIO devices names are numbered differently (see below).
 
@@ -54,7 +54,7 @@ When inserting the GPIO board into the Raspberry Pi or Toradex, be sure to orien
 
 The GPIO pins and device names are assigned as follows.
 
-Raspberry Pi 2/3:
+Raspberry Pi 0/2/3/4:
 
 | Function   | P1 Pin | GPIO Name |
 | ---------- | ------ | --------- |
