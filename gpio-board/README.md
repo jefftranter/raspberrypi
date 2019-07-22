@@ -13,6 +13,11 @@ It is compatible with the Raspberry Pi 2, 3 or 4. It is not compatible with the 
 
 The board is compatible with the GPIO connector on a Toradex Colibri i.MX6 series mounted on an Aster carrier board. Programming is slightly different from a Raspberry Pi as the GPIO devices names are numbered differently (see below).
 
+If you use the official Raspberry Pi touchscreen, it uses two pins on the GPIO connector for power. This will conflict with being able to install the GPIO Learning Board on the connector. A couple of workarounds for this are:
+
+1. Connect the touchscreen using wirewrap or soldered wires to leave the GPIO pins free.
+2. On the GPIO Learning Board, use a GPIO header with long pins that extend from the top of the board and can be used to attach the touchscreen wires. See, for example https://www.buyapi.ca/product/gpio-stacking-header-for-pi-abpi-2-extra-long-2x20-pins/
+
 ## PARTS LIST
 
 See the file bom.csv.
