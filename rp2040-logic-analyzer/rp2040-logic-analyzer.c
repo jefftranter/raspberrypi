@@ -86,7 +86,7 @@ void logic_analyser_arm(PIO pio, uint sm, uint dma_chan, uint32_t *capture_buf, 
     channel_config_set_dreq(&c, pio_get_dreq(pio, sm, false));
 
     dma_channel_configure(dma_chan, &c,
-        capture_buf,        // Destinatinon pointer
+        capture_buf,        // Destination pointer
         &pio->rxf[sm],      // Source pointer
         capture_size_words, // Number of transfers
         true                // Start immediately
