@@ -8,10 +8,10 @@ My version extends the commands and adds support for storing the
 samples on an SD card attached to the Pico using a commonly available
 SD card adaptor.
 
-The samples are written to a file OUTPUT.csv on the SD card. These can
-be loaded into applications on a desktop computer for analysis. For
-example, it can be loaded into PulseView using a command like
-"pulseview -i OUTPUT.csv -I csv:samplerate=2000000"
+The samples are written to a file on the SD card. This can be loaded
+into applications on a desktop computer for analysis. For example, it
+can be loaded into PulseView using a command like "pulseview -i
+OUTPUT.csv -I csv:samplerate=2000000"
 
 ## Hardware Setup
 
@@ -68,14 +68,15 @@ baud. Once connected press h to get help of the commands. The capture is
 only limited by the abilities of the Pico.
 
 The commands are:
-  * p#   - Set the first pin to receive capture data
-  * n#   - Set how many pins to receive capture data
-  * f#   - Set the frequency to capture data in Hz
-  * t1|0 - Set the trigger to high or low (triggers on first pin)
-  * s#   - Set how many samples to capture
-  * g    - Go!
-  * ?    - show current parameters
-  * h    - Show command usage
+  * p#        - Set the first pin to receive capture data
+  * n#        - Set how many pins to receive capture data
+  * f#        - Set the frequency to capture data in Hz
+  * t1|0      - Set the trigger to high or low (triggers on first pin)
+  * s#        - Set how many samples to capture
+  * cfilename - Set filename to save (default OUTPUT.csv)
+  * g         - Go!
+  * ?         - show current parameters
+  * h         - Show command usage
 
 Once "go" is selected the trigger will arm and wait for the specified signal.
 The output is a CSV file, each line contains every pin being sampled.

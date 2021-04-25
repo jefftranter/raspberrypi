@@ -42,6 +42,7 @@ const uint LED_PIN = 25;
 uint CAPTURE_PIN_BASE = 0;
 uint CAPTURE_PIN_COUNT = 4;
 uint CAPTURE_N_SAMPLES = 10000;
+char FILENAME[16] = "OUTPUT.csv";
 float FREQ_DIV = 125.0f; // Divide 125Mhz by this to get your freq
 uint FREQUENCY = 1000000;
 bool TRIGGER = false; // true = high : false = low
@@ -105,7 +106,7 @@ void print_capture_buf_csv(const uint32_t *buf, uint pin_base, uint pin_count, u
     }
 
     FIL fil;
-    res = f_open(&fil, "OUTPUT.csv", FA_WRITE|FA_CREATE_ALWAYS);
+    res = f_open(&fil, FILENAME, FA_WRITE|FA_CREATE_ALWAYS);
     if (res != FR_OK) {
         printf("file open error: %s (%d)\n", FRESULT_str(res), res);
         return;
@@ -139,7 +140,7 @@ void print_capture_buf_csv(const uint32_t *buf, uint pin_base, uint pin_count, u
 }
 
 void read_user_input() {
-    const int BUFFER_MAX = 11;
+    const int BUFFER_MAX = 16;
     char buffer[BUFFER_MAX+1];
 
     while (true) {
@@ -235,6 +236,9 @@ void read_user_input() {
         else if (buffer[0] == 'g') {
             break;
         }
+        else if ((buffer[0] == 'c') && (strlen(buffer) > 2)) {
+            strcpy(FILENAME, &buffer[1]);
+        }
         else if (buffer[0] == '?') {
             printf("Current settings:\n");
             printf("First pin:      %d\n", CAPTURE_PIN_BASE);
@@ -249,16 +253,18 @@ void read_user_input() {
             }
             printf("Trigger level:  %d\n", TRIGGER);
             printf("Samples:        %d\n", CAPTURE_N_SAMPLES);
+            printf("Filename:       %s\n", FILENAME);
         }
         else if (buffer[0] == 'h') {
-            printf("p#   - Set the first pin to receive capture data\n");
-            printf("n#   - Set how many pins to receive capture data\n");
-            printf("f#   - Set the frequency to capture data in Hz\n");
-            printf("t1|0 - Set the trigger to high or low (triggers on first pin)\n");
-            printf("s#   - Set how many samples to capture\n");
-            printf("g    - Go!\n");
-            printf("?    - show current parameters\n");
-            printf("h    - Show command usage\n");
+            printf("p#        - Set the first pin to receive capture data\n");
+            printf("n#        - Set how many pins to receive capture data\n");
+            printf("f#        - Set the frequency to capture data in Hz\n");
+            printf("t1|0      - Set the trigger to high or low (triggers on first pin)\n");
+            printf("s#        - Set how many samples to capture\n");
+            printf("cfilename - Set filename to save (default OUTPUT.csv)\n");
+            printf("g         - Go!\n");
+            printf("?         - show current parameters\n");
+            printf("h         - Show command usage\n");
         }
         else {
             printf("Unknown command, type h for help\n");
@@ -315,7 +321,7 @@ int main() {
 
         printf("Writing data to SD card...\n");
         print_capture_buf_csv(capture_buf, CAPTURE_PIN_BASE, CAPTURE_PIN_COUNT, CAPTURE_N_SAMPLES);
-        printf("Data written to OUTPUT.csv\n");
+        printf("Data written to %s\n", FILENAME);
 
         pio_remove_program(pio, capture_prog_2, offset);
 
