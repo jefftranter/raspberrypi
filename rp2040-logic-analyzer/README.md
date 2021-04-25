@@ -36,14 +36,14 @@ Raspberry Pi Pico examples. The example now allows interactive configuration
 of the capture to perform and outputs the capture in CSV format suitable for
 importing into sigrock / Pulseview for further analysis.
 
-To use the analyzer install it on a Pico and connect to the COM port at 921600 
+To use the analyzer install it on a Pico and connect to the COM port at 115200
 baud. Once connected press h to get help of the commands. The capture is
 only limited by the abilities of the Pico.
 
 The commands are:
   * p# - Set the first pin to receive capture data
   * n# - Set how many pins to receive capture data
-  * f# - Set the freqency to capture data at in Hz
+  * f# - Set the frequency to capture data at in Hz
   * t(1)(0) - Set the trigger to high or low. Trigger happens off first pin
   * s# - Set how many samples to capture
   * g - Go!

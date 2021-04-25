@@ -1,4 +1,8 @@
 /**
+ * Modifed by Jeff Tranter <tranter@pobox.com>
+ * Added ? and h commands.
+ * Added support for saving captured data to a CSV file on an SD card.
+ *
  * Modified by Mark Komus 2021
  * Now repeatedly captures data and outputs to a CSV format
  * Intended to be imported by sigrok / PulseView
@@ -136,7 +140,6 @@ void read_user_input() {
             if (pin == -1)
                 printf("Pin number is not valid\n");
             else {
-                printf("Start pin is %d\n", pin);
                 CAPTURE_PIN_BASE = pin;
             }
         }
@@ -151,7 +154,6 @@ void read_user_input() {
             if (number == -1)
                 printf("Number of pins is not valid\n");
             else {
-                printf("Total pins is %d\n", number);
                 CAPTURE_PIN_COUNT = number;
             }
         }
@@ -168,7 +170,6 @@ void read_user_input() {
             else {
                 FREQUENCY = freq;
                 FREQ_DIV = clock_get_hz(clk_sys) / (float)FREQUENCY;
-                printf("Frequency is %d div is %f\n", FREQUENCY, FREQ_DIV);
             }
         }
         else if (buffer[0] == 't') {
@@ -182,7 +183,6 @@ void read_user_input() {
                 printf("Trigger value is not valid\n");
             else {
                 TRIGGER = t;
-                printf("Trigger set to %d\n", TRIGGER);
             }
         }
         else if (buffer[0] == 's') {
@@ -196,30 +196,34 @@ void read_user_input() {
             if (number == -1)
                 printf("Sample number is not valid\n");
             else {
-                printf("Sample number is %d\n", number);
                 CAPTURE_N_SAMPLES = number;
             }
         }
         else if (buffer[0] == 'g') {
             break;
         }
+        else if (buffer[0] == '?') {
+            printf("Current settings:\n");
+            printf("First pin:      %d\n", CAPTURE_PIN_BASE);
+            printf("Number of pins: %d\n", CAPTURE_PIN_COUNT);
+            printf("Frequency:      %d Hz\n", FREQUENCY);
+            printf("Trigger level:  %d\n", TRIGGER);
+            printf("Samples:        %d\n", CAPTURE_N_SAMPLES);
+        }
+        else if (buffer[0] == 'h') {
+            printf("p#   - Set the first pin to receive capture data\n");
+            printf("n#   - Set how many pins to receive capture data\n");
+            printf("f#   - Set the frequency to capture data in Hz\n");
+            printf("t1|0 - Set the trigger to high or low (triggers on first pin)\n");
+            printf("s#   - Set how many samples to capture\n");
+            printf("?    - show current parameters\n");
+            printf("g    - Go!\n");
+        }
         else {
-            printf("Unknown command\n");
-            printf("p# - Set the first pin to receive capture data\n");
-            printf("n# - Set how many pins to receive capture data\n");
-            printf("f# - Set the freqency to capture data at in Hz\n");
-            printf("t(1)(0) - Set the trigger to high or low\n");
-            printf("    Trigger happens off first pin\n");
-            printf("s# - Set how many samples to capture\n");
-            printf("g - Go!\n");
+            printf("Unknown command, type h for help\n");
         }
     }
 }
-
-// Boost the baud rate to try to get the data out faster
-// Probably should just call the init with the baud rate option set
-//#undef PICO_DEFAULT_UART_BAUD_RATE
-//#define PICO_DEFAULT_UART_BAUD_RATE 921600
 
 int main() {
     stdio_init_all();
@@ -232,6 +236,10 @@ int main() {
     PIO pio = pio0;
     uint sm = 0;
     uint dma_chan = 0;
+
+    sleep_ms(1000); // Allow time for serial connection to come up.
+    printf("Raspberry Pi Pico Logic Analyzer\n");
+    printf("Type h for help.\n");
 
     while (true) {
         gpio_put(LED_PIN, 1);
@@ -249,9 +257,7 @@ int main() {
         logic_analyser_init(pio, sm, CAPTURE_PIN_BASE, CAPTURE_PIN_COUNT, FREQ_DIV);
 
         uint32_t hz = clock_get_hz(clk_sys);
-        printf("Clock speed is   %d\n", hz);
-        float caphz = (float)hz/FREQ_DIV;
-        printf("Capture speed is %f.2\n", caphz);
+        float caphz = (float)hz / FREQ_DIV;
 
         printf("Arming trigger\n");
         gpio_put(LED_PIN, 1);
@@ -263,6 +269,8 @@ int main() {
         dma_channel_wait_for_finish_blocking(dma_chan);
 
         gpio_put(LED_PIN, 0);
+        printf("Data acquired\n");
+
         print_capture_buf_csv(capture_buf, CAPTURE_PIN_BASE, CAPTURE_PIN_COUNT, CAPTURE_N_SAMPLES);
 
         pio_remove_program(pio, capture_prog_2, offset);
