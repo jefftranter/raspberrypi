@@ -2,6 +2,7 @@
  * Modifed by Jeff Tranter <tranter@pobox.com>
  * Added ? and h commands.
  * Added support for saving captured data to a CSV file on an SD card.
+ * Added more error checking of parameters.
  *
  * Modified by Mark Komus 2021
  * Now repeatedly captures data and outputs to a CSV format
