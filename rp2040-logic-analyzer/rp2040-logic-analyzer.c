@@ -29,7 +29,13 @@
 #include "hardware/dma.h"
 #include "hardware/clocks.h"
 
+#include "sd_card.h"
+#include "ff.h"
+#include "f_util.h"
+
+#ifndef LED_PIN
 const uint LED_PIN = 25;
+#endif
 
 // Defaults - just what I tested with any legal value is fine
 uint CAPTURE_PIN_BASE = 0;
@@ -89,23 +95,42 @@ void logic_analyser_arm(PIO pio, uint sm, uint dma_chan, uint32_t *capture_buf, 
 }
 
 void print_capture_buf_csv(const uint32_t *buf, uint pin_base, uint pin_count, uint32_t n_samples) {
+    FATFS *p_fs = malloc(sizeof(FATFS));
+
+    FRESULT res = f_mount(p_fs, "", 0);
+    if (res != FR_OK) {
+        printf("SD card mount error: %s (%d)\n", FRESULT_str(res), res);
+    }
+
+    FIL fil;
+    res = f_open(&fil, "OUTPUT.csv", FA_WRITE|FA_CREATE_ALWAYS);
+    if (res != FR_OK) {
+        printf("file open error: %s (%d)\n", FRESULT_str(res), res);
+    }
+
     for (int sample = 0; sample < n_samples; ++sample) {
         for (int pin = 0; pin < pin_count; ++pin) {
             uint bit_index = pin + sample * pin_count;
             bool level = !!(buf[bit_index / 32] & 1u << (bit_index % 32));
-            printf(level ? "1" : "0");
-            printf(",");
+            f_printf(&fil, level ? "1" : "0");
+            if (pin != pin_count-1) {
+                f_printf(&fil, ",");
+            }
         }
-
-        // Blink the LED every 2500 samples to show something is happening
-        // Good for a serial capture where you cannot see if it is still outputting
-        if ((sample % 5000) == 0)
-            gpio_put(LED_PIN, 1);
-        else if ((sample % 5000) == 2500)
-            gpio_put(LED_PIN, 0);
-
-        printf("\n");
+        f_printf(&fil, "\n");
     }
+
+    res = f_close(&fil);
+    if (res != FR_OK) {
+        printf("file close error: %s (%d)\n", FRESULT_str(res), res);
+    }
+
+    res = f_unmount("");
+    if (res != FR_OK) {
+        printf("SD card unmount error: %s (%d)\n", FRESULT_str(res), res);
+    }
+
+    free(p_fs);
 }
 
 void read_user_input() {
@@ -231,6 +256,7 @@ void read_user_input() {
 
 int main() {
     stdio_init_all();
+    sd_init_driver();
 
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
@@ -275,7 +301,9 @@ int main() {
         gpio_put(LED_PIN, 0);
         printf("Data acquired\n");
 
+        printf("Writing data to SD card...\n");
         print_capture_buf_csv(capture_buf, CAPTURE_PIN_BASE, CAPTURE_PIN_COUNT, CAPTURE_N_SAMPLES);
+        printf("Data written to OUTPUT.csv\n");
 
         pio_remove_program(pio, capture_prog_2, offset);
 

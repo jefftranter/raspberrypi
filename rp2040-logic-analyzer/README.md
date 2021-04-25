@@ -41,6 +41,7 @@ References:
 * https://github.com/raspberrypi/pico-examples/tree/master/pio/logic_analyser
 * https://github.com/carlk3/no-OS-FatFS-SD-SPI-RPi-Pico
 * http://elm-chan.org/fsw/ff/00index_e.html
+* https://sigrok.org/wiki/File_format:Csv
 
 The original README.md file is below:
 
