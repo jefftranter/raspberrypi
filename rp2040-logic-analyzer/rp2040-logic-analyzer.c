@@ -179,7 +179,7 @@ void read_user_input() {
             int number = -1;
             if (isdigit(buffer[1]) != 0) {
                 number = strtol(buffer+1, NULL, 10);
-                if (number > 28)
+                if ((number == 0) || (number > 28))
                     number = -1;
             }
 
