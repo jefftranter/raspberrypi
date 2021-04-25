@@ -8,6 +8,11 @@ My version extends the commands and adds support for storing the
 samples on an SD card attached to the Pico using a commonly available
 SD card adaptor.
 
+The samples are written to a file OUTPUT.csv on the SD card. These can
+be loaded into applications on a desktop computer for analysis. For
+example, it can be loaded into PulseView using a command like
+"pulseview -i OUTPUT.csv -I csv:samplerate=2000000"
+
 ## Hardware Setup
 
 | SD Adaptor | Pi Pico  | Pin |
@@ -19,10 +24,16 @@ SD card adaptor.
 | MOSI       | GP19/TX  | 25  |
 | 3V3        | 3V3OUT   | 36  |
 
+Note that the Pico input pins uses 3.3V logic and cannot accept other
+levels such as 5V without level converters.
+
+Note that you can't use GPIO pins 16 through 19 for logic analyzer
+input since they are allocated to the SD card.
+
 Building:
 
 Set the environment variable PICO_SDK_PATH to the location of the
-installed Pico SDK.
+installed Pico SDK and build in the usual manner, e.g.
 
 ```
 mkdir build
@@ -43,7 +54,7 @@ References:
 * http://elm-chan.org/fsw/ff/00index_e.html
 * https://sigrok.org/wiki/File_format:Csv
 
-The original README.md file is below:
+The original README.md file (with some changes) is below:
 
 # rp2040-logic-analyzer
 
@@ -67,8 +78,4 @@ The commands are:
   * h    - Show command usage
 
 Once "go" is selected the trigger will arm and wait for the specified signal.
-The output is a CSV file, each line contains every pin being sampled. The output
-can be saved with any program that can read a serial port to a file. Just be
-aware a large number of samples can take quite a while to transfer. The
-onboard LED will blink as the transfer is happening so you can know when to end
-the save.
+The output is a CSV file, each line contains every pin being sampled.
