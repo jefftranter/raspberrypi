@@ -32,8 +32,8 @@
 const uint LED_PIN = 25;
 
 // Defaults - just what I tested with any legal value is fine
-uint CAPTURE_PIN_BASE = 17;
-uint CAPTURE_PIN_COUNT = 2;
+uint CAPTURE_PIN_BASE = 0;
+uint CAPTURE_PIN_COUNT = 4;
 uint CAPTURE_N_SAMPLES = 200000;
 float FREQ_DIV = 125.0f; // Divide 125Mhz by this to get your freq
 uint FREQUENCY = 1000000;
@@ -216,8 +216,9 @@ void read_user_input() {
             printf("f#   - Set the frequency to capture data in Hz\n");
             printf("t1|0 - Set the trigger to high or low (triggers on first pin)\n");
             printf("s#   - Set how many samples to capture\n");
-            printf("?    - show current parameters\n");
             printf("g    - Go!\n");
+            printf("?    - show current parameters\n");
+            printf("h    - Show command usage\n");
         }
         else {
             printf("Unknown command, type h for help\n");
@@ -237,7 +238,7 @@ int main() {
     uint sm = 0;
     uint dma_chan = 0;
 
-    sleep_ms(1000); // Allow time for serial connection to come up.
+    sleep_ms(2000); // Allow time for serial connection to come up.
     printf("Raspberry Pi Pico Logic Analyzer\n");
     printf("Type h for help.\n");
 

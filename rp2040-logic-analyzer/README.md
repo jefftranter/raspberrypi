@@ -19,6 +19,21 @@ SD card adaptor.
 | MOSI       | GP19/TX  | 25  |
 | 3V3        | 3V3OUT   | 36  |
 
+Building:
+
+Set the environment variable PICO_SDK_PATH to the location of the
+installed Pico SDK.
+
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+
+Put the Pico in boot mode and copy rp2040-logic-analyzer.uf2 to the
+mounted folder.
+
 References:
 
 * https://www.hackster.io/markkomus/using-a-raspberry-pi-pico-as-a-logic-analyzer-with-pulseview-e12543
@@ -41,12 +56,14 @@ baud. Once connected press h to get help of the commands. The capture is
 only limited by the abilities of the Pico.
 
 The commands are:
-  * p# - Set the first pin to receive capture data
-  * n# - Set how many pins to receive capture data
-  * f# - Set the frequency to capture data at in Hz
-  * t(1)(0) - Set the trigger to high or low. Trigger happens off first pin
-  * s# - Set how many samples to capture
-  * g - Go!
+  * p#   - Set the first pin to receive capture data
+  * n#   - Set how many pins to receive capture data
+  * f#   - Set the frequency to capture data in Hz
+  * t1|0 - Set the trigger to high or low (triggers on first pin)
+  * s#   - Set how many samples to capture
+  * g    - Go!
+  * ?    - show current parameters
+  * h    - Show command usage
 
 Once "go" is selected the trigger will arm and wait for the specified signal.
 The output is a CSV file, each line contains every pin being sampled. The output
