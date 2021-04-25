@@ -197,7 +197,7 @@ void read_user_input() {
                     freq = 0;
             }
 
-            if (freq < 0)
+            if (freq <= 0)
                 printf("Frequency is not valid\n");
             else {
                 FREQUENCY = freq;
@@ -238,7 +238,14 @@ void read_user_input() {
             printf("Current settings:\n");
             printf("First pin:      %d\n", CAPTURE_PIN_BASE);
             printf("Number of pins: %d\n", CAPTURE_PIN_COUNT);
-            printf("Frequency:      %d Hz\n", FREQUENCY);
+
+            if (FREQUENCY >= 1e6) {
+                printf("Frequency:      %f MHz\n", FREQUENCY / 1000000.0 );
+            } else if (FREQUENCY >= 1e3) {
+                printf("Frequency:      %f kHz\n", FREQUENCY / 1000.0 );
+            } else {
+                printf("Frequency:      %d Hz\n", FREQUENCY);
+            }
             printf("Trigger level:  %d\n", TRIGGER);
             printf("Samples:        %d\n", CAPTURE_N_SAMPLES);
         }
