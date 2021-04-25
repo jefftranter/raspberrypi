@@ -100,12 +100,14 @@ void print_capture_buf_csv(const uint32_t *buf, uint pin_base, uint pin_count, u
     FRESULT res = f_mount(p_fs, "", 0);
     if (res != FR_OK) {
         printf("SD card mount error: %s (%d)\n", FRESULT_str(res), res);
+        return;
     }
 
     FIL fil;
     res = f_open(&fil, "OUTPUT.csv", FA_WRITE|FA_CREATE_ALWAYS);
     if (res != FR_OK) {
         printf("file open error: %s (%d)\n", FRESULT_str(res), res);
+        return;
     }
 
     for (int sample = 0; sample < n_samples; ++sample) {
@@ -123,11 +125,13 @@ void print_capture_buf_csv(const uint32_t *buf, uint pin_base, uint pin_count, u
     res = f_close(&fil);
     if (res != FR_OK) {
         printf("file close error: %s (%d)\n", FRESULT_str(res), res);
+        return;
     }
 
     res = f_unmount("");
     if (res != FR_OK) {
         printf("SD card unmount error: %s (%d)\n", FRESULT_str(res), res);
+        return;
     }
 
     free(p_fs);
