@@ -117,6 +117,9 @@ void read_user_input() {
         int bufpos = 0;
         int c = 0;
 
+        printf("%% ");
+        stdio_flush();
+
         while (c != '\r') {
             c = getchar_timeout_us(30000000);
             if (c == -1) continue; // timeout ran out
@@ -239,7 +242,7 @@ int main() {
     uint dma_chan = 0;
 
     sleep_ms(2000); // Allow time for serial connection to come up.
-    printf("Raspberry Pi Pico Logic Analyzer\n");
+    printf("Raspberry Pi Pico Logic Analyzer ver 0.2\n");
     printf("Type h for help.\n");
 
     while (true) {
