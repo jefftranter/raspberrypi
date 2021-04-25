@@ -11,6 +11,9 @@ project(rp2040-logic-analyzer C CXX)
 # Initialise the Pico SDK
 pico_sdk_init()
 
+# Add FatFS SPI library
+add_subdirectory(FatFs_SPI)
+
 # Add executable. Default name is the project name, version 0.2
 
 add_executable(rp2040-logic-analyzer rp2040-logic-analyzer.c )
@@ -22,7 +25,9 @@ pico_enable_stdio_uart(rp2040-logic-analyzer 0)
 pico_enable_stdio_usb(rp2040-logic-analyzer 1)
 
 # Add the standard library to the build
-target_link_libraries(rp2040-logic-analyzer pico_stdlib hardware_pio hardware_dma)
+target_link_libraries(rp2040-logic-analyzer FatFs_SPI pico_stdlib hardware_pio hardware_dma)
+
+target_compile_definitions(rp2040-logic-analyzer PUBLIC N_SD_CARDS=1)
 
 pico_add_extra_outputs(rp2040-logic-analyzer)
 
