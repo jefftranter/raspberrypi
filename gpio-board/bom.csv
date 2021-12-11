@@ -1,5 +1,5 @@
 Designator,Approx. Cost,Description,Example Vendor,Comments
-P1,$1.00,2x32 female GPIO header,http://adafru.it/2222,Mount on underside of board.
+P1,$1.00,2x20 female GPIO header,http://adafru.it/2222,Mount on underside of board.
 P2,$1.00,1x6 male header,http://adafru.it/3009,For FTDI (cut to size)
 R1,$0.03,"Resistor, 10K, 1/4W, 5%",http://adafru.it/2784,
 R2,$0.03,"Resistor, 10K, 1/4W, 5%",http://adafru.it/2784,
