@@ -84,11 +84,36 @@ Sample programs for the Raspberry Pi (shell script and Python) are provided here
 To use the serial port, on the Raspberry Pi you can run raspi-config to enable a serial console and you should then be able to log in on the serial port using settings of 115200 bps 8N1.
 The device file for the serial port is /dev/ttyS0. On the Toradex Colibri with Aster carrier board, the serial port shows up as UART B with device file /dev/ttymxc1. By default there is no login process connected to it. You need to be root to read or write the serial port. See reference [12] below for more details.
 
-## AVAILABILITY
-
-This is Open Source Hardware, licensed under the The TAPR Open Hardware License. You are welcome to build the circuit and use my PCB layout.
+## AVAILABILITY AND LICENSING
 
 Assembled and tested boards are available from me for a nominal cost. Check eBay for "Raspberry Pi GPIO Learning Board" from seller Sordnax. Contact me directly about purchasing larger volumes of boards at a discount.
+
+Copyright (c) 2019-2023 by Jeff Tranter <tranter@pobox.com>
+
+The hardware design is Open Source Hardware, licensed under the The TAPR
+Open Hardware License. You are welcome to build the circuit and use my
+PCB layout.
+See https://web.tapr.org/TAPR_Open_Hardware_License_v1.0.txt
+
+
+The software is released under the following license:
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+Documentation is licensed under a Creative Commons Attribution 4.0
+International License.
+See https://creativecommons.org/licenses/by/4.0/
 
 ## REFERENCES
 
